@@ -359,8 +359,15 @@ app.post('/api/borrow', requireAuth, wrap((req) => {
     // 1. Kurangi stok barang di database secara otomatis
     db.prepare('UPDATE tools SET quantity = ? WHERE code = ?').run(newStock, code);
 
-    // 2. Simpan transaksi peminjaman ke Riwayat (loans)
-    const info = q.insertLoan.run(code, targetUser.username, t, null, qty, badgeToSave, note);
+    // 2. Simpan transaksi ke Riwayat (loans)
+    // Strategi: TOOLS = Pinjam (wajib kembali), MATERIAL = Habis Pakai (langsung selesai / tidak perlu dikembalikan)
+    const isMaterial = (tool.item_type || (tool.code.startsWith('M-') ? 'material' : 'tool')) === 'material';
+    const finalNote = note || (isMaterial ? 'Habis Pakai' : '');
+    const info = q.insertLoan.run(code, targetUser.username, t, null, qty, badgeToSave, finalNote);
+    if (isMaterial) {
+      db.prepare("UPDATE loans SET in_at = ?, in_by = ?, in_condition = 'consumed', in_note = ? WHERE id = ?")
+        .run(t, targetUser.username, finalNote, info.lastInsertRowid);
+    }
     const loan = q.loanById.get(info.lastInsertRowid);
     const updatedTool = q.tool.get(code);
 
@@ -368,7 +375,8 @@ app.post('/api/borrow', requireAuth, wrap((req) => {
 
     return {
       ok: true,
-      kind: 'borrowed',
+      kind: isMaterial ? 'consumed' : 'borrowed',
+      isMaterial,
       tool: updatedTool,
       worker: { ...targetUser, badge_id: badgeToSave },
       loan,
@@ -630,9 +638,9 @@ app.post('/api/undo', requireAuth, wrap((req) => {
   if (!loan) throw new HttpError(404, 'Transaksi tidak ditemukan');
   return tx(() => {
     const qty = Number(loan.qty ?? 1);
-    if (action === 'borrow') {
+    if (action === 'borrow' || action === 'consume') {
       if (loan.worker_code !== req.user.username && req.user.role !== 'admin') throw new HttpError(403, 'Tidak diizinkan');
-      if (loan.in_at) throw new HttpError(400, 'Barang sudah dikembalikan');
+      if (loan.in_at && loan.in_condition !== 'consumed') throw new HttpError(400, 'Barang sudah dikembalikan');
       if (Date.now() - Date.parse(loan.out_at) > UNDO_WINDOW_MS) throw new HttpError(400, 'Batas waktu batal (5 menit) lewat');
       db.prepare('UPDATE tools SET quantity = quantity + ? WHERE code = ?').run(qty, loan.tool_code);
       db.prepare('DELETE FROM loans WHERE id = ?').run(loan.id);
@@ -920,6 +928,41 @@ app.post('/api/opname', requireAdmin, wrap((req) => {
   db.prepare('INSERT INTO opnames (at, by_user, found, missing, out_count) VALUES (?, ?, ?, ?, ?)')
     .run(now(), req.user.username, JSON.stringify(found), JSON.stringify(missing.map((m) => m.code)), stillOut.length);
   return { missing, foundButOut, stillOut, foundCount: found.length };
+}));
+
+// Balancing Stok Gudang (Stok Opname Aktual vs Sistem)
+app.post('/api/opname/balance', requireAdmin, wrap((req) => {
+  const items = Array.isArray(req.body.items) ? req.body.items : [];
+  if (!items.length) throw new HttpError(400, 'Tidak ada data stok untuk disesuaikan');
+
+  return tx(() => {
+    let updatedCount = 0;
+    const adjustedCodes = [];
+    for (const item of items) {
+      const code = norm(item.code);
+      if (!code) continue;
+      const tool = q.tool.get(code);
+      if (!tool || !tool.active) continue;
+      const newQty = Number(item.actualQty);
+      if (Number.isNaN(newQty) || newQty < 0) continue;
+
+      let newCond = String(item.condition || tool.condition || 'bagus').toLowerCase();
+      if (!['bagus', 'kalibrasi', 'eject'].includes(newCond)) newCond = tool.condition || 'bagus';
+      const newStatus = newCond === 'eject' ? 'rusak' : 'ok';
+
+      if (Number(tool.quantity ?? 0) !== newQty || tool.condition !== newCond) {
+        db.prepare('UPDATE tools SET quantity = ?, condition = ?, status = ? WHERE code = ?')
+          .run(newQty, newCond, newStatus, code);
+        updatedCount++;
+        adjustedCodes.push(`${code}:${tool.quantity}->${newQty}`);
+      }
+    }
+
+    db.prepare('INSERT INTO opnames (at, by_user, found, missing, out_count) VALUES (?, ?, ?, ?, ?)')
+      .run(now(), req.user.username, JSON.stringify(adjustedCodes), '[]', updatedCount);
+    try { db.exec('PRAGMA wal_checkpoint(PASSIVE)'); } catch { /* abaikan */ }
+    return { ok: true, updatedCount };
+  });
 }));
 
 app.post('/api/return-bulk', requireAdmin, wrap((req) => {

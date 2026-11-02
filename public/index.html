@@ -8,29 +8,29 @@
   <title>GFM Gudang Alat &amp; Material — PT Sulawesi Cahaya Mineral</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css?v=25">
+  <link rel="stylesheet" href="/style.css?v=26">
   <script>
     // Bersihkan Service Worker & Cache lama agar menu dan aplikasi selalu berjalan normal 100%
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(regs) {
-        regs.forEach(function(r) { r.unregister(); });
-      }).catch(function() {});
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        regs.forEach(function (r) { r.unregister(); });
+      }).catch(function () { });
     }
     if ('caches' in window) {
-      caches.keys().then(function(keys) {
-        keys.forEach(function(k) { caches.delete(k); });
-      }).catch(function() {});
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) { caches.delete(k); });
+      }).catch(function () { });
     }
     // Fungsi pindah menu anti-macet (selalu bisa diklik walau script utama masih dimuat)
-    window.switchGudangTab = function(name) {
+    window.switchGudangTab = function (name) {
       if (typeof window.showTab === 'function') {
         window.showTab(name);
         return;
       }
-      document.querySelectorAll('.navbars button').forEach(function(b) {
+      document.querySelectorAll('.navbars button').forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-tab') === name);
       });
-      document.querySelectorAll('.tab').forEach(function(t) {
+      document.querySelectorAll('.tab').forEach(function (t) {
         t.classList.toggle('active', t.id === 'tab-' + name);
       });
     };
@@ -144,16 +144,16 @@
         <nav class="navbars" aria-label="Menu Utama">
           <button type="button" data-tab="database" class="active" onclick="switchGudangTab('database')">
             <span class="nav-ico">📦</span>
-            <span class="nav-lbl">STOK</span>
+            <span class="nav-lbl">DATABASE</span>
             <span id="outBadge" class="badge hidden">0</span>
           </button>
           <button type="button" data-tab="entry" id="navEntry" onclick="switchGudangTab('entry')">
             <span class="nav-ico">➕</span>
-            <span class="nav-lbl">TAMBAH</span>
+            <span class="nav-lbl">DATA ENTRY</span>
           </button>
           <button type="button" data-tab="scan" onclick="switchGudangTab('scan')">
             <span class="nav-ico">🤝</span>
-            <span class="nav-lbl">PINJAM</span>
+            <span class="nav-lbl">KELUAR</span>
             <span id="myBadge" class="badge warn hidden">0</span>
           </button>
           <button type="button" data-tab="history" onclick="switchGudangTab('history')">
@@ -219,7 +219,7 @@
               </button>
             </div>
 
-            <div class="excel-action-btns desk-only">
+            <div class="excel-action-btns">
               <button type="button" id="btnQuickAddFromDb" class="btn btn-primary btn-sm">➕ Tambah Barang</button>
               <button type="button" id="btnDlExcelFromDb" class="btn btn-dark btn-sm">📊 Unduh Excel</button>
               <button type="button" class="btn btn-ghost btn-sm print-hide" onclick="window.print()">🖨️ Cetak</button>
@@ -231,26 +231,34 @@
             <!-- Kotak Pencarian + Tombol Filter (HP) -->
             <div class="search-filter-row">
               <div class="excel-search-box flex1">
-                <input id="dbSearch" type="search" placeholder="🔍 Cari barang…" autocomplete="off">
+                <input id="dbSearch" type="search" placeholder="🔍 Cari nama barang / kode…" autocomplete="off">
               </div>
-              <button type="button" id="btnToggleDbFilter" class="btn btn-ghost btn-sm mob-only" title="Filter lainnya">⚙️ Filter</button>
+              <button type="button" id="btnToggleDbFilter" class="btn btn-ghost btn-sm mob-only"
+                title="Filter lainnya">⚙️ Filter</button>
             </div>
 
             <!-- Filter Ketersediaan -->
             <div class="excel-filter-pills" id="dbAvailTabs">
-              <button type="button" class="excel-pill active" data-avail="all">Semua (<span id="cntAvailAll">29</span>)</button>
-              <button type="button" class="excel-pill" data-avail="ready">🟢 Ready (<span id="cntAvailReady">29</span>)</button>
-              <button type="button" class="excel-pill" data-avail="out">🟠 Dipinjam (<span id="cntAvailOut">0</span>)</button>
+              <button type="button" class="excel-pill active" data-avail="all">Semua (<span
+                  id="cntAvailAll">29</span>)</button>
+              <button type="button" class="excel-pill" data-avail="ready">🟢 Ready (<span
+                  id="cntAvailReady">29</span>)</button>
+              <button type="button" class="excel-pill" data-avail="out">🟠 Dipinjam (<span
+                  id="cntAvailOut">0</span>)</button>
             </div>
 
             <!-- Filter Tambahan (di HP disembunyikan sampai tombol Filter ditekan) -->
             <div id="dbMoreFilters" class="more-filters">
               <div class="excel-filter-pills" id="dbCondPills">
                 <span class="excel-pill-label">Kondisi:</span>
-                <button type="button" data-cond="all" class="excel-pill active">Semua (<span id="cntCondAll">29</span>)</button>
-                <button type="button" data-cond="bagus" class="excel-pill cond-bagus-pill">🟢 Bagus (<span id="cntCondBagus">29</span>)</button>
-                <button type="button" data-cond="kalibrasi" class="excel-pill cond-kalibrasi-pill">🟡 Kalibrasi (<span id="cntCondKalibrasi">0</span>)</button>
-                <button type="button" data-cond="eject" class="excel-pill cond-eject-pill">🔴 Rusak (<span id="cntCondEject">0</span>)</button>
+                <button type="button" data-cond="all" class="excel-pill active">Semua (<span
+                    id="cntCondAll">29</span>)</button>
+                <button type="button" data-cond="bagus" class="excel-pill cond-bagus-pill">🟢 Bagus (<span
+                    id="cntCondBagus">29</span>)</button>
+                <button type="button" data-cond="kalibrasi" class="excel-pill cond-kalibrasi-pill">🟡 Kalibrasi (<span
+                    id="cntCondKalibrasi">0</span>)</button>
+                <button type="button" data-cond="eject" class="excel-pill cond-eject-pill">🔴 Rusak (<span
+                    id="cntCondEject">0</span>)</button>
               </div>
 
               <select id="dbSort" class="excel-select" title="Urutkan data">
@@ -277,34 +285,32 @@
           </div>
         </div>
 
-        <!-- TABEL DATA (PC) -->
-        <div class="excel-sheet-card desk-only">
+        <!-- TABEL DATABASE BARANG (SELALU TAMPIL DI PC MAUPUN HP) -->
+        <div class="excel-sheet-card">
           <div class="excel-sheet-header">
             <span class="excel-grid-title" id="dbTableHeading">Tabel Database Barang (29 Data)</span>
-            <span class="small muted">Ubah jumlah dengan − / + dan kondisi lewat pilihan di baris.</span>
+            <span class="small muted">Ubah jumlah dengan − / + dan kondisi langsung pada baris tabel.</span>
           </div>
           <div class="excel-table-container">
             <table id="dbTable" class="excel-table"></table>
           </div>
         </div>
-
-        <!-- KARTU BARANG (HP) -->
-        <div id="dbCards" class="m-cards mob-only"></div>
-
-        <!-- Tombol Tambah Melayang (HP) -->
-        <button type="button" id="fabAddItem" class="fab mob-only" title="Tambah barang" onclick="switchGudangTab('entry')">＋</button>
       </section>
 
       <!-- =========================================================================
-           HALAMAN 2: DATA ENTRY (COMPACT, SIMPEL & MUDAH DIGUNAKAN AWAM)
+           HALAMAN 2: DATA ENTRY (HANYA FORM TAMBAH BARANG & IMPORT, TANPA TABEL BARANG)
            ========================================================================= -->
       <section id="tab-entry" class="tab">
         <div class="card compact-entry-card">
           <!-- Baris Atas: Judul + Tombol Cepat Excel & QR -->
           <div class="entry-top-bar">
-            <h2 style="margin:0">➕ Tambah Barang</h2>
-            <div class="row wrap gap8 desk-only">
-              <button type="button" id="btnDlFormatToolsQuick" class="btn btn-ghost btn-sm">📊 Format Excel (<span id="dlToolsCount">29</span>)</button>
+            <div>
+              <h2 style="margin:0">➕ Data Entry — Tambah Barang Baru</h2>
+              <div class="muted small" style="margin-top:2px">Barang yang disimpan langsung masuk ke menu <b>📦 DATABASE</b>.</div>
+            </div>
+            <div class="row wrap gap8">
+              <button type="button" id="btnDlFormatToolsQuick" class="btn btn-ghost btn-sm">📊 Format Excel (<span
+                  id="dlToolsCount">29</span>)</button>
               <button type="button" id="btnUploadCsvQuick" class="btn btn-dark btn-sm">📂 Upload Excel</button>
               <button type="button" id="btnTogglePasteBox" class="btn btn-ghost btn-sm">📋 Paste Excel</button>
               <a class="btn btn-ghost btn-sm" href="/labels" target="_blank">🖨️ Cetak QR</a>
@@ -316,15 +322,15 @@
             <button type="button" class="entry-type-btn active" data-etype="tool" id="btnEntryTypeTool">
               <span class="et-ico">🧰</span>
               <span class="et-txt">
-                <b>TOOLS</b>
-                <small><span id="entryCountTool">21</span> alat</small>
+                <b>TOOLS (Alat Pinjam)</b>
+                <small><span id="entryCountTool">21</span> alat terdaftar • Kode T-xxx</small>
               </span>
             </button>
             <button type="button" class="entry-type-btn" data-etype="material" id="btnEntryTypeMaterial">
               <span class="et-ico">📦</span>
               <span class="et-txt">
-                <b>MATERIAL</b>
-                <small><span id="entryCountMaterial">8</span> bahan</small>
+                <b>MATERIAL (Habis Pakai)</b>
+                <small><span id="entryCountMaterial">8</span> bahan terdaftar • Kode M-xxx</small>
               </span>
             </button>
           </div>
@@ -343,10 +349,11 @@
 
               <!-- 2. Jumlah -->
               <div class="c-field c-field-qty">
-                <label for="entryQty">Jumlah <span style="color:#dc2626">*</span></label>
+                <label for="entryQty">Jumlah Stok Awal <span style="color:#dc2626">*</span></label>
                 <div class="qty-stepper">
                   <button type="button" class="qty-btn" id="btnQtyMinus" title="Kurangi 1">−</button>
-                  <input name="quantity" id="entryQty" type="number" inputmode="decimal" step="any" min="0" value="1" required>
+                  <input name="quantity" id="entryQty" type="number" inputmode="decimal" step="any" min="0" value="1"
+                    required>
                   <button type="button" class="qty-btn" id="btnQtyPlus" title="Tambah 1">+</button>
                 </div>
               </div>
@@ -394,15 +401,18 @@
 
               <!-- Tombol buka kolom opsional (HP) -->
               <div class="c-field c-field-advtoggle mob-only">
-                <button type="button" id="btnToggleAdv" class="btn btn-ghost btn-sm" style="width:100%">＋ Kelompok &amp; Kode (opsional)</button>
+                <button type="button" id="btnToggleAdv" class="btn btn-ghost btn-sm" style="width:100%">＋ Kelompok &amp;
+                  Kode (opsional)</button>
               </div>
 
               <!-- 7. Tombol Simpan -->
               <div class="c-field c-field-submit">
                 <label class="desk-only">&nbsp;</label>
                 <div class="row gap8">
-                  <button type="submit" class="btn btn-primary" id="btnSubmitEntry" style="height:44px;padding:0 18px;flex:1">💾 Simpan Barang</button>
-                  <button type="reset" id="btnResetEntry" class="btn btn-ghost" style="height:44px;padding:0 14px" title="Kosongkan form">🔄</button>
+                  <button type="submit" class="btn btn-primary" id="btnSubmitEntry"
+                    style="height:44px;padding:0 18px;flex:1">💾 Simpan Barang ke Database</button>
+                  <button type="reset" id="btnResetEntry" class="btn btn-ghost" style="height:44px;padding:0 14px"
+                    title="Kosongkan form">🔄</button>
                 </div>
               </div>
             </div>
@@ -413,7 +423,8 @@
             <div class="row between wrap gap8">
               <div>
                 <b>📥 Import Banyak Barang Sekaligus dari Excel</b>
-                <div class="muted small">Copy baris dari Microsoft Excel lalu Paste di kotak bawah, atau klik <b>Upload File</b>.</div>
+                <div class="muted small">Copy baris dari Microsoft Excel lalu Paste di kotak bawah, atau klik <b>Upload
+                    File</b>.</div>
               </div>
               <div class="row wrap gap8">
                 <button type="button" id="btnDlFormatTools" class="btn btn-ghost btn-sm">📊 Format Excel Barang</button>
@@ -421,38 +432,24 @@
                 <input id="importFile" type="file" accept=".csv,.txt,.tsv,.xls,.xlsx" class="hidden">
               </div>
             </div>
-            <textarea id="importText" rows="3" style="margin-top:8px" placeholder="T-022	Kunci Momen 3/4	tool	Hand Tool	bagus	1	Unit"></textarea>
+            <textarea id="importText" rows="3" style="margin-top:8px"
+              placeholder="T-022	Kunci Momen 3/4	tool	Hand Tool	bagus	1	Unit"></textarea>
             <div class="row wrap gap8" style="margin-top:8px">
               <button id="btnImportTools" class="btn btn-primary btn-sm" type="button">📥 Simpan Data Barang</button>
               <button id="btnImportUsers" class="btn btn-ghost btn-sm" type="button">📥 Simpan Akun Crew</button>
             </div>
           </div>
-        </div>
 
-        <!-- DAFTAR BARANG (BISA LANGSUNG UBAH JUMLAH +/- DAN KONDISI) -->
-        <div class="excel-sheet-card" style="margin-top:12px">
-          <div class="excel-sheet-header">
-            <div class="row wrap gap8">
-              <span class="excel-grid-title">📋 Daftar Barang (<span id="entryTotalCount">29</span>)</span>
-              <div class="excel-filter-pills" id="entryFilterPills">
-                <button type="button" class="excel-pill active" data-efilter="all">Semua</button>
-                <button type="button" class="excel-pill" data-efilter="tool">🧰 Tools</button>
-                <button type="button" class="excel-pill" data-efilter="material">📦 Material</button>
-              </div>
-            </div>
-            <div class="excel-search-box" style="max-width:280px">
-              <input id="toolSearch" type="search" placeholder="🔍 Cari barang…">
-            </div>
+          <!-- Pintasan ke Database (Tidak menampilkan tabel barang di halaman Data Entry) -->
+          <div class="row between wrap gap8" style="margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e1">
+            <span class="small muted">💡 Semua daftar barang ditampilkan terpusat di halaman <b>DATABASE</b>.</span>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="switchGudangTab('database')">📦 Buka Tabel Database (<span id="entryTotalCount">29</span> Barang) →</button>
           </div>
-          <div class="excel-table-container desk-only" style="max-height:55vh">
-            <table id="entryQuickTable" class="excel-table"></table>
-          </div>
-          <div id="entryCards" class="m-cards mob-only" style="padding:8px"></div>
         </div>
       </section>
 
       <!-- =========================================================================
-           HALAMAN 3: SCAN & PINJAM (SIMPEL & BERTAHAP — MUNCUL SAAT MENU DITEKAN)
+           HALAMAN 3: KELUAR — PINJAM TOOLS & AMBIL MATERIAL (HABIS PAKAI)
            ========================================================================= -->
       <section id="tab-scan" class="tab">
         <div id="incomingTransfersBox" class="hidden"></div>
@@ -461,38 +458,41 @@
 
         <div class="simple-scan-wrap">
           <div class="card simple-scan-card">
-            <!-- Header + Tombol Kembalikan -->
+            <!-- Header + Tombol Kembalikan Tools -->
             <div class="row between wrap gap8" style="margin-bottom:12px">
-              <h3 style="margin:0;font-size:1.15rem">🤝 Pinjam Barang</h3>
+              <div>
+                <h3 style="margin:0;font-size:1.15rem">📤 Menu Barang Keluar</h3>
+                <div class="muted small">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis pakai).</div>
+              </div>
               <button type="button" id="btnToggleReturnBox" class="btn btn-ok btn-sm">
-                ↩️ Kembalikan (<span id="myHoldingCount">0</span>)
+                ↩️ Kembalikan Tools (<span id="myHoldingCount">0</span>)
               </button>
             </div>
 
-            <!-- Kotak Pengembalian Barang -->
+            <!-- Kotak Pengembalian Tools -->
             <div id="myHoldingCard" class="compact-import-box hidden" style="margin-bottom:14px">
               <div class="row between" style="margin-bottom:8px">
-                <b style="font-size:.95rem">↩️ Barang yang sedang dipinjam</b>
+                <b style="font-size:.95rem">↩️ Daftar Tools yang Sedang Dipinjam (Klik Kembalikan)</b>
                 <button type="button" id="btnCloseReturnBox" class="btn btn-ghost btn-sm">✕</button>
               </div>
               <div id="myHoldingList" class="active-loans-scroll"></div>
               <div id="outgoingTransfersBox"></div>
             </div>
 
-            <!-- LANGKAH 1: PILIH JENIS -->
+            <!-- LANGKAH 1: PILIH JENIS TRANSAKSI KELUAR -->
             <div class="entry-type-switcher scan-type-switcher" style="margin-bottom:0">
               <button type="button" id="btnScanTypeTool" class="entry-type-btn" data-type="tool">
                 <span class="et-icon">🔧</span>
                 <div class="et-text">
-                  <b>TOOLS</b>
-                  <small><span id="scanCountTool">0</span> alat</small>
+                  <b>PINJAM TOOLS (Alat Kerja)</b>
+                  <small>Wajib dikembalikan • <span id="scanCountTool">0</span> jenis alat</small>
                 </div>
               </button>
               <button type="button" id="btnScanTypeMaterial" class="entry-type-btn material" data-type="material">
                 <span class="et-icon">📦</span>
                 <div class="et-text">
-                  <b>MATERIAL</b>
-                  <small><span id="scanCountMaterial">0</span> bahan</small>
+                  <b>AMBIL MATERIAL (Habis Pakai)</b>
+                  <small>Langsung kurangi stok • <span id="scanCountMaterial">0</span> bahan</small>
                 </div>
               </button>
             </div>
@@ -511,7 +511,9 @@
               <!-- Kamera QR (Muncul hanya jika klik Scan Kamera) -->
               <div id="cameraBox" class="camera hidden" style="margin-bottom:10px">
                 <video id="video" playsinline muted></video>
-                <div id="camReticle" class="reticle"><div class="scan-line"></div></div>
+                <div id="camReticle" class="reticle">
+                  <div class="scan-line"></div>
+                </div>
                 <div class="cam-top-bar">
                   <span class="cam-live-pill"><span class="live-dot"></span> AUTO-STOP</span>
                   <div class="row gap8">
@@ -524,7 +526,7 @@
               </div>
 
               <form id="scanForm" class="scan-input" autocomplete="off" style="margin:0 0 8px">
-                <input id="scanInput" type="search" placeholder="🔍 Cari barang…" autocomplete="off" spellcheck="false">
+                <input id="scanInput" type="search" placeholder="🔍 Cari nama barang / kode…" autocomplete="off" spellcheck="false">
                 <button type="submit" class="btn btn-dark btn-sm">Cari</button>
               </form>
 
@@ -538,7 +540,7 @@
                   <div id="selItemStockInfo" class="small muted"></div>
                 </div>
                 <div class="sel-item-qty">
-                  <span class="c-label" style="margin-bottom:3px">Jumlah</span>
+                  <span class="c-label" id="selItemQtyLabel" style="margin-bottom:3px">Jumlah</span>
                   <div class="qty-stepper">
                     <button type="button" id="btnBorrowQtyMinus" class="qty-btn">−</button>
                     <input type="number" inputmode="decimal" id="borrowQtyInput" value="1" min="1" step="any">
@@ -549,18 +551,18 @@
               </div>
             </div>
 
-            <!-- LANGKAH 3: SIAPA YANG PINJAM -->
+            <!-- LANGKAH 3: SIAPA YANG PINJAM / MENGAMBIL -->
             <div id="scanStepBorrower" class="borrow-step-box hidden" style="margin-top:12px">
-              <div class="borrow-step-title">② Siapa yang pinjam?</div>
+              <div class="borrow-step-title" id="scanStepBorrowerTitle">② Siapa yang meminjam?</div>
 
               <!-- Ketik Badge ID / Nama (otomatis menyaring daftar) -->
               <div class="borrower-form-grid">
                 <div class="c-field">
-                  <span class="c-label">🪪 Badge ID / Nama *</span>
+                  <span class="c-label">🪪 Badge ID / Nama Crew *</span>
                   <input id="borrowBadgeId" type="search" placeholder="Ketik badge / nama…" autocomplete="off">
                 </div>
                 <div class="c-field">
-                  <span class="c-label">👷 Nama</span>
+                  <span class="c-label">👷 Nama Crew Terpilih</span>
                   <input id="borrowerNameInput" placeholder="Terisi otomatis" autocomplete="off">
                 </div>
               </div>
@@ -574,8 +576,9 @@
               <input type="hidden" id="borrowNoteInput">
 
               <div style="margin-top:12px">
-                <button type="button" id="btnSubmitBorrow" class="btn btn-ok btn-lg" style="width:100%;font-size:1.05rem;padding:14px">
-                  ✅ SIMPAN PINJAMAN
+                <button type="button" id="btnSubmitBorrow" class="btn btn-ok btn-lg"
+                  style="width:100%;font-size:1.05rem;padding:14px">
+                  ✅ SIMPAN PINJAMAN TOOLS
                 </button>
               </div>
             </div>
@@ -587,7 +590,7 @@
       </section>
 
       <!-- =========================================================================
-           HALAMAN 4: RIWAYAT
+           HALAMAN 4: RIWAYAT (TABEL SELALU TAMPIL)
            ========================================================================= -->
       <section id="tab-history" class="tab">
         <div class="card history-filters">
@@ -596,9 +599,9 @@
             <label>Sampai <input type="date" id="hTo"></label>
           </div>
           <select id="hType" class="clean-select">
-            <option value="">Semua</option>
-            <option value="tool">🧰 Tools</option>
-            <option value="material">📦 Material</option>
+            <option value="">Semua Barang</option>
+            <option value="tool">🧰 Tools (Pinjam)</option>
+            <option value="material">📦 Material (Habis Pakai)</option>
           </select>
           <input id="hQ" type="search" class="flex1" placeholder="🔍 Cari barang / nama crew…">
           <div class="hf-btns">
@@ -606,19 +609,20 @@
             <button id="hCsv" class="btn btn-dark">⬇️ Excel</button>
           </div>
         </div>
-        <div class="table-wrap desk-only">
-          <table id="hTable"></table>
+        <div class="excel-sheet-card">
+          <div class="excel-table-container">
+            <table id="hTable" class="excel-table"></table>
+          </div>
         </div>
-        <div id="hCards" class="m-cards mob-only"></div>
       </section>
 
       <!-- =========================================================================
-           HALAMAN 5: AKUN & SISTEM (PUSAT KENDALI ADMIN SIMPEL & RAMAH AWAM)
+           HALAMAN 5: ADMIN (CREW, DATA OPNAME / BALANCING STOK, REKAP, QR & BACKUP)
            ========================================================================= -->
       <section id="tab-admin" class="tab">
         <div class="card compact-entry-card print-hide" style="margin-bottom:12px">
           <div class="row between wrap gap8" style="margin-bottom:10px">
-            <h2 style="margin:0;font-size:1.1rem">⚙️ Admin</h2>
+            <h2 style="margin:0;font-size:1.1rem">⚙️ Panel Kendali Admin</h2>
             <div class="row wrap gap6">
               <button type="button" id="btnAdminQuickAddTool" class="btn btn-primary btn-sm">🔧 + Tools</button>
               <button type="button" id="btnAdminQuickAddMat" class="btn btn-dark btn-sm">📦 + Material</button>
@@ -627,10 +631,11 @@
 
           <!-- MENU UTAMA ADMIN -->
           <div class="subtabs admin-big-tabs">
-            <button type="button" data-sub="users" class="active">👷 Crew (<span id="adminCrewCountTab">32</span>)</button>
-            <button type="button" data-sub="outlist">📊 Laporan</button>
+            <button type="button" data-sub="users" class="active">👷 Data Crew (<span
+                id="adminCrewCountTab">32</span>)</button>
+            <button type="button" data-sub="opname">⚖️ Data Opname (Balancing Stok)</button>
+            <button type="button" data-sub="outlist">📊 Rekap &amp; Laporan</button>
             <button type="button" data-sub="system">🛠️ QR &amp; Backup</button>
-            <button type="button" data-sub="opname">✅ Cek Fisik</button>
           </div>
         </div>
 
@@ -639,8 +644,9 @@
           <div class="card compact-entry-card">
             <div class="row between wrap gap8" style="margin-bottom:8px">
               <h3 style="margin:0;font-size:1rem" id="userFormTitle">➕ Tambah Crew</h3>
-              <div class="row wrap gap6 desk-only">
-                <button type="button" id="btnDlCsvUsers" class="btn btn-ghost btn-sm">📗 Excel Crew (<span id="dlUsersCount">32</span>)</button>
+              <div class="row wrap gap6">
+                <button type="button" id="btnDlCsvUsers" class="btn btn-ghost btn-sm">📗 Excel Crew (<span
+                    id="dlUsersCount">32</span>)</button>
                 <button type="button" id="btnGoImportUsers" class="btn btn-ghost btn-sm">📥 Import Crew</button>
               </div>
             </div>
@@ -666,15 +672,16 @@
                 <label for="ufUsername">Badge ID <small class="muted">(boleh kosong)</small></label>
                 <input name="username" id="ufUsername" placeholder="Otomatis">
               </div>
-              <!-- Field lama disembunyikan otomatis agar tidak membingungkan admin awam -->
               <input type="hidden" name="phone" id="ufPhone" value="">
               <input type="hidden" name="role" id="ufRole" value="crew">
               <input type="hidden" name="password" id="ufPassword" value="">
               <div class="c-field c-field-btn">
                 <label class="hide-mobile">&nbsp;</label>
                 <div class="row gap6" style="width:100%">
-                  <button type="submit" id="ufSubmitBtn" class="btn btn-primary" style="flex:1;height:44px;white-space:nowrap">➕ Simpan Crew</button>
-                  <button type="button" id="ufCancelBtn" class="btn btn-ghost hidden" style="height:44px">✕ Batal</button>
+                  <button type="submit" id="ufSubmitBtn" class="btn btn-primary"
+                    style="flex:1;height:44px;white-space:nowrap">➕ Simpan Crew</button>
+                  <button type="button" id="ufCancelBtn" class="btn btn-ghost hidden" style="height:44px">✕
+                    Batal</button>
                 </div>
               </div>
             </form>
@@ -689,14 +696,69 @@
                 </div>
               </div>
             </div>
-            <div class="excel-table-container desk-only">
+            <div class="excel-table-container">
               <table id="userTable" class="excel-table"></table>
             </div>
-            <div id="userCards" class="m-cards mob-only" style="padding:8px"></div>
           </div>
         </div>
 
-        <!-- SUB 2: REKAP LAPORAN & UNDUH EXCEL 1-KLIK -->
+        <!-- SUB 2: DATA OPNAME (BALANCING STOK SISTEM VS STOK FISIK AKTUAL) -->
+        <div id="sub-opname" class="sub hidden">
+          <div class="card compact-entry-card" style="margin-bottom:10px">
+            <div class="row between wrap gap8" style="margin-bottom:10px">
+              <div>
+                <h3 style="margin:0;font-size:1.05rem">⚖️ Data Opname — Balancing Stok Gudang</h3>
+                <div class="muted small">Sesuaikan <b>Stok Fisik Aktual</b> di gudang untuk menyeimbangkan (balance) jumlah stok di Database.</div>
+              </div>
+              <div class="row wrap gap8">
+                <button type="button" id="btnOpReset" class="btn btn-ghost btn-sm" title="Samakan kembali angka fisik dengan stok sistem">↺ Samakan Fisik = Sistem</button>
+                <button type="button" id="btnOpSaveAll" class="btn btn-ok btn-sm">✅ Simpan &amp; Balance Semua Stok (<span id="opDiffActionCount">0</span>)</button>
+              </div>
+            </div>
+
+            <!-- Ringkasan Opname -->
+            <div class="opname-summary-bar" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+              <span class="excel-badge" style="background:#f1f5f9;color:#1e293b;border:1px solid #cbd5e1;padding:6px 12px">
+                📦 Total Jenis Barang: <b id="opTotalItems">0</b>
+              </span>
+              <span class="excel-badge" style="background:#dcfce7;color:#166534;border:1px solid #86efac;padding:6px 12px">
+                🟢 Sudah Sesuai (Balance): <b id="opMatchCount">0</b>
+              </span>
+              <span class="excel-badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:6px 12px">
+                ⚖️ Ada Selisih (Perlu Balance): <b id="opDiffCount">0</b>
+              </span>
+            </div>
+
+            <!-- Filter & Pencarian Opname -->
+            <div class="row between wrap gap8">
+              <div class="excel-filter-pills" id="opFilterPills">
+                <button type="button" class="excel-pill active" data-opfilter="all">Semua</button>
+                <button type="button" class="excel-pill" data-opfilter="tool">🧰 Tools</button>
+                <button type="button" class="excel-pill" data-opfilter="material">📦 Material</button>
+                <button type="button" class="excel-pill" data-opfilter="diff">⚖️ Hanya yang Selisih</button>
+              </div>
+              <div class="row wrap gap6" style="flex:1;max-width:460px">
+                <input id="opSearchInput" type="search" class="flex1" placeholder="🔍 Cari nama / kode barang…" autocomplete="off">
+                <form id="opQuickScanForm" class="row gap4" style="margin:0" autocomplete="off">
+                  <input id="opQuickScanInput" type="text" placeholder="⚡ Scan kode (+1 fisik)" style="max-width:170px">
+                  <button type="submit" class="btn btn-dark btn-sm">+1</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="excel-sheet-card">
+            <div class="excel-sheet-header">
+              <span class="excel-grid-title">📋 Tabel Balancing Stok (Sistem vs Fisik Aktual)</span>
+              <span class="small muted">Ketik jumlah fisik aktual atau tekan − / +, lalu klik <b>⚖️ Balance</b>.</span>
+            </div>
+            <div class="excel-table-container">
+              <table id="opBalanceTable" class="excel-table"></table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB 3: REKAP LAPORAN & UNDUH EXCEL 1-KLIK -->
         <div id="sub-outlist" class="sub hidden">
           <!-- Ringkasan Angka Gudang -->
           <div id="stats" class="stats print-hide" style="margin-bottom:12px"></div>
@@ -715,14 +777,14 @@
               <button type="button" id="btnRecapHistoryExcel" class="recap-action-card">
                 <span class="rac-icon">📘</span>
                 <div>
-                  <div class="rac-title">Laporan Pinjaman</div>
+                  <div class="rac-title">Laporan Keluar &amp; Pinjam</div>
                   <div class="rac-sub">Excel</div>
                 </div>
               </button>
               <button type="button" onclick="window.print()" class="recap-action-card">
                 <span class="rac-icon">🖨️</span>
                 <div>
-                  <div class="rac-title">Cetak Barang Dipinjam</div>
+                  <div class="rac-title">Cetak Tools Dipinjam</div>
                   <div class="rac-sub">Kertas / PDF</div>
                 </div>
               </button>
@@ -732,14 +794,14 @@
           <!-- Daftar Barang Sedang Dipinjam -->
           <div class="card compact-entry-card">
             <div class="row between wrap gap8" style="margin-bottom:10px">
-              <h3 style="margin:0;font-size:1rem">👷 Sedang Dipinjam</h3>
+              <h3 style="margin:0;font-size:1rem">👷 Tools yang Sedang Dipinjam</h3>
               <span class="muted small print-only">Dicetak: <span id="printTimeAdmin"></span></span>
             </div>
             <div id="outList"></div>
           </div>
         </div>
 
-        <!-- SUB 3: IMPORT EXCEL, CETAK QR & BACKUP SISTEM -->
+        <!-- SUB 4: IMPORT EXCEL, CETAK QR & BACKUP SISTEM -->
         <div id="sub-system" class="sub hidden">
           <div class="admin-simple-grid">
             <div class="card compact-entry-card">
@@ -764,42 +826,6 @@
             </div>
           </div>
         </div>
-
-        <!-- SUB 4: STOK OPNAME FISIK -->
-        <div id="sub-opname" class="sub hidden">
-          <div id="opIntro" class="card compact-entry-card" style="text-align:center;padding:24px 16px">
-            <h2 style="margin-top:0">✅ Cek Fisik Gudang</h2>
-            <p class="muted small" style="margin:4px 0 14px">Cocokkan jumlah barang fisik dengan data aplikasi.</p>
-            <button id="btnOpStart" class="btn btn-primary btn-lg">▶️ Mulai Cek Fisik</button>
-          </div>
-          <div id="opRun" class="hidden">
-            <div class="card row between wrap gap8">
-              <h3 style="margin:0">Ditemukan: <span id="opCount">0</span> barang</h3>
-              <div class="row wrap gap6">
-                <button id="btnOpCam" class="btn btn-primary btn-sm">📷 Scan</button>
-                <button id="btnOpFinish" class="btn btn-dark btn-sm">✔ Selesai</button>
-              </div>
-            </div>
-            <form id="opForm" class="scan-input"><input id="opInput" placeholder="Ketik / Scan kode…"
-                autocomplete="off"><button class="btn btn-dark">Tambah</button></form>
-            <div id="opCamBox" class="camera hidden">
-              <video id="opVideo" playsinline muted></video>
-              <div class="reticle"><div class="scan-line"></div></div>
-              <div class="cam-hint">Arahkan ke QR barang</div>
-            </div>
-            <div class="grid2" style="margin-top:10px">
-              <div class="card">
-                <h3>Belum (<span id="opPendingN">0</span>)</h3>
-                <div id="opPending" class="chips"></div>
-              </div>
-              <div class="card">
-                <h3>Sudah (<span id="opFoundN">0</span>)</h3>
-                <div id="opFound" class="chips"></div>
-              </div>
-            </div>
-          </div>
-          <div id="opResult" class="hidden"></div>
-        </div>
       </section>
     </main>
   </div>
@@ -809,7 +835,7 @@
   </div>
 
   <script src="/vendor/jsQR.js" defer></script>
-  <script src="/app.js?v=25" defer></script>
+  <script src="/app.js?v=26" defer></script>
 </body>
 
 </html>

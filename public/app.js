@@ -472,6 +472,7 @@ function showTab(name) {
   if (name === 'history') loadHistory();
   if (name === 'admin') {
     loadAdminUsers();
+    loadOpnameBalanceView();
     loadOut();
   }
 }
@@ -867,6 +868,28 @@ async function loadScanBorrowView() {
   }
 }
 
+function updateScanModeLabels(validType) {
+  const isMat = validType === 'material';
+  if ($('#scanStepItemsTitle')) {
+    $('#scanStepItemsTitle').textContent = isMat
+      ? '① Pilih Material (Habis Pakai) & Jumlah yang Diambil'
+      : '① Pilih Tools (Alat Kerja) & Jumlah yang Dipinjam';
+  }
+  if ($('#selItemQtyLabel')) {
+    $('#selItemQtyLabel').textContent = isMat ? 'Jumlah Diambil' : 'Jumlah Pinjam';
+  }
+  if ($('#scanStepBorrowerTitle')) {
+    $('#scanStepBorrowerTitle').textContent = isMat
+      ? '② Siapa yang mengambil Material (Habis Pakai)?'
+      : '② Siapa yang meminjam Tools?';
+  }
+  if ($('#btnSubmitBorrow')) {
+    $('#btnSubmitBorrow').textContent = isMat
+      ? '✅ KELUARKAN MATERIAL (HABIS PAKAI)'
+      : '✅ SIMPAN PINJAMAN TOOLS';
+  }
+}
+
 function setScanItemType(type) {
   const validType = type === 'material' ? 'material' : 'tool';
   scanState.itemType = validType;
@@ -875,11 +898,7 @@ function setScanItemType(type) {
   $('#btnScanTypeTool')?.classList.toggle('active', validType === 'tool');
   $('#btnScanTypeMaterial')?.classList.toggle('active', validType === 'material');
 
-  if ($('#scanStepItemsTitle')) {
-    $('#scanStepItemsTitle').textContent = validType === 'material'
-      ? '1. Pilih Material & Jumlah yang Diambil (Klik Barang di Bawah)'
-      : '1. Pilih Tools & Jumlah yang Dipinjam (Klik Barang di Bawah)';
-  }
+  updateScanModeLabels(validType);
 
   // Munculkan kotak pilih barang, dan sembunyikan kotak peminjam sampai barang dipilih
   $('#scanStepItems')?.classList.remove('hidden');
@@ -953,6 +972,7 @@ function selectScanItem(code, resetQty = true) {
     $('#btnScanTypeTool')?.classList.toggle('active', it === 'tool');
     $('#btnScanTypeMaterial')?.classList.toggle('active', it === 'material');
   }
+  updateScanModeLabels(it);
   $('#scanStepItems')?.classList.remove('hidden');
   $('#selectedItemBox')?.classList.remove('hidden');
   $('#scanStepBorrower')?.classList.remove('hidden');
@@ -1154,13 +1174,18 @@ async function submitBorrowForm() {
       body: { code, qty, workerCode, badgeId, borrowerName, borrowerDept, note },
     });
     feedback.ok();
-    const unitTxt = r.tool?.unit || 'Unit';
+    const isMat = r.isMaterial || r.kind === 'consumed' || String(r.tool?.code || '').startsWith('M-');
+    const unitTxt = r.tool?.unit || (isMat ? 'Pcs' : 'Unit');
     const ev = addEvent(
       'borrowed',
-      `✅ TERSIMPAN: ${r.qty} ${esc(unitTxt)} ${esc(r.tool.name)} (${esc(r.tool.code)})`,
-      `Peminjam: <b>${esc(r.worker.name)}</b> (Badge ID: <code>${esc(r.worker.badge_id || r.worker.username)}</code>) · Sisa stok di Database: <b>${r.remainingStock} ${esc(unitTxt)}</b>.`,
+      isMat
+        ? `📦 MATERIAL KELUAR (HABIS PAKAI): ${r.qty} ${esc(unitTxt)} ${esc(r.tool.name)} (${esc(r.tool.code)})`
+        : `✅ PINJAMAN TOOLS TERSIMPAN: ${r.qty} ${esc(unitTxt)} ${esc(r.tool.name)} (${esc(r.tool.code)})`,
+      isMat
+        ? `Diambil oleh: <b>${esc(r.worker.name)}</b> (Badge ID: <code>${esc(r.worker.badge_id || r.worker.username)}</code>) · Stok Material di Database otomatis berkurang menjadi <b>${r.remainingStock} ${esc(unitTxt)}</b> (Habis Pakai — Tidak Perlu Dikembalikan).`
+        : `Peminjam: <b>${esc(r.worker.name)}</b> (Badge ID: <code>${esc(r.worker.badge_id || r.worker.username)}</code>) · Sisa stok di Database: <b>${r.remainingStock} ${esc(unitTxt)}</b> (Wajib Dikembalikan).`,
       [
-        { label: '↶ Batal', cls: 'btn-ghost btn-sm', fn: () => undoLoan('borrow', r.loan.id, ev) },
+        { label: '↶ Batal', cls: 'btn-ghost btn-sm', fn: () => undoLoan(isMat ? 'consume' : 'borrow', r.loan.id, ev) },
       ]
     );
 
@@ -1178,7 +1203,7 @@ async function submitBorrowForm() {
     await refreshOutStats();
   } catch (err) {
     feedback.err();
-    alert('Gagal memproses peminjaman: ' + err.message);
+    alert('Gagal memproses barang keluar: ' + err.message);
   }
 }
 
@@ -1593,6 +1618,15 @@ function renderDatabaseTable() {
     } else if (cond === 'kalibrasi') {
       rowStateCls = 'row-state-kalibrasi';
       availHtml = `<span class="excel-badge kalibrasi"><span class="hl-dot"></span> Kalibrasi</span>`;
+    } else if (!isTool) {
+      // Strategi Material = Habis Pakai (Bukan Pinjam)
+      if (Number(qtyNum) <= 0) {
+        rowStateCls = 'row-state-eject';
+        availHtml = `<span class="excel-badge eject"><span class="hl-dot"></span> Stok Habis (0 ${unitTxt})</span>`;
+      } else {
+        rowStateCls = 'row-state-ready';
+        availHtml = `<span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (${qtyNum} ${unitTxt})</span>`;
+      }
     } else if (t.holder && Number(qtyNum) <= 0) {
       rowStateCls = 'row-state-out';
       availHtml = `<span class="excel-badge out"><span class="hl-dot"></span> Dipinjam: <b>${esc(t.holder)}</b> (${borrowedQty || 1} ${unitTxt})</span>`;
@@ -1609,6 +1643,9 @@ function renderDatabaseTable() {
       rowStateCls = 'row-state-ready';
       availHtml = `<span class="excel-badge ready"><span class="hl-dot"></span> Ready</span>`;
     }
+
+    const actionBtnLabel = isTool ? '🤝 Pinjam' : '📦 Ambil';
+    const actionBtnCls = isTool ? 'btn btn-ok btn-sm' : 'btn btn-primary btn-sm';
 
     return `<tr class="${rowStateCls}">
       <td class="excel-row-num">${idx + 1}</td>
@@ -1643,7 +1680,7 @@ function renderDatabaseTable() {
         ${availHtml}
       </td>
       <td style="text-align:center;white-space:nowrap">
-        ${canBorrow ? `<button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('${esc(t.code)}')">🤝 Pinjam</button>` : ''}
+        ${canBorrow ? `<button type="button" class="${actionBtnCls}" onclick="quickBorrowItem('${esc(t.code)}')">${actionBtnLabel}</button>` : ''}
         <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('${esc(t.code)}')">🔲 QR</button>
       </td>
     </tr>`;
@@ -2290,15 +2327,26 @@ function historyParams() {
 async function loadHistory() {
   const rows = await api('/api/history?' + historyParams());
   if ($('#hTable')) {
-    $('#hTable').innerHTML = `<thead><tr><th>Waktu Pinjam</th><th>Status</th><th>Barang</th><th>Jumlah</th><th>Peminjam</th><th>Aksi</th></tr></thead><tbody>${
+    $('#hTable').innerHTML = `<thead><tr><th>Waktu Keluar / Pinjam</th><th>Status</th><th>Barang</th><th>Jumlah</th><th>Crew</th><th>Aksi</th></tr></thead><tbody>${
       rows.map((r) => {
         const isMat = r.item_type === 'material' || String(r.tool_code || '').startsWith('M-');
+        const isConsumed = r.in_condition === 'consumed' || (isMat && r.in_at && r.in_at === r.out_at);
         const unitTxt = esc(r.unit || (isMat ? 'Pcs' : 'Unit'));
         const qtyTxt = `${r.qty ?? 1} ${unitTxt}`;
         const badgeId = esc(r.badge_id || r.worker_code);
-        return `<tr class="${r.in_at ? '' : 'open'}">
+
+        let statusBadge = '';
+        if (isConsumed) {
+          statusBadge = `<span class="excel-badge" style="background:#f3e8ff;color:#6b21a8;border:1px solid #d8b4fe">📦 HABIS PAKAI (KELUAR)</span>`;
+        } else if (r.in_at) {
+          statusBadge = `<span class="excel-badge ready">✔ Kembali ${fmtTime(r.in_at)}</span>`;
+        } else {
+          statusBadge = `<span class="excel-badge out">🟠 Sedang Dipinjam</span>`;
+        }
+
+        return `<tr class="${r.in_at ? 'row-state-ready' : 'row-state-out'}">
           <td>${fmtTime(r.out_at)}</td>
-          <td>${r.in_at ? `<span class="excel-badge ready">✔ Kembali ${fmtTime(r.in_at)}</span>` : '<span class="tag out">DIPINJAM</span>'}</td>
+          <td>${statusBadge}</td>
           <td>
             <span class="${isMat ? 'code-pill material' : 'code-pill tool'}" style="font-size:.74rem">${esc(r.tool_code)}</span>
             <b>${esc(r.tool_name)}</b>
@@ -2309,34 +2357,9 @@ async function loadHistory() {
             <div class="small muted">🪪 ${badgeId}${r.worker_dept ? ' · ' + esc(r.worker_dept) : ''}</div>
           </td>
           <td class="small">
-            ${!r.in_at ? `<button type="button" class="btn btn-ok btn-sm" onclick="returnBorrowedLoan(${r.id})">↩️ Kembalikan</button>` : '-'}
+            ${!r.in_at ? `<button type="button" class="btn btn-ok btn-sm" onclick="returnBorrowedLoan(${r.id})">↩️ Kembalikan</button>` : (isConsumed ? '<span class="muted small">Habis Pakai</span>' : '-')}
           </td></tr>`;
       }).join('') || '<tr><td colspan="6" class="muted" style="text-align:center;padding:24px">Belum ada riwayat pada tanggal ini.</td></tr>'}</tbody>`;
-  }
-
-  const hCards = $('#hCards');
-  if (hCards) {
-    if (!rows.length) {
-      hCards.innerHTML = `<div class="empty">Belum ada riwayat pada tanggal ini.</div>`;
-    } else {
-      hCards.innerHTML = rows.map((r) => {
-        const isMat = r.item_type === 'material' || String(r.tool_code || '').startsWith('M-');
-        const unitTxt = esc(r.unit || (isMat ? 'Pcs' : 'Unit'));
-        const qtyTxt = `${r.qty ?? 1} ${unitTxt}`;
-        const badgeId = esc(r.badge_id || r.worker_code);
-        return `<div class="m-card ${r.in_at ? 'm-state-ready' : 'm-state-out'}">
-          <div class="mc-top">
-            <div class="mc-title-wrap">
-              <div class="mc-name">${esc(r.tool_name)} <span style="color:#0369a1">(${qtyTxt})</span></div>
-              <div class="mc-meta">👷 <b>${esc(r.worker_name)}</b> · 🪪 ${badgeId}</div>
-              <div class="small muted" style="margin-top:2px">🕒 ${fmtTime(r.out_at)}</div>
-            </div>
-            ${r.in_at ? `<span class="excel-badge ready">✔ Kembali</span>` : `<span class="excel-badge out">Dipinjam</span>`}
-          </div>
-          ${!r.in_at ? `<div style="margin-top:8px"><button type="button" class="btn btn-ok btn-block" onclick="returnBorrowedLoan(${r.id})">↩️ Kembalikan ke Gudang</button></div>` : ''}
-        </div>`;
-      }).join('');
-    }
   }
 }
 $('#hGo').onclick = loadHistory;
@@ -2346,26 +2369,30 @@ $('#hCsv').onclick = async () => {
     const rows = await api('/api/history?' + historyParams());
     if (!rows || !rows.length) return alert('Belum ada data riwayat pada filter tanggal yang dipilih.');
     const stamp = new Date().toISOString().slice(0, 10);
-    const headers = ['Waktu Pinjam', 'Waktu Kembali', 'Tipe', 'Kode Barang', 'Nama Barang', 'Jumlah', 'Badge ID', 'Nama Peminjam', 'Divisi/Crew', 'Catatan'];
-    const rRows = rows.map((r) => ({
-      cells: [
-        fmtTime(r.out_at),
-        r.in_at ? fmtTime(r.in_at) : 'MASIH DIPINJAM',
-        r.item_type === 'material' ? 'Material' : 'Tools',
-        r.tool_code,
-        r.tool_name,
-        `${r.qty ?? 1} ${r.unit || 'Unit'}`,
-        r.badge_id || r.worker_code,
-        r.worker_name,
-        r.worker_dept || '',
-        r.in_note || '',
-      ],
-      isExample: false,
-    }));
+    const headers = ['Waktu Keluar', 'Status / Kembali', 'Tipe', 'Kode Barang', 'Nama Barang', 'Jumlah', 'Badge ID', 'Nama Crew', 'Divisi/Crew', 'Catatan'];
+    const rRows = rows.map((r) => {
+      const isMat = r.item_type === 'material' || String(r.tool_code || '').startsWith('M-');
+      const isConsumed = r.in_condition === 'consumed' || (isMat && r.in_at && r.in_at === r.out_at);
+      return {
+        cells: [
+          fmtTime(r.out_at),
+          isConsumed ? 'HABIS PAKAI (KELUAR)' : (r.in_at ? fmtTime(r.in_at) : 'MASIH DIPINJAM'),
+          isMat ? 'Material (Habis Pakai)' : 'Tools (Pinjam)',
+          r.tool_code,
+          r.tool_name,
+          `${r.qty ?? 1} ${r.unit || 'Unit'}`,
+          r.badge_id || r.worker_code,
+          r.worker_name,
+          r.worker_dept || '',
+          r.in_note || '',
+        ],
+        isExample: false,
+      };
+    });
     const html = buildExcelWorkbookHtml({
-      sheetName: 'Riwayat Pinjam',
+      sheetName: 'Riwayat Gudang',
       title: 'GFM — PT SULAWESI CAHAYA MINERAL',
-      subtitle: `LAPORAN RIWAYAT PEMINJAMAN ALAT GUDANG (${rows.length} Transaksi)`,
+      subtitle: `LAPORAN RIWAYAT PINJAMAN TOOLS & MATERIAL HABIS PAKAI (${rows.length} Transaksi)`,
       note: `Filter: ${$('#hFrom').value || 'Awal'} s/d ${$('#hTo').value || 'Sekarang'}. Diunduh pada: ${new Date().toLocaleString('id-ID')}`,
       headers,
       rows: rRows,
@@ -2383,13 +2410,14 @@ $('#hCsv').onclick = async () => {
 };
 
 // =====================================================================
-// TAB 5: PUSAT KENDALI ADMIN (SIMPEL & RAMAH AWAM)
+// TAB 5: PUSAT KENDALI ADMIN (CREW, DATA OPNAME / BALANCING STOK, REKAP, QR & BACKUP)
 // =====================================================================
 $$('.subtabs button').forEach((b) => b.onclick = () => {
   const sub = b.dataset.sub;
   $$('.subtabs button').forEach((x) => x.classList.toggle('active', x === b));
   $$('#tab-admin .sub').forEach((s) => s.classList.toggle('hidden', s.id !== 'sub-' + sub));
   if (sub !== 'opname') stopOpCam();
+  if (sub === 'opname') loadOpnameBalanceView();
   if (sub === 'outlist') refreshOutStats();
 });
 
@@ -2571,62 +2599,263 @@ if ($('#btnRecapHistoryExcel')) {
   $('#btnRecapHistoryExcel').onclick = () => $('#hCsv')?.click();
 }
 
-// ---------------- Stok Opname ----------------
-let op = null;
-$('#btnOpStart').onclick = async () => {
-  const tools = await api('/api/tools');
-  op = { tools: new Map(tools.map((t) => [t.code, t])), found: new Set() };
-  $('#opIntro').classList.add('hidden'); $('#opResult').classList.add('hidden'); $('#opRun').classList.remove('hidden');
-  renderOp(); $('#opInput').focus();
+// =====================================================================
+// SUB 2: DATA OPNAME — BALANCING STOK GUDANG (SISTEM VS FISIK AKTUAL)
+// =====================================================================
+const opBalanceState = {
+  filter: 'all', // 'all' | 'tool' | 'material' | 'diff'
+  search: '',
+  actualQtyMap: new Map(), // code -> actual physical quantity
+  actualCondMap: new Map(), // code -> condition
 };
-$('#opForm').onsubmit = (e) => { e.preventDefault(); const v = $('#opInput').value; $('#opInput').value = ''; if (v.trim()) opScan(norm(v)); };
-function opScan(code) {
-  if (!op) return;
-  const t = op.tools.get(code);
-  if (!t) { feedback.err(); alert(`Kode ${code} bukan barang terdaftar`); return; }
-  if (op.found.has(code)) { feedback.warn(); return; }
-  op.found.add(code); feedback.ok(); renderOp();
+
+function stopOpCam() { /* kompatibilitas navigasi */ }
+
+async function loadOpnameBalanceView(forceReset = false) {
+  try {
+    const tools = await api('/api/tools');
+    allToolsCache = tools;
+    for (const t of tools) {
+      if (forceReset || !opBalanceState.actualQtyMap.has(t.code)) {
+        opBalanceState.actualQtyMap.set(t.code, Number(t.quantity ?? 0));
+      }
+      if (forceReset || !opBalanceState.actualCondMap.has(t.code)) {
+        opBalanceState.actualCondMap.set(t.code, t.condition || (t.status === 'rusak' ? 'eject' : 'bagus'));
+      }
+    }
+    renderOpnameBalanceTable();
+  } catch (err) {
+    console.error('loadOpnameBalanceView err:', err);
+  }
 }
-function renderOp() {
-  const expected = [...op.tools.values()].filter((t) => !t.holder);
-  const pending = expected.filter((t) => !op.found.has(t.code));
-  $('#opCount').textContent = op.found.size;
-  $('#opFoundN').textContent = op.found.size;
-  $('#opPendingN').textContent = pending.length;
-  $('#opPending').innerHTML = pending.map((t) => `<span class="chip">${esc(t.name)} <code>${esc(t.code)}</code></span>`).join('') || '<span class="muted">Semua barang di gudang sudah ter-scan 👍</span>';
-  $('#opFound').innerHTML = [...op.found].map((c) => {
-    const t = op.tools.get(c);
-    return `<span class="chip ${t.holder ? '' : 'new'}" ${t.holder ? `style="background:#fef3c7" title="Tercatat dipinjam ${esc(t.holder)}"` : ''}>${esc(t.name)} (${esc(t.code)})${t.holder ? ' ⚠️' : ''}</span>`;
-  }).join('');
+
+function updateOpnameSummaryCounts() {
+  const tools = allToolsCache || [];
+  let matchCount = 0;
+  let diffCount = 0;
+
+  for (const t of tools) {
+    const sysQty = Number(t.quantity ?? 0);
+    const actQty = Number(opBalanceState.actualQtyMap.get(t.code) ?? sysQty);
+    const sysCond = t.condition || (t.status === 'rusak' ? 'eject' : 'bagus');
+    const actCond = opBalanceState.actualCondMap.get(t.code) || sysCond;
+    if (actQty !== sysQty || actCond !== sysCond) diffCount++;
+    else matchCount++;
+  }
+
+  if ($('#opTotalItems')) $('#opTotalItems').textContent = tools.length;
+  if ($('#opMatchCount')) $('#opMatchCount').textContent = matchCount;
+  if ($('#opDiffCount')) $('#opDiffCount').textContent = diffCount;
+  if ($('#opDiffActionCount')) $('#opDiffActionCount').textContent = diffCount;
 }
-const opCam = new CameraScanner($('#opVideo'), opScan);
-$('#btnOpCam').onclick = async () => {
-  if (opCam.running) return stopOpCam();
-  $('#opCamBox').classList.remove('hidden');
-  if (!(await opCam.start())) $('#opCamBox').classList.add('hidden');
-};
-function stopOpCam() { opCam.stop(); $('#opCamBox').classList.add('hidden'); }
-$('#btnOpFinish').onclick = async () => {
-  stopOpCam();
-  const r = await api('/api/opname', { method: 'POST', body: { found: [...op.found] } });
-  $('#opRun').classList.add('hidden');
-  const list = (arr, extra) => arr.length ? arr.map((t) => `<div class="item"><span><b>${esc(t.name)}</b> <code>${esc(t.code)}</code></span><span>${extra ? extra(t) : ''}</span></div>`).join('') : '<p class="muted small">Tidak ada.</p>';
-  $('#opResult').innerHTML = `
-    <div class="card" style="border-left:8px solid var(--err)"><h2>❌ Barang Hilang / Tidak Ditemukan di Rak (${r.missing.length})</h2>
-      <p class="muted small">Tercatat ada di gudang (tidak sedang dipinjam), tetapi fisik barang tidak ditemukan saat opname.</p>${list(r.missing)}</div>
-    <div class="card" style="border-left:8px solid var(--warn)"><h2>⚠️ Ada di Rak Gudang tapi Masih Tercatat Dipinjam (${r.foundButOut.length})</h2>
-      <p class="muted small">Barang sudah ditaruh di rak tanpa di-scan kembali oleh Penjaga Gudang.</p>${list(r.foundButOut, (t) => 'Peminjam: ' + esc(t.holder))}
-      ${r.foundButOut.length ? '<button id="btnFixOut" class="btn btn-primary" style="margin-top:8px">✔ Sah Kembalikan Semua ke Gudang</button>' : ''}</div>
-    <div class="card" style="border-left:8px solid var(--info)"><h2>📋 Masih Dipinjam di Lapangan (${r.stillOut.length})</h2>${list(r.stillOut, (t) => esc(t.holder))}</div>
-    <div class="row gap8"><button class="btn btn-dark" onclick="window.print()">🖨️ Cetak Hasil Opname</button><button id="btnOpNew" class="btn btn-ghost">Opname Baru</button></div>`;
-  $('#opResult').classList.remove('hidden');
-  $('#btnOpNew').onclick = () => { op = null; $('#opResult').classList.add('hidden'); $('#opIntro').classList.remove('hidden'); };
-  const fix = $('#btnFixOut');
-  if (fix) fix.onclick = async () => {
-    const res = await api('/api/return-bulk', { method: 'POST', body: { codes: r.foundButOut.map((t) => t.code) } });
-    fix.textContent = `✔ ${res.closed} barang disahkan kembali ke gudang`; fix.disabled = true; refreshOutStats();
+
+function renderOpnameBalanceTable() {
+  updateOpnameSummaryCounts();
+  const tbl = $('#opBalanceTable');
+  if (!tbl) return;
+
+  const q = (opBalanceState.search || '').toLowerCase();
+  const list = (allToolsCache || []).filter((t) => {
+    const it = t.item_type || (t.code?.startsWith('M-') ? 'material' : 'tool');
+    const sysQty = Number(t.quantity ?? 0);
+    const actQty = Number(opBalanceState.actualQtyMap.get(t.code) ?? sysQty);
+    const sysCond = t.condition || (t.status === 'rusak' ? 'eject' : 'bagus');
+    const actCond = opBalanceState.actualCondMap.get(t.code) || sysCond;
+    const hasDiff = actQty !== sysQty || actCond !== sysCond;
+
+    if (opBalanceState.filter === 'tool' && it !== 'tool') return false;
+    if (opBalanceState.filter === 'material' && it !== 'material') return false;
+    if (opBalanceState.filter === 'diff' && !hasDiff) return false;
+    if (!q) return true;
+    return [t.code, t.name, t.category].some((v) => String(v || '').toLowerCase().includes(q));
+  });
+
+  if (!list.length) {
+    tbl.innerHTML = `<tbody><tr><td colspan="9" style="text-align:center;padding:28px;color:#64748b;font-weight:600">Tidak ada barang pada filter opname ini.</td></tr></tbody>`;
+    return;
+  }
+
+  const thead = `<thead>
+    <tr>
+      <th style="width:42px;text-align:center">No</th>
+      <th style="width:100px">Kode</th>
+      <th>Nama Barang</th>
+      <th style="width:110px">Tipe</th>
+      <th style="width:125px;text-align:center">Stok Sistem</th>
+      <th style="width:175px">Stok Fisik Aktual</th>
+      <th style="width:145px;text-align:center">Selisih (Balance)</th>
+      <th style="width:135px">Kondisi Fisik</th>
+      <th style="width:135px;text-align:center">Aksi Balance</th>
+    </tr>
+  </thead>`;
+
+  const tbody = `<tbody>` + list.map((t, idx) => {
+    const isTool = (t.item_type || (t.code?.startsWith('M-') ? 'material' : 'tool')) === 'tool';
+    const codeCls = isTool ? 'code-pill tool' : 'code-pill material';
+    const unitTxt = esc(t.unit || (isTool ? 'Unit' : 'Pcs'));
+    const sysQty = Number(t.quantity ?? 0);
+    const actQty = Number(opBalanceState.actualQtyMap.get(t.code) ?? sysQty);
+    const diff = Number((actQty - sysQty).toFixed(2));
+    const sysCond = t.condition || (t.status === 'rusak' ? 'eject' : 'bagus');
+    const actCond = opBalanceState.actualCondMap.get(t.code) || sysCond;
+    const hasDiff = diff !== 0 || actCond !== sysCond;
+
+    let diffBadge = `<span class="excel-badge ready">✔ Balance (0)</span>`;
+    let rowCls = 'row-state-ready';
+    if (diff > 0) {
+      diffBadge = `<span class="excel-badge" style="background:#dbeafe;color:#1d4ed8;border:1px solid #93c5fd">➕ Lebih +${diff} ${unitTxt}</span>`;
+      rowCls = 'row-state-kalibrasi';
+    } else if (diff < 0) {
+      diffBadge = `<span class="excel-badge eject">➖ Kurang ${diff} ${unitTxt}</span>`;
+      rowCls = 'row-state-out';
+    } else if (actCond !== sysCond) {
+      diffBadge = `<span class="excel-badge kalibrasi">🔄 Ubah Kondisi</span>`;
+      rowCls = 'row-state-kalibrasi';
+    }
+
+    return `<tr class="${rowCls}">
+      <td class="excel-row-num">${idx + 1}</td>
+      <td><span class="${codeCls}">${esc(t.code)}</span></td>
+      <td>
+        <b>${esc(t.name)}</b>
+        ${t.category ? `<div class="small muted">${esc(t.category)}</div>` : ''}
+      </td>
+      <td><span class="muted small">${isTool ? '🧰 Tools' : '📦 Material'}</span></td>
+      <td style="text-align:center">
+        <b style="font-size:.95rem">${sysQty} ${unitTxt}</b>
+        ${t.borrowed_qty ? `<div class="small muted">Dipinjam: ${t.borrowed_qty}</div>` : ''}
+      </td>
+      <td>
+        <div class="inline-qty-wrap">
+          <button type="button" class="inline-qty-btn" onclick="changeOpnameActualQty('${esc(t.code)}', -1, true)">−</button>
+          <input type="number" step="any" min="0" class="inline-qty-input" value="${actQty}" onchange="changeOpnameActualQty('${esc(t.code)}', this.value, false)">
+          <button type="button" class="inline-qty-btn" onclick="changeOpnameActualQty('${esc(t.code)}', 1, true)">+</button>
+          <span class="inline-qty-unit">${unitTxt}</span>
+        </div>
+      </td>
+      <td style="text-align:center">${diffBadge}</td>
+      <td>
+        <select class="cond-select-inline ${actCond}" onchange="changeOpnameActualCond('${esc(t.code)}', this.value)">
+          <option value="bagus" ${actCond === 'bagus' ? 'selected' : ''}>🟢 Bagus</option>
+          <option value="kalibrasi" ${actCond === 'kalibrasi' ? 'selected' : ''}>🟡 Kalibrasi</option>
+          <option value="eject" ${actCond === 'eject' ? 'selected' : ''}>🔴 Rusak</option>
+        </select>
+      </td>
+      <td style="text-align:center;white-space:nowrap">
+        ${hasDiff
+          ? `<button type="button" class="btn btn-primary btn-sm" onclick="balanceSingleItem('${esc(t.code)}')">⚖️ Balance</button>`
+          : `<span class="small muted">✔ Sesuai</span>`}
+      </td>
+    </tr>`;
+  }).join('') + `</tbody>`;
+
+  tbl.innerHTML = thead + tbody;
+}
+
+function changeOpnameActualQty(code, valOrDelta, isDelta = false) {
+  const t = allToolsCache.find((x) => x.code === code);
+  const sysQty = Number(t?.quantity ?? 0);
+  const cur = Number(opBalanceState.actualQtyMap.get(code) ?? sysQty);
+  const next = isDelta ? Math.max(0, cur + Number(valOrDelta)) : Math.max(0, Number(valOrDelta) || 0);
+  opBalanceState.actualQtyMap.set(code, next);
+  renderOpnameBalanceTable();
+}
+window.changeOpnameActualQty = changeOpnameActualQty;
+
+function changeOpnameActualCond(code, newCond) {
+  opBalanceState.actualCondMap.set(code, newCond);
+  renderOpnameBalanceTable();
+}
+window.changeOpnameActualCond = changeOpnameActualCond;
+
+async function balanceSingleItem(code) {
+  const t = allToolsCache.find((x) => x.code === code);
+  if (!t) return;
+  const actualQty = Number(opBalanceState.actualQtyMap.get(code) ?? t.quantity ?? 0);
+  const condition = opBalanceState.actualCondMap.get(code) || t.condition || 'bagus';
+  try {
+    await api('/api/opname/balance', {
+      method: 'POST',
+      body: { items: [{ code, actualQty, condition }] },
+    });
+    feedback.ok();
+    await loadOpnameBalanceView(true);
+    await loadDatabaseView();
+  } catch (err) {
+    feedback.err();
+    alert('Gagal melakukan balancing stok: ' + err.message);
+  }
+}
+window.balanceSingleItem = balanceSingleItem;
+
+async function saveAllOpnameBalance() {
+  const adjustments = [];
+  for (const t of (allToolsCache || [])) {
+    const sysQty = Number(t.quantity ?? 0);
+    const actQty = Number(opBalanceState.actualQtyMap.get(t.code) ?? sysQty);
+    const sysCond = t.condition || (t.status === 'rusak' ? 'eject' : 'bagus');
+    const actCond = opBalanceState.actualCondMap.get(t.code) || sysCond;
+    if (actQty !== sysQty || actCond !== sysCond) {
+      adjustments.push({ code: t.code, actualQty: actQty, condition: actCond });
+    }
+  }
+
+  if (!adjustments.length) {
+    feedback.info();
+    return alert('✅ Semua stok fisik aktual sudah sama (Balance) dengan stok sistem di Database.');
+  }
+
+  try {
+    const res = await api('/api/opname/balance', {
+      method: 'POST',
+      body: { items: adjustments },
+    });
+    feedback.ok();
+    await loadOpnameBalanceView(true);
+    await loadDatabaseView();
+    alert(`✅ Berhasil menyeimbangkan (Balance) stok untuk ${res.updatedCount || adjustments.length} barang di Database!`);
+  } catch (err) {
+    feedback.err();
+    alert('Gagal menyimpan hasil opname: ' + err.message);
+  }
+}
+
+$('#btnOpReset')?.addEventListener('click', () => {
+  loadOpnameBalanceView(true);
+  feedback.info();
+});
+$('#btnOpSaveAll')?.addEventListener('click', saveAllOpnameBalance);
+
+$$('#opFilterPills button').forEach((btn) => btn.onclick = () => {
+  opBalanceState.filter = btn.dataset.opfilter || 'all';
+  $$('#opFilterPills button').forEach((b) => b.classList.toggle('active', b === btn));
+  renderOpnameBalanceTable();
+});
+
+if ($('#opSearchInput')) {
+  $('#opSearchInput').oninput = (e) => {
+    opBalanceState.search = e.target.value.trim();
+    renderOpnameBalanceTable();
   };
-};
+}
+
+if ($('#opQuickScanForm')) {
+  $('#opQuickScanForm').onsubmit = (e) => {
+    e.preventDefault();
+    const inp = $('#opQuickScanInput');
+    const raw = (inp?.value || '').trim().toUpperCase();
+    if (!raw) return;
+    const t = (allToolsCache || []).find((x) => x.code.toUpperCase() === raw);
+    if (!t) {
+      feedback.err();
+      alert(`Kode barang "${raw}" tidak ditemukan.`);
+      return;
+    }
+    inp.value = '';
+    changeOpnameActualQty(t.code, 1, true);
+    feedback.ok();
+  };
+}
 
 // ---------------- Sistem: Logo, Import & Backup ----------------
 $('#btnLogo').onclick = async () => {
