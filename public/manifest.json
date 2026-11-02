@@ -1,0 +1,13 @@
+{
+  "name": "GFM Gudang Alat — PT Sulawesi Cahaya Mineral",
+  "short_name": "GFM Gudang",
+  "description": "Sistem peminjaman & pengembalian alat gudang GFM PT Sulawesi Cahaya Mineral",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f4f6",
+  "theme_color": "#f59e0b",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f2942">
+  <title>GFM Gudang Alat &amp; Material — PT Sulawesi Cahaya Mineral</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=25">
+  <script>
+    // Bersihkan Service Worker & Cache lama agar menu dan aplikasi selalu berjalan normal 100%
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.unregister(); });
+      }).catch(function() {});
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(keys) {
+        keys.forEach(function(k) { caches.delete(k); });
+      }).catch(function() {});
+    }
+    // Fungsi pindah menu anti-macet (selalu bisa diklik walau script utama masih dimuat)
+    window.switchGudangTab = function(name) {
+      if (typeof window.showTab === 'function') {
+        window.showTab(name);
+        return;
+      }
+      document.querySelectorAll('.navbars button').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-tab') === name);
+      });
+      document.querySelectorAll('.tab').forEach(function(t) {
+        t.classList.toggle('active', t.id === 'tab-' + name);
+      });
+    };
+  </script>
+</head>
+
+<body>
+  <!-- ================= LAYAR LOGIN (DISEMBUNYIKAN KARENA SISTEM LANGSUNG MASUK KE DATABASE) ================= -->
+  <div id="loginView" class="login-screen hidden">
+    <div class="login-card">
+      <div class="login-hero">
+        <div class="login-emblem">
+          <img src="/logo-active?v=22" alt="GFM PT SCM" class="login-logo">
+        </div>
+        <div class="login-hero-txt">
+          <div class="login-kicker"><span class="live-dot"></span> PT SULAWESI CAHAYA MINERAL</div>
+          <h1 class="login-title">GFM · Gudang</h1>
+          <div class="login-desc">General Facility Maintenance — Tools &amp; Material</div>
+        </div>
+      </div>
+
+      <div class="login-body">
+        <button type="button" id="btnLoginConnectHp" class="hp-banner-btn">
+          <span>📲 Buka di HP? <b>Klik QR Akses HP &amp; Kamera Live</b></span>
+          <span>➔</span>
+        </button>
+
+        <!-- Login Cepat (32 Akun Rill Database) -->
+        <div class="quick-login">
+          <div class="quick-title">Login Cepat</div>
+          <div class="quick-row">
+            <select id="quickCrewSelect" class="quick-select">
+              <option value="">-- Pilih Akun (32 Akun Database) --</option>
+              <option value="ADMIN">🛡️ ADMIN — Hendra Wijaya (Penjaga Gudang) (GFM Warehouse)</option>
+              <option value="CREW01">👷 CREW01 — Budi Santoso (Crew Elektrik)</option>
+              <option value="CREW02">👷 CREW02 — Andi Pratama (Crew Elektrik)</option>
+              <option value="CREW03">👷 CREW03 — Joko Susilo (Crew Elektrik)</option>
+              <option value="CREW04">👷 CREW04 — Rahmat Hidayat (Crew Elektrik)</option>
+              <option value="CREW05">👷 CREW05 — La Ode Muhammad (Crew Elektrik)</option>
+              <option value="CREW06">👷 CREW06 — Syahrul Ramadhan (Crew Elektrik)</option>
+              <option value="CREW07">👷 CREW07 — Arif Setiawan (Crew Elektrik)</option>
+              <option value="CREW08">👷 CREW08 — Muh. Fadli (Crew Elektrik)</option>
+              <option value="CREW09">👷 CREW09 — Irwan Saputra (Crew Elektrik)</option>
+              <option value="CREW10">👷 CREW10 — Dedi Kurniawan (Crew Elektrik)</option>
+              <option value="CREW11">👷 CREW11 — Zulkifli Hasan (Crew Elektrik)</option>
+              <option value="CREW12">👷 CREW12 — Rizky Maulana (Crew Elektrik)</option>
+              <option value="CREW13">👷 CREW13 — Agus Salim (Crew Elektrik)</option>
+              <option value="CREW14">👷 CREW14 — Heri Kusuma (Crew Elektrik)</option>
+              <option value="CREW15">👷 CREW15 — Fajar Nugroho (Crew Elektrik)</option>
+              <option value="CREW16">👷 CREW16 — Wahyu Hidayat (Crew Elektrik)</option>
+              <option value="CREW17">👷 CREW17 — Ruslan Abdul (Crew Elektrik)</option>
+              <option value="CREW18">👷 CREW18 — Ilham Jaya (Crew Elektrik)</option>
+              <option value="CREW19">👷 CREW19 — Taufik Akbar (Crew Elektrik)</option>
+              <option value="CREW20">👷 CREW20 — Nasrul Amin (Crew Elektrik)</option>
+              <option value="CREW21">👷 CREW21 — YUDIX (Crew Elektrik)</option>
+              <option value="CREW22">👷 CREW22 — RAFLI PRAYUDA (Crew Elektrik)</option>
+              <option value="CREW23">👷 CREW23 — BANG WAHYU (Crew Elektrik)</option>
+              <option value="CREW24">👷 CREW24 — Ajeng (Crew Elektrik)</option>
+              <option value="CREW25">👷 CREW25 — Yoyo (Crew Elektrik)</option>
+              <option value="CREW26">👷 CREW26 — Eksa (Crew Elektrik)</option>
+              <option value="CREW27">👷 CREW27 — Maksa (Crew Elektrik)</option>
+              <option value="CREW28">👷 CREW28 — Bawa (Crew Elektrik)</option>
+              <option value="CREW29">👷 CREW29 — Bata (Crew Elektrik)</option>
+              <option value="CREW30">👷 CREW30 — Cihuy (Crew Elektrik)</option>
+              <option value="EE">👷 EE — ee (ee)</option>
+            </select>
+          </div>
+        </div>
+
+        <form id="loginForm" class="login-form" autocomplete="on">
+          <div id="quickPickedBanner" class="picked-banner hidden"></div>
+          <label class="field">
+            <span>ID Akun (Username)</span>
+            <input id="loginUser" name="username" placeholder="Ketik atau pilih akun di atas" required
+              autocapitalize="characters" autocomplete="username">
+          </label>
+          <label class="field">
+            <span>Password <small class="muted">(Default: 1234)</small></span>
+            <div class="pw-wrap">
+              <input id="loginPass" name="password" type="password" inputmode="text"
+                placeholder="Ketik password akun Anda…" required autocomplete="current-password">
+              <button type="button" id="btnToggleLoginPw" class="pw-eye" title="Lihat/Sembunyikan Password">👁️</button>
+            </div>
+          </label>
+          <div id="loginError" class="alert-err hidden"></div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">🔐 Masuk ke Sistem</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= APLIKASI UTAMA (LANGSUNG TAMPIL KE DATABASE) ================= -->
+  <div id="appView" class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <!-- KIRI: IDENTITAS PERUSAHAAN -->
+        <div class="brand">
+          <div class="brand-emblem">
+            <img id="brandLogo" class="brand-logo" src="/logo-active?v=22" alt="GFM PT Sulawesi Cahaya Mineral">
+          </div>
+          <div class="brand-text">
+            <div class="brand-sub"><span class="live-dot"></span> PT SULAWESI CAHAYA MINERAL</div>
+            <div class="brand-title-row">
+              <span class="brand-title">GFM · Gudang</span>
+              <span class="brand-tag">TOOLS &amp; MATERIAL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TENGAH: 5 HALAMAN UTAMA -->
+        <nav class="navbars" aria-label="Menu Utama">
+          <button type="button" data-tab="database" class="active" onclick="switchGudangTab('database')">
+            <span class="nav-ico">📦</span>
+            <span class="nav-lbl">STOK</span>
+            <span id="outBadge" class="badge hidden">0</span>
+          </button>
+          <button type="button" data-tab="entry" id="navEntry" onclick="switchGudangTab('entry')">
+            <span class="nav-ico">➕</span>
+            <span class="nav-lbl">TAMBAH</span>
+          </button>
+          <button type="button" data-tab="scan" onclick="switchGudangTab('scan')">
+            <span class="nav-ico">🤝</span>
+            <span class="nav-lbl">PINJAM</span>
+            <span id="myBadge" class="badge warn hidden">0</span>
+          </button>
+          <button type="button" data-tab="history" onclick="switchGudangTab('history')">
+            <span class="nav-ico">🕘</span>
+            <span class="nav-lbl">RIWAYAT</span>
+          </button>
+          <button type="button" data-tab="admin" id="navAdmin" onclick="switchGudangTab('admin')">
+            <span class="nav-ico">⚙️</span>
+            <span class="nav-lbl">ADMIN</span>
+          </button>
+        </nav>
+
+        <!-- KANAN: AKSES HP -->
+        <div class="topbar-actions">
+          <button type="button" id="btnConnectHp" class="hdr-hp-btn" title="Buka di HP melalui Wi-Fi">
+            <span class="hp-ico">📲</span>
+            <span class="hp-txt">Akses HP</span>
+          </button>
+
+          <button type="button" id="btnChangePwTop" class="hdr-pw-btn hidden" title="Ubah Password Akun">
+            <span>🔑</span>
+            <span class="pw-txt">Ubah Sandi</span>
+          </button>
+
+          <button type="button" class="user-pill hidden" id="btnUserMenu" title="Profil Akun">
+            <span id="topUserAvatar" class="user-avatar">GF</span>
+            <span class="user-info">
+              <span class="user-line1">
+                <span id="topRoleBadge" class="role-badge">CREW</span>
+                <span id="topUserName" class="user-name"></span>
+              </span>
+              <span id="topUserDept" class="user-dept"></span>
+            </span>
+            <span class="user-gear">▾</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- =========================================================================
+           HALAMAN 1: DATABASE (TABEL GAYA EXCEL — SPREADSHEET LOOK, EASY TO USE)
+           ========================================================================= -->
+      <section id="tab-database" class="tab active">
+        <div id="pendingTransfersOverview" class="hidden"></div>
+
+        <!-- SPREADSHEET TOOLBAR ALA EXCEL -->
+        <div class="card excel-toolbar-card">
+          <!-- Sheet Tabs: [Semua] [🧰 Tools] [📦 Material] + Aksi Cepat -->
+          <div class="excel-toolbar-top">
+            <div class="excel-sheets-tabs" id="dbTypeTabs">
+              <button type="button" class="excel-sheet-tab active" data-type="all" id="btnTypeAll">
+                <span>Semua</span>
+                <span class="sheet-count" id="badgeTypeAll">29</span>
+              </button>
+              <button type="button" class="excel-sheet-tab" data-type="tool" id="btnTypeTool">
+                <span>🧰 Tools</span>
+                <span class="sheet-count" id="badgeTypeTool">21</span>
+              </button>
+              <button type="button" class="excel-sheet-tab" data-type="material" id="btnTypeMaterial">
+                <span>📦 Material</span>
+                <span class="sheet-count" id="badgeTypeMaterial">8</span>
+              </button>
+            </div>
+
+            <div class="excel-action-btns desk-only">
+              <button type="button" id="btnQuickAddFromDb" class="btn btn-primary btn-sm">➕ Tambah Barang</button>
+              <button type="button" id="btnDlExcelFromDb" class="btn btn-dark btn-sm">📊 Unduh Excel</button>
+              <button type="button" class="btn btn-ghost btn-sm print-hide" onclick="window.print()">🖨️ Cetak</button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div class="excel-filter-bar">
+            <!-- Kotak Pencarian + Tombol Filter (HP) -->
+            <div class="search-filter-row">
+              <div class="excel-search-box flex1">
+                <input id="dbSearch" type="search" placeholder="🔍 Cari barang…" autocomplete="off">
+              </div>
+              <button type="button" id="btnToggleDbFilter" class="btn btn-ghost btn-sm mob-only" title="Filter lainnya">⚙️ Filter</button>
+            </div>
+
+            <!-- Filter Ketersediaan -->
+            <div class="excel-filter-pills" id="dbAvailTabs">
+              <button type="button" class="excel-pill active" data-avail="all">Semua (<span id="cntAvailAll">29</span>)</button>
+              <button type="button" class="excel-pill" data-avail="ready">🟢 Ready (<span id="cntAvailReady">29</span>)</button>
+              <button type="button" class="excel-pill" data-avail="out">🟠 Dipinjam (<span id="cntAvailOut">0</span>)</button>
+            </div>
+
+            <!-- Filter Tambahan (di HP disembunyikan sampai tombol Filter ditekan) -->
+            <div id="dbMoreFilters" class="more-filters">
+              <div class="excel-filter-pills" id="dbCondPills">
+                <span class="excel-pill-label">Kondisi:</span>
+                <button type="button" data-cond="all" class="excel-pill active">Semua (<span id="cntCondAll">29</span>)</button>
+                <button type="button" data-cond="bagus" class="excel-pill cond-bagus-pill">🟢 Bagus (<span id="cntCondBagus">29</span>)</button>
+                <button type="button" data-cond="kalibrasi" class="excel-pill cond-kalibrasi-pill">🟡 Kalibrasi (<span id="cntCondKalibrasi">0</span>)</button>
+                <button type="button" data-cond="eject" class="excel-pill cond-eject-pill">🔴 Rusak (<span id="cntCondEject">0</span>)</button>
+              </div>
+
+              <select id="dbSort" class="excel-select" title="Urutkan data">
+                <option value="name_asc">🔤 Nama A → Z</option>
+                <option value="name_desc">🔤 Nama Z → A</option>
+                <option value="code_asc">🔢 Kode</option>
+                <option value="date_desc">📅 Terbaru</option>
+                <option value="date_asc">📅 Terlama</option>
+              </select>
+
+              <select id="dbSubCat" class="excel-select" title="Filter Kategori">
+                <option value="">📂 Semua Kategori</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Khusus Print -->
+        <div class="print-only print-hdr">
+          <img src="/logo-active" alt="GFM SCM">
+          <div>
+            <div class="print-comp">GFM — PT SULAWESI CAHAYA MINERAL</div>
+            <h2>Database Gudang — <span id="printTime"></span></h2>
+          </div>
+        </div>
+
+        <!-- TABEL DATA (PC) -->
+        <div class="excel-sheet-card desk-only">
+          <div class="excel-sheet-header">
+            <span class="excel-grid-title" id="dbTableHeading">Tabel Database Barang (29 Data)</span>
+            <span class="small muted">Ubah jumlah dengan − / + dan kondisi lewat pilihan di baris.</span>
+          </div>
+          <div class="excel-table-container">
+            <table id="dbTable" class="excel-table"></table>
+          </div>
+        </div>
+
+        <!-- KARTU BARANG (HP) -->
+        <div id="dbCards" class="m-cards mob-only"></div>
+
+        <!-- Tombol Tambah Melayang (HP) -->
+        <button type="button" id="fabAddItem" class="fab mob-only" title="Tambah barang" onclick="switchGudangTab('entry')">＋</button>
+      </section>
+
+      <!-- =========================================================================
+           HALAMAN 2: DATA ENTRY (COMPACT, SIMPEL & MUDAH DIGUNAKAN AWAM)
+           ========================================================================= -->
+      <section id="tab-entry" class="tab">
+        <div class="card compact-entry-card">
+          <!-- Baris Atas: Judul + Tombol Cepat Excel & QR -->
+          <div class="entry-top-bar">
+            <h2 style="margin:0">➕ Tambah Barang</h2>
+            <div class="row wrap gap8 desk-only">
+              <button type="button" id="btnDlFormatToolsQuick" class="btn btn-ghost btn-sm">📊 Format Excel (<span id="dlToolsCount">29</span>)</button>
+              <button type="button" id="btnUploadCsvQuick" class="btn btn-dark btn-sm">📂 Upload Excel</button>
+              <button type="button" id="btnTogglePasteBox" class="btn btn-ghost btn-sm">📋 Paste Excel</button>
+              <a class="btn btn-ghost btn-sm" href="/labels" target="_blank">🖨️ Cetak QR</a>
+            </div>
+          </div>
+
+          <!-- Pilihan Tipe Barang -->
+          <div class="entry-type-switcher" id="entryTypePills">
+            <button type="button" class="entry-type-btn active" data-etype="tool" id="btnEntryTypeTool">
+              <span class="et-ico">🧰</span>
+              <span class="et-txt">
+                <b>TOOLS</b>
+                <small><span id="entryCountTool">21</span> alat</small>
+              </span>
+            </button>
+            <button type="button" class="entry-type-btn" data-etype="material" id="btnEntryTypeMaterial">
+              <span class="et-ico">📦</span>
+              <span class="et-txt">
+                <b>MATERIAL</b>
+                <small><span id="entryCountMaterial">8</span> bahan</small>
+              </span>
+            </button>
+          </div>
+
+          <!-- Form Input -->
+          <form id="toolForm" class="compact-entry-form" autocomplete="off">
+            <input type="hidden" name="item_type" id="entryItemType" value="tool">
+            <input type="hidden" name="note" id="entryNote" value="">
+
+            <div class="compact-form-row">
+              <!-- 1. Nama Barang -->
+              <div class="c-field c-field-name">
+                <label for="entryNameInput">Nama Barang <span style="color:#dc2626">*</span></label>
+                <input name="name" id="entryNameInput" placeholder="Contoh: Gerinda Makita" required>
+              </div>
+
+              <!-- 2. Jumlah -->
+              <div class="c-field c-field-qty">
+                <label for="entryQty">Jumlah <span style="color:#dc2626">*</span></label>
+                <div class="qty-stepper">
+                  <button type="button" class="qty-btn" id="btnQtyMinus" title="Kurangi 1">−</button>
+                  <input name="quantity" id="entryQty" type="number" inputmode="decimal" step="any" min="0" value="1" required>
+                  <button type="button" class="qty-btn" id="btnQtyPlus" title="Tambah 1">+</button>
+                </div>
+              </div>
+
+              <!-- 3. Satuan -->
+              <div class="c-field c-field-unit">
+                <label for="entryUnit">Satuan</label>
+                <select name="unit" id="entryUnit">
+                  <option value="Unit">Unit</option>
+                  <option value="Pcs">Pcs</option>
+                  <option value="Set">Set</option>
+                  <option value="Box">Box</option>
+                  <option value="Roll">Roll</option>
+                  <option value="Liter">Liter</option>
+                  <option value="Kg">Kg</option>
+                  <option value="Pail">Pail</option>
+                  <option value="Kaleng">Kaleng</option>
+                  <option value="Meter">Meter</option>
+                  <option value="Ikat">Ikat</option>
+                </select>
+              </div>
+
+              <!-- 4. Kondisi -->
+              <div class="c-field c-field-cond">
+                <label for="entryCondition">Kondisi</label>
+                <select name="condition" id="entryCondition">
+                  <option value="bagus">🟢 Bagus</option>
+                  <option value="kalibrasi">🟡 Kalibrasi</option>
+                  <option value="eject">🔴 Eject / Rusak</option>
+                </select>
+              </div>
+
+              <!-- 5. Kelompok / Jenis (Opsional) -->
+              <div class="c-field c-field-cat adv-field">
+                <label for="entryCategory">Kelompok <small class="muted">(boleh kosong)</small></label>
+                <input name="category" id="entryCategory" placeholder="Contoh: Hand Tool" list="catList">
+                <datalist id="catList"></datalist>
+              </div>
+
+              <!-- 6. Kode Barang (Otomatis) -->
+              <div class="c-field c-field-code adv-field">
+                <label for="entryCodeInput">Kode <small class="muted">(otomatis)</small></label>
+                <input name="code" id="entryCodeInput" placeholder="Otomatis">
+              </div>
+
+              <!-- Tombol buka kolom opsional (HP) -->
+              <div class="c-field c-field-advtoggle mob-only">
+                <button type="button" id="btnToggleAdv" class="btn btn-ghost btn-sm" style="width:100%">＋ Kelompok &amp; Kode (opsional)</button>
+              </div>
+
+              <!-- 7. Tombol Simpan -->
+              <div class="c-field c-field-submit">
+                <label class="desk-only">&nbsp;</label>
+                <div class="row gap8">
+                  <button type="submit" class="btn btn-primary" id="btnSubmitEntry" style="height:44px;padding:0 18px;flex:1">💾 Simpan Barang</button>
+                  <button type="reset" id="btnResetEntry" class="btn btn-ghost" style="height:44px;padding:0 14px" title="Kosongkan form">🔄</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!-- Panel Copy-Paste / Import Excel (Bisa dibuka/tutup agar tidak memenuhi layar) -->
+          <div id="importDataCard" class="compact-import-box hidden">
+            <div class="row between wrap gap8">
+              <div>
+                <b>📥 Import Banyak Barang Sekaligus dari Excel</b>
+                <div class="muted small">Copy baris dari Microsoft Excel lalu Paste di kotak bawah, atau klik <b>Upload File</b>.</div>
+              </div>
+              <div class="row wrap gap8">
+                <button type="button" id="btnDlFormatTools" class="btn btn-ghost btn-sm">📊 Format Excel Barang</button>
+                <button id="btnUploadCsv" class="btn btn-dark btn-sm" type="button">📂 Pilih File (.xls / .csv)</button>
+                <input id="importFile" type="file" accept=".csv,.txt,.tsv,.xls,.xlsx" class="hidden">
+              </div>
+            </div>
+            <textarea id="importText" rows="3" style="margin-top:8px" placeholder="T-022	Kunci Momen 3/4	tool	Hand Tool	bagus	1	Unit"></textarea>
+            <div class="row wrap gap8" style="margin-top:8px">
+              <button id="btnImportTools" class="btn btn-primary btn-sm" type="button">📥 Simpan Data Barang</button>
+              <button id="btnImportUsers" class="btn btn-ghost btn-sm" type="button">📥 Simpan Akun Crew</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAFTAR BARANG (BISA LANGSUNG UBAH JUMLAH +/- DAN KONDISI) -->
+        <div class="excel-sheet-card" style="margin-top:12px">
+          <div class="excel-sheet-header">
+            <div class="row wrap gap8">
+              <span class="excel-grid-title">📋 Daftar Barang (<span id="entryTotalCount">29</span>)</span>
+              <div class="excel-filter-pills" id="entryFilterPills">
+                <button type="button" class="excel-pill active" data-efilter="all">Semua</button>
+                <button type="button" class="excel-pill" data-efilter="tool">🧰 Tools</button>
+                <button type="button" class="excel-pill" data-efilter="material">📦 Material</button>
+              </div>
+            </div>
+            <div class="excel-search-box" style="max-width:280px">
+              <input id="toolSearch" type="search" placeholder="🔍 Cari barang…">
+            </div>
+          </div>
+          <div class="excel-table-container desk-only" style="max-height:55vh">
+            <table id="entryQuickTable" class="excel-table"></table>
+          </div>
+          <div id="entryCards" class="m-cards mob-only" style="padding:8px"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           HALAMAN 3: SCAN & PINJAM (SIMPEL & BERTAHAP — MUNCUL SAAT MENU DITEKAN)
+           ========================================================================= -->
+      <section id="tab-scan" class="tab">
+        <div id="incomingTransfersBox" class="hidden"></div>
+        <div id="roleBanner" class="role-card hidden"></div>
+        <div id="adminDelegateBox" class="hidden"><select id="delegateSelect"></select></div>
+
+        <div class="simple-scan-wrap">
+          <div class="card simple-scan-card">
+            <!-- Header + Tombol Kembalikan -->
+            <div class="row between wrap gap8" style="margin-bottom:12px">
+              <h3 style="margin:0;font-size:1.15rem">🤝 Pinjam Barang</h3>
+              <button type="button" id="btnToggleReturnBox" class="btn btn-ok btn-sm">
+                ↩️ Kembalikan (<span id="myHoldingCount">0</span>)
+              </button>
+            </div>
+
+            <!-- Kotak Pengembalian Barang -->
+            <div id="myHoldingCard" class="compact-import-box hidden" style="margin-bottom:14px">
+              <div class="row between" style="margin-bottom:8px">
+                <b style="font-size:.95rem">↩️ Barang yang sedang dipinjam</b>
+                <button type="button" id="btnCloseReturnBox" class="btn btn-ghost btn-sm">✕</button>
+              </div>
+              <div id="myHoldingList" class="active-loans-scroll"></div>
+              <div id="outgoingTransfersBox"></div>
+            </div>
+
+            <!-- LANGKAH 1: PILIH JENIS -->
+            <div class="entry-type-switcher scan-type-switcher" style="margin-bottom:0">
+              <button type="button" id="btnScanTypeTool" class="entry-type-btn" data-type="tool">
+                <span class="et-icon">🔧</span>
+                <div class="et-text">
+                  <b>TOOLS</b>
+                  <small><span id="scanCountTool">0</span> alat</small>
+                </div>
+              </button>
+              <button type="button" id="btnScanTypeMaterial" class="entry-type-btn material" data-type="material">
+                <span class="et-icon">📦</span>
+                <div class="et-text">
+                  <b>MATERIAL</b>
+                  <small><span id="scanCountMaterial">0</span> bahan</small>
+                </div>
+              </button>
+            </div>
+
+            <!-- LANGKAH 2: PILIH BARANG -->
+            <div id="scanStepItems" class="borrow-step-box hidden" style="margin-top:14px">
+              <div class="row between wrap gap8" style="margin-bottom:8px">
+                <div class="borrow-step-title" id="scanStepItemsTitle" style="margin:0">① Pilih barang</div>
+                <div class="row gap6">
+                  <button type="button" id="btnCamera" class="btn btn-primary btn-sm">📷 Scan</button>
+                  <button type="button" id="btnPhotoQr" class="btn btn-dark btn-sm">📸 Foto</button>
+                  <input id="photoQrInput" type="file" accept="image/*" capture="environment" class="hidden">
+                </div>
+              </div>
+
+              <!-- Kamera QR (Muncul hanya jika klik Scan Kamera) -->
+              <div id="cameraBox" class="camera hidden" style="margin-bottom:10px">
+                <video id="video" playsinline muted></video>
+                <div id="camReticle" class="reticle"><div class="scan-line"></div></div>
+                <div class="cam-top-bar">
+                  <span class="cam-live-pill"><span class="live-dot"></span> AUTO-STOP</span>
+                  <div class="row gap8">
+                    <button type="button" id="btnCamTorch" class="btn btn-dark btn-sm hidden">🔦 Senter</button>
+                    <button type="button" id="btnCamFlip" class="btn btn-dark btn-sm">🔄 Kamera</button>
+                    <button type="button" id="btnCamClose" class="btn btn-danger btn-sm">✕ Tutup</button>
+                  </div>
+                </div>
+                <div id="camHint" class="cam-hint">Arahkan ke QR barang</div>
+              </div>
+
+              <form id="scanForm" class="scan-input" autocomplete="off" style="margin:0 0 8px">
+                <input id="scanInput" type="search" placeholder="🔍 Cari barang…" autocomplete="off" spellcheck="false">
+                <button type="submit" class="btn btn-dark btn-sm">Cari</button>
+              </form>
+
+              <!-- Daftar Scroll Barang -->
+              <div id="scanItemScrollList" class="quick-scroll-list"></div>
+
+              <!-- Pengatur Jumlah Barang Terpilih -->
+              <div id="selectedItemBox" class="selected-item-banner hidden">
+                <div class="sel-item-info">
+                  <div id="selItemTitle" class="sel-item-name">-</div>
+                  <div id="selItemStockInfo" class="small muted"></div>
+                </div>
+                <div class="sel-item-qty">
+                  <span class="c-label" style="margin-bottom:3px">Jumlah</span>
+                  <div class="qty-stepper">
+                    <button type="button" id="btnBorrowQtyMinus" class="qty-btn">−</button>
+                    <input type="number" inputmode="decimal" id="borrowQtyInput" value="1" min="1" step="any">
+                    <button type="button" id="btnBorrowQtyPlus" class="qty-btn">+</button>
+                    <span id="borrowUnitLabel" class="inline-qty-unit" style="padding:0 6px;font-weight:800">Unit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LANGKAH 3: SIAPA YANG PINJAM -->
+            <div id="scanStepBorrower" class="borrow-step-box hidden" style="margin-top:12px">
+              <div class="borrow-step-title">② Siapa yang pinjam?</div>
+
+              <!-- Ketik Badge ID / Nama (otomatis menyaring daftar) -->
+              <div class="borrower-form-grid">
+                <div class="c-field">
+                  <span class="c-label">🪪 Badge ID / Nama *</span>
+                  <input id="borrowBadgeId" type="search" placeholder="Ketik badge / nama…" autocomplete="off">
+                </div>
+                <div class="c-field">
+                  <span class="c-label">👷 Nama</span>
+                  <input id="borrowerNameInput" placeholder="Terisi otomatis" autocomplete="off">
+                </div>
+              </div>
+
+              <!-- Daftar Crew (ketuk untuk memilih) -->
+              <div style="margin-top:8px">
+                <select id="borrowQuickSelect" class="clean-select hidden"></select>
+                <div id="borrowCrewScrollList" class="crew-scroll-grid"></div>
+              </div>
+              <input type="hidden" id="borrowerDeptInput">
+              <input type="hidden" id="borrowNoteInput">
+
+              <div style="margin-top:12px">
+                <button type="button" id="btnSubmitBorrow" class="btn btn-ok btn-lg" style="width:100%;font-size:1.05rem;padding:14px">
+                  ✅ SIMPAN PINJAMAN
+                </button>
+              </div>
+            </div>
+
+            <!-- Notifikasi Hasil Singkat (Hanya muncul setelah transaksi selesai) -->
+            <div id="feed" class="feed" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           HALAMAN 4: RIWAYAT
+           ========================================================================= -->
+      <section id="tab-history" class="tab">
+        <div class="card history-filters">
+          <div class="hf-dates">
+            <label>Dari <input type="date" id="hFrom"></label>
+            <label>Sampai <input type="date" id="hTo"></label>
+          </div>
+          <select id="hType" class="clean-select">
+            <option value="">Semua</option>
+            <option value="tool">🧰 Tools</option>
+            <option value="material">📦 Material</option>
+          </select>
+          <input id="hQ" type="search" class="flex1" placeholder="🔍 Cari barang / nama crew…">
+          <div class="hf-btns">
+            <button id="hGo" class="btn btn-primary">🔍 Tampilkan</button>
+            <button id="hCsv" class="btn btn-dark">⬇️ Excel</button>
+          </div>
+        </div>
+        <div class="table-wrap desk-only">
+          <table id="hTable"></table>
+        </div>
+        <div id="hCards" class="m-cards mob-only"></div>
+      </section>
+
+      <!-- =========================================================================
+           HALAMAN 5: AKUN & SISTEM (PUSAT KENDALI ADMIN SIMPEL & RAMAH AWAM)
+           ========================================================================= -->
+      <section id="tab-admin" class="tab">
+        <div class="card compact-entry-card print-hide" style="margin-bottom:12px">
+          <div class="row between wrap gap8" style="margin-bottom:10px">
+            <h2 style="margin:0;font-size:1.1rem">⚙️ Admin</h2>
+            <div class="row wrap gap6">
+              <button type="button" id="btnAdminQuickAddTool" class="btn btn-primary btn-sm">🔧 + Tools</button>
+              <button type="button" id="btnAdminQuickAddMat" class="btn btn-dark btn-sm">📦 + Material</button>
+            </div>
+          </div>
+
+          <!-- MENU UTAMA ADMIN -->
+          <div class="subtabs admin-big-tabs">
+            <button type="button" data-sub="users" class="active">👷 Crew (<span id="adminCrewCountTab">32</span>)</button>
+            <button type="button" data-sub="outlist">📊 Laporan</button>
+            <button type="button" data-sub="system">🛠️ QR &amp; Backup</button>
+            <button type="button" data-sub="opname">✅ Cek Fisik</button>
+          </div>
+        </div>
+
+        <!-- SUB 1: KELOLA DATA CREW & BADGE ID (SIMPEL TANPA PASSWORD) -->
+        <div id="sub-users" class="sub">
+          <div class="card compact-entry-card">
+            <div class="row between wrap gap8" style="margin-bottom:8px">
+              <h3 style="margin:0;font-size:1rem" id="userFormTitle">➕ Tambah Crew</h3>
+              <div class="row wrap gap6 desk-only">
+                <button type="button" id="btnDlCsvUsers" class="btn btn-ghost btn-sm">📗 Excel Crew (<span id="dlUsersCount">32</span>)</button>
+                <button type="button" id="btnGoImportUsers" class="btn btn-ghost btn-sm">📥 Import Crew</button>
+              </div>
+            </div>
+
+            <form id="userForm" class="simple-crew-form" autocomplete="off">
+              <div class="c-field">
+                <label for="ufName">Nama Crew *</label>
+                <input name="crew_name" id="ufName" placeholder="Contoh: Budi Santoso" required>
+              </div>
+              <div class="c-field">
+                <label for="ufDept">Divisi</label>
+                <input name="dept" id="ufDept" list="crewDeptList" placeholder="Contoh: Crew A - Mekanik">
+                <datalist id="crewDeptList">
+                  <option value="Crew A - Mekanik"></option>
+                  <option value="Crew B - Elektrikal"></option>
+                  <option value="Crew C - Welder & Fabrikasi"></option>
+                  <option value="Crew D - Instrument & Kontrol"></option>
+                  <option value="Crew E - Utility & Piping"></option>
+                  <option value="GFM Warehouse / Logistik"></option>
+                </datalist>
+              </div>
+              <div class="c-field">
+                <label for="ufUsername">Badge ID <small class="muted">(boleh kosong)</small></label>
+                <input name="username" id="ufUsername" placeholder="Otomatis">
+              </div>
+              <!-- Field lama disembunyikan otomatis agar tidak membingungkan admin awam -->
+              <input type="hidden" name="phone" id="ufPhone" value="">
+              <input type="hidden" name="role" id="ufRole" value="crew">
+              <input type="hidden" name="password" id="ufPassword" value="">
+              <div class="c-field c-field-btn">
+                <label class="hide-mobile">&nbsp;</label>
+                <div class="row gap6" style="width:100%">
+                  <button type="submit" id="ufSubmitBtn" class="btn btn-primary" style="flex:1;height:44px;white-space:nowrap">➕ Simpan Crew</button>
+                  <button type="button" id="ufCancelBtn" class="btn btn-ghost hidden" style="height:44px">✕ Batal</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="excel-sheet-card" style="margin-top:10px">
+            <div class="excel-sheet-header">
+              <div class="row wrap gap8" style="flex:1">
+                <span class="excel-grid-title">📋 Daftar Crew</span>
+                <div class="excel-search-box" style="flex:1;max-width:300px">
+                  <input id="userSearchInput" type="search" placeholder="🔍 Cari crew…" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="excel-table-container desk-only">
+              <table id="userTable" class="excel-table"></table>
+            </div>
+            <div id="userCards" class="m-cards mob-only" style="padding:8px"></div>
+          </div>
+        </div>
+
+        <!-- SUB 2: REKAP LAPORAN & UNDUH EXCEL 1-KLIK -->
+        <div id="sub-outlist" class="sub hidden">
+          <!-- Ringkasan Angka Gudang -->
+          <div id="stats" class="stats print-hide" style="margin-bottom:12px"></div>
+
+          <!-- Unduh Laporan 1-Klik -->
+          <div class="card compact-entry-card print-hide" style="margin-bottom:12px">
+            <h3 style="margin:0 0 10px;font-size:1rem">📥 Unduh Laporan</h3>
+            <div class="recap-actions-grid">
+              <button type="button" id="btnRecapStockExcel" class="recap-action-card">
+                <span class="rac-icon">📗</span>
+                <div>
+                  <div class="rac-title">Laporan Stok</div>
+                  <div class="rac-sub">Excel</div>
+                </div>
+              </button>
+              <button type="button" id="btnRecapHistoryExcel" class="recap-action-card">
+                <span class="rac-icon">📘</span>
+                <div>
+                  <div class="rac-title">Laporan Pinjaman</div>
+                  <div class="rac-sub">Excel</div>
+                </div>
+              </button>
+              <button type="button" onclick="window.print()" class="recap-action-card">
+                <span class="rac-icon">🖨️</span>
+                <div>
+                  <div class="rac-title">Cetak Barang Dipinjam</div>
+                  <div class="rac-sub">Kertas / PDF</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Daftar Barang Sedang Dipinjam -->
+          <div class="card compact-entry-card">
+            <div class="row between wrap gap8" style="margin-bottom:10px">
+              <h3 style="margin:0;font-size:1rem">👷 Sedang Dipinjam</h3>
+              <span class="muted small print-only">Dicetak: <span id="printTimeAdmin"></span></span>
+            </div>
+            <div id="outList"></div>
+          </div>
+        </div>
+
+        <!-- SUB 3: IMPORT EXCEL, CETAK QR & BACKUP SISTEM -->
+        <div id="sub-system" class="sub hidden">
+          <div class="admin-simple-grid">
+            <div class="card compact-entry-card">
+              <h3 style="margin:0 0 10px;font-size:1rem">📦 Barang &amp; Excel</h3>
+              <div class="row wrap gap8">
+                <button type="button" id="btnSysAddTool" class="btn btn-primary">🔧 + Tools</button>
+                <button type="button" id="btnSysAddMat" class="btn btn-dark">📦 + Material</button>
+                <button type="button" id="btnDlCsvTools" class="btn btn-ghost">📗 Excel Barang</button>
+                <button type="button" id="btnDlFormatUsers" class="btn btn-ghost">👥 Excel Crew</button>
+              </div>
+            </div>
+
+            <div class="card compact-entry-card">
+              <h3 style="margin:0 0 10px;font-size:1rem">🖨️ QR &amp; Backup</h3>
+              <div class="row wrap gap8">
+                <a class="btn btn-primary" href="/labels" target="_blank">🖨️ Cetak QR</a>
+                <button id="btnBackup" class="btn btn-dark" type="button">💾 Backup Data</button>
+                <button id="btnLogo" class="btn btn-ghost" type="button">🖼️ Ganti Logo</button>
+                <input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hidden">
+                <a class="btn btn-ghost" href="/setup" target="_blank">📱 Kamera HP</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB 4: STOK OPNAME FISIK -->
+        <div id="sub-opname" class="sub hidden">
+          <div id="opIntro" class="card compact-entry-card" style="text-align:center;padding:24px 16px">
+            <h2 style="margin-top:0">✅ Cek Fisik Gudang</h2>
+            <p class="muted small" style="margin:4px 0 14px">Cocokkan jumlah barang fisik dengan data aplikasi.</p>
+            <button id="btnOpStart" class="btn btn-primary btn-lg">▶️ Mulai Cek Fisik</button>
+          </div>
+          <div id="opRun" class="hidden">
+            <div class="card row between wrap gap8">
+              <h3 style="margin:0">Ditemukan: <span id="opCount">0</span> barang</h3>
+              <div class="row wrap gap6">
+                <button id="btnOpCam" class="btn btn-primary btn-sm">📷 Scan</button>
+                <button id="btnOpFinish" class="btn btn-dark btn-sm">✔ Selesai</button>
+              </div>
+            </div>
+            <form id="opForm" class="scan-input"><input id="opInput" placeholder="Ketik / Scan kode…"
+                autocomplete="off"><button class="btn btn-dark">Tambah</button></form>
+            <div id="opCamBox" class="camera hidden">
+              <video id="opVideo" playsinline muted></video>
+              <div class="reticle"><div class="scan-line"></div></div>
+              <div class="cam-hint">Arahkan ke QR barang</div>
+            </div>
+            <div class="grid2" style="margin-top:10px">
+              <div class="card">
+                <h3>Belum (<span id="opPendingN">0</span>)</h3>
+                <div id="opPending" class="chips"></div>
+              </div>
+              <div class="card">
+                <h3>Sudah (<span id="opFoundN">0</span>)</h3>
+                <div id="opFound" class="chips"></div>
+              </div>
+            </div>
+          </div>
+          <div id="opResult" class="hidden"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card" id="modalCard"></div>
+  </div>
+
+  <script src="/vendor/jsQR.js" defer></script>
+  <script src="/app.js?v=25" defer></script>
+</body>
+
+</html>

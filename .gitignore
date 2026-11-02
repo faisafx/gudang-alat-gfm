@@ -1,0 +1,6 @@
+node_modules/
+data/
+*.pem
+.env
+.vercel/
+temp_test.bat

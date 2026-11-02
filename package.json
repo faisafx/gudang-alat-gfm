@@ -1,0 +1,22 @@
+{
+  "name": "gudang-alat",
+  "version": "1.0.0",
+  "description": "Sistem peminjaman & pengembalian alat gudang berbasis scan QR",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "seed": "node --env-file-if-exists=.env seed.js"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "express": "^5.3.0",
+    "jsqr": "^1.4.0",
+    "node-forge": "^1.4.2",
+    "qrcode": "^1.5.4"
+  }
+}

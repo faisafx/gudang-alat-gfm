@@ -1,0 +1,1893 @@
+:root{
+  --bg:#f1f5f9; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --navy:#0f2942; --navy-dark:#091929;
+  --primary:#f59e0b; --primary-ink:#1f1300; --dark:#1e293b;
+  --ok:#16a34a; --ok-bg:#dcfce7;
+  --info:#2563eb; --info-bg:#dbeafe;
+  --err:#dc2626; --err-bg:#fee2e2;
+  --warn:#d97706; --warn-bg:#fef3c7;
+  --r:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+.hidden{display:none!important}
+.muted{color:var(--muted)} .small{font-size:.84rem}
+.flex1{flex:1;min-width:180px}
+.row{display:flex;gap:10px;align-items:center} .row.wrap{flex-wrap:wrap} .between{justify-content:space-between} .gap8{gap:8px}
+h1,h2,h3{margin:.15em 0 .35em;line-height:1.25}
+h2{font-size:1.16rem} h3{font-size:1.02rem}
+code{background:#e2e8f0;padding:2px 6px;border-radius:6px;font-size:.88em;font-weight:700;white-space:nowrap}
+
+/* ================= LOGIN SCREEN ================= */
+.login-screen{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(circle at 50% 0%,#163a5f 0%,#071320 75%)}
+.login-card{background:var(--card);width:100%;max-width:460px;border-radius:22px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.55);border:1px solid rgba(252,211,77,.25)}
+.login-hero{background:linear-gradient(135deg,#071320 0%,#0f2942 60%,#163a5f 100%);color:#fff;padding:22px 22px 18px;display:flex;align-items:center;justify-content:center;gap:14px;border-bottom:3px solid var(--primary);text-align:left}
+.login-emblem{width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,.07);border:1.5px solid rgba(252,211,77,.45);padding:5px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.login-logo{width:100%;height:100%;object-fit:contain}
+.login-hero-txt{min-width:0}
+.login-kicker{display:flex;align-items:center;gap:6px;font-size:.69rem;font-weight:900;letter-spacing:.9px;color:#fcd34d;text-transform:uppercase}
+.login-title{font-size:1.38rem;font-weight:900;color:#fff;margin:2px 0;letter-spacing:.2px}
+.login-desc{font-size:.8rem;color:#cbd5e1;font-weight:600}
+.login-body{padding:18px 22px 22px}
+.hp-banner-btn{width:100%;background:linear-gradient(90deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid #f59e0b;color:#92400e;border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.84rem;cursor:pointer;margin-bottom:14px;text-align:left}
+.hp-banner-btn:hover{background:#fde68a}
+
+.quick-login{margin-bottom:14px;padding:12px;background:#f8fafc;border:1px solid var(--line);border-radius:14px}
+.quick-title{font-size:.8rem;color:var(--dark);margin-bottom:8px;font-weight:800}
+.quick-row{display:flex;flex-direction:column;gap:8px}
+.chip-btn{border:1.5px solid #0f2942;background:#0f2942;color:#fff;font-weight:800;padding:10px 12px;border-radius:11px;cursor:pointer;text-align:left;font-size:.88rem;transition:.15s}
+.chip-btn:hover{background:#163a5f}
+.quick-select{width:100%;padding:10px 12px;border-radius:11px;font-weight:700;background:#fff;font-size:.88rem;border:1.5px solid #cbd5e1;cursor:pointer}
+
+.picked-banner{background:#ecfdf5;border:1.5px solid #10b981;color:#065f46;padding:9px 12px;border-radius:11px;font-size:.84rem;font-weight:700}
+.login-form{display:flex;flex-direction:column;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;font-weight:700;font-size:.9rem;color:var(--dark)}
+.field input{width:100%;padding:11px 14px;font-size:1rem}
+.pw-wrap{position:relative;display:flex;align-items:center}
+.pw-wrap input{padding-right:44px}
+.pw-eye{position:absolute;right:6px;background:transparent;border:0;font-size:1.1rem;padding:6px 8px;cursor:pointer;border-radius:8px;opacity:.75}
+.pw-eye:hover{opacity:1;background:#f1f5f9}
+.alert-err{background:var(--err-bg);color:var(--err);padding:10px 12px;border-radius:10px;font-weight:700;font-size:.9rem}
+.pw-highlight{border-color:#f59e0b!important;box-shadow:0 0 0 3px rgba(245,158,11,.28)!important}
+
+/* ================= TOPBAR & NAVBAR (MENTOK KIRI-KANAN & ANTI-TUMPANG TINDIH) ================= */
+.live-dot{width:7px;height:7px;border-radius:50%;background:#10b981;display:inline-block;box-shadow:0 0 0 3px rgba(16,185,129,.28);flex:none}
+.topbar{position:sticky;top:0;z-index:25;background:linear-gradient(135deg,#071320 0%,#0f2942 50%,#163a5f 100%);color:#fff;border-bottom:3px solid var(--primary);box-shadow:0 6px 20px rgba(7,19,32,.26)}
+
+/* Layout Laptop / Desktop: Full-Width, Brand mentok kiri, Menu di tengah, Profil mentok kanan */
+.topbar-inner{
+  width:100%;
+  max-width:100%;
+  margin:0;
+  padding:8px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.brand-emblem{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.08);border:1.5px solid rgba(252,211,77,.5);padding:4px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 3px 8px rgba(0,0,0,.3)}
+.brand-logo{width:100%;height:100%;object-fit:contain}
+.brand-text{display:flex;flex-direction:column;gap:2px}
+.brand-sub{display:flex;align-items:center;gap:5px;font-size:.62rem;font-weight:900;color:#fcd34d;letter-spacing:.75px;text-transform:uppercase;line-height:1.1;white-space:nowrap}
+.brand-title-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+.brand-title{font-weight:900;font-size:1.06rem;letter-spacing:.2px;color:#fff;line-height:1.1;white-space:nowrap}
+.brand-tag{font-size:.58rem;font-weight:900;letter-spacing:.55px;padding:2px 6px;border-radius:5px;background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid rgba(252,211,77,.35);white-space:nowrap}
+
+/* Tengah: Navigasi Pill Dock (Tidak pernah tertimpa oleh Brand kiri maupun Profil kanan) */
+.navbars{
+  flex:0 0 auto;
+  margin:0 auto;
+  background:rgba(7,19,32,.62);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:4px;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.35);
+}
+.navbars button{
+  background:transparent;
+  color:#cbd5e1;
+  border:0;
+  padding:7px 12px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.85rem;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+  position:relative;
+  transition:.15s;
+}
+.navbars button:hover{background:rgba(255,255,255,.08);color:#fff}
+.navbars button.active{background:var(--primary);color:var(--primary-ink);font-weight:900;box-shadow:0 2px 8px rgba(245,158,11,.35)}
+.nav-ico{font-size:1rem;line-height:1}
+.badge{display:inline-block;min-width:19px;padding:1px 5px;border-radius:99px;background:var(--err);color:#fff;font-size:.72rem;font-weight:800;text-align:center}
+.badge.warn{background:#d97706}
+
+/* Kanan: Actions & User Pill mentok kanan */
+.topbar-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.hdr-hp-btn,.hdr-pw-btn{
+  background:rgba(252,211,77,.13);
+  border:1.5px solid rgba(252,211,77,.45);
+  color:#fcd34d;
+  border-radius:11px;
+  padding:7px 10px;
+  font-weight:800;
+  font-size:.78rem;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+  transition:.15s;
+}
+.hdr-pw-btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#e2e8f0}
+.hdr-hp-btn:hover,.hdr-pw-btn:hover{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+
+.user-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.09);padding:4px 9px 4px 5px;border-radius:12px;border:1px solid rgba(255,255,255,.18);color:#fff;cursor:pointer;text-align:left;transition:.15s}
+.user-pill:hover{background:rgba(255,255,255,.15);border-color:rgba(252,211,77,.45)}
+.user-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:#1f1300;font-weight:900;font-size:.78rem;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 2px 5px rgba(0,0,0,.25)}
+.user-avatar.admin{background:linear-gradient(135deg,#10b981 0%,#047857 100%);color:#fff}
+.user-info{display:flex;flex-direction:column;gap:1px;min-width:0}
+.user-line1{display:flex;align-items:center;gap:5px}
+.user-name{font-size:.82rem;font-weight:800;color:#fff;white-space:nowrap;max-width:135px;overflow:hidden;text-overflow:ellipsis}
+.user-dept{font-size:.67rem;color:#cbd5e1;font-weight:600;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.role-badge{font-size:.62rem;font-weight:900;padding:1px 5px;border-radius:5px;background:var(--primary);color:var(--primary-ink);letter-spacing:.3px}
+.role-badge.admin{background:#10b981;color:#fff}
+.user-gear{font-size:.76rem;color:#fcd34d;margin-left:2px}
+
+main{padding:16px 20px;max-width:1400px;margin:0 auto;padding-bottom:90px}
+.tab{display:none} .tab.active{display:block}
+
+/* Layar Laptop Kecil / Tablet (761px - 1150px): 2 Baris Simetris agar tidak pernah berhimpitan */
+@media (max-width:1150px) and (min-width:761px){
+  .topbar-inner{flex-wrap:wrap;row-gap:8px}
+  .navbars{order:3;width:100%;justify-content:center;overflow-x:auto}
+}
+
+/* Layar HP (<= 760px): Header 2 Baris Rapi + Navigasi Bawah */
+@media (max-width:760px){
+  .topbar-inner{display:flex;flex-wrap:wrap;padding:9px 12px;gap:8px}
+  .brand{flex:1 1 auto}
+  .brand-emblem{width:40px;height:40px;border-radius:11px}
+  .brand-sub{font-size:.62rem;letter-spacing:.6px}
+  .brand-title{font-size:1.04rem}
+  .brand-tag{font-size:.58rem;padding:1.5px 5px}
+  .topbar-actions{width:100%;justify-content:space-between;padding-top:7px;border-top:1px solid rgba(255,255,255,.12);gap:6px}
+  .user-pill{flex:1;min-width:0;justify-content:flex-start;padding:4px 8px 4px 5px}
+  .user-info{flex:1;min-width:0}
+  .user-name{max-width:140px}
+  .user-dept{max-width:170px}
+  .hdr-pw-btn{order:2;padding:7px 9px;font-size:.75rem}
+  .hdr-hp-btn{order:3;padding:7px 9px;font-size:.75rem}
+  .navbars{
+    position:fixed;bottom:0;left:0;right:0;top:auto;
+    border-radius:0;border:0;border-top:2px solid #1e293b;
+    padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+    background:#091929;justify-content:space-around;z-index:30;
+  }
+  .navbars button{flex-direction:column;gap:2px;padding:6px 6px;font-size:.72rem;flex:1;justify-content:center}
+  .navbars button .badge{position:absolute;top:2px;right:14%}
+  main{padding:10px;padding-bottom:88px}
+}
+
+/* ================= BUTTONS & INPUTS ================= */
+.btn{border:0;border-radius:12px;padding:10px 15px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;justify-content:center;white-space:nowrap;transition:transform .1s}
+.btn-lg{padding:13px 18px;font-size:1rem}
+.btn-sm{padding:6px 10px;font-size:.82rem;border-radius:9px}
+.btn-block{width:100%}
+.btn-primary{background:var(--primary);color:var(--primary-ink)}
+.btn-dark{background:var(--navy);color:#fff}
+.btn-ghost{background:#e2e8f0;color:var(--ink)}
+.btn-danger{background:var(--err);color:#fff}
+.btn-ok{background:var(--ok);color:#fff}
+.btn:active{transform:scale(.97)}
+
+.card{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:0 1px 3px rgba(15,23,42,.07);border:1px solid var(--line)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+input,textarea,select{border:2px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;color:var(--ink);min-width:0}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary)}
+textarea{width:100%}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px}
+
+/* ================= SCAN & HANDOVER SIMETRIS ================= */
+.role-card{
+  border-radius:var(--r);
+  padding:14px 18px;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,#0f2942 0%,#1e3a5f 100%);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  box-shadow:0 4px 12px rgba(15,41,66,.16);
+}
+.role-card.admin{background:linear-gradient(135deg,#064e3b 0%,#0f766e 100%)}
+.role-card .rc-title{font-weight:900;font-size:1.06rem}
+.role-card .rc-sub{font-size:.84rem;color:#e2e8f0;margin-top:2px}
+.role-card-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.scan-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media (max-width:920px){.scan-layout{grid-template-columns:1fr}}
+
+.transfer-alert{background:#fffbeb;border:2.5px solid #f59e0b;border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:0 6px 18px rgba(245,158,11,.2);animation:pulseBorder 2s infinite}
+@keyframes pulseBorder{0%,100%{border-color:#f59e0b}50%{border-color:#dc2626}}
+.transfer-item{padding:10px 0;border-top:1px solid #fde68a;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.transfer-item:first-of-type{border-top:0;padding-top:4px}
+
+.cam-actions{display:flex;gap:8px;flex-wrap:wrap}
+.delegate-box{margin-top:12px;padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;display:flex;flex-direction:column;gap:6px}
+.scan-input{display:flex;gap:8px;margin-top:12px}
+.scan-input input{flex:1;font-size:1rem}
+
+/* Kamera Live dengan Laser & Auto-Stop Feedback */
+.camera{position:relative;border-radius:var(--r);overflow:hidden;background:#000;margin-top:12px;max-height:55vh;border:2px solid #0f2942}
+.camera video{width:100%;display:block;max-height:55vh;min-height:250px;object-fit:cover}
+.cam-top-bar{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;z-index:3}
+.cam-live-pill{background:rgba(7,19,32,.78);color:#fff;font-size:.72rem;font-weight:900;padding:5px 10px;border-radius:99px;display:inline-flex;align-items:center;gap:6px;letter-spacing:.5px;border:1px solid rgba(255,255,255,.2)}
+.reticle{position:absolute;inset:18% 18%;border:3.5px solid rgba(245,158,11,.95);border-radius:18px;box-shadow:0 0 0 999px rgba(0,0,0,.42);pointer-events:none;overflow:hidden;transition:border-color .15s,transform .15s}
+.reticle.hit{border-color:#22c55e;background:rgba(34,197,94,.22);transform:scale(1.03)}
+.scan-line{position:absolute;left:6%;right:6%;height:3px;background:linear-gradient(90deg,transparent,#f59e0b,#fef08a,#f59e0b,transparent);box-shadow:0 0 10px #f59e0b;animation:scanMove 1.8s ease-in-out infinite}
+@keyframes scanMove{0%,100%{top:10%}50%{top:88%}}
+.cam-hint{position:absolute;bottom:10px;left:10px;right:10px;text-align:center;color:#fff;font-weight:700;font-size:.82rem;background:rgba(7,19,32,.75);padding:6px 10px;border-radius:10px}
+
+.feed-card{min-height:100%}
+.feed{display:flex;flex-direction:column;gap:10px}
+.ev{border-radius:var(--r);padding:14px 16px;border-left:9px solid;background:var(--card);box-shadow:0 2px 6px rgba(0,0,0,.06);animation:pop .22s ease-out}
+.ev .t{font-size:1.06rem;font-weight:900}
+.ev .d{margin-top:4px;font-size:.91rem}
+.ev .acts{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.ev.borrowed{border-color:var(--ok);background:var(--ok-bg)}
+.ev.returned{border-color:var(--info);background:var(--info-bg)}
+.ev.error{border-color:var(--err);background:var(--err-bg)}
+.ev.locked{border-color:var(--warn);background:var(--warn-bg)}
+.ev.info{border-color:var(--navy);background:#e0f2fe}
+.ev.undone{opacity:.45;text-decoration:line-through}
+.ev .time{float:right;color:var(--muted);font-size:.78rem;font-weight:700}
+@keyframes pop{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
+.flash-ok{animation:flashOk .45s} .flash-err{animation:flashErr .45s}
+@keyframes flashOk{0%{box-shadow:inset 0 0 0 999px rgba(22,163,74,.28)}100%{box-shadow:none}}
+@keyframes flashErr{0%{box-shadow:inset 0 0 0 999px rgba(220,38,38,.32)}100%{box-shadow:none}}
+
+/* ================= TOOL CATALOG & QR CARDS ================= */
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+.filter-pills button{border:1px solid var(--line);background:#f8fafc;color:var(--ink);padding:8px 12px;border-radius:99px;font-weight:700;font-size:.84rem;cursor:pointer}
+.filter-pills button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.tool-item{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.tool-item:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,23,42,.1)}
+.tool-qr-thumb{width:58px;height:58px;flex:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px}
+.tool-qr-thumb img{width:100%;height:100%;display:block}
+.tool-meta{flex:1;min-width:0}
+.tool-code{font-weight:900;font-size:.82rem;color:var(--navy);letter-spacing:.4px}
+.tool-name{font-weight:800;font-size:1rem;margin:1px 0 4px;line-height:1.25}
+.tool-sub{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+
+/* ================= STATS & MONITORING ================= */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-bottom:12px}
+.stat{background:var(--card);border-radius:var(--r);padding:14px;border:1px solid var(--line)}
+.stat .n{font-size:1.95rem;font-weight:900;line-height:1.05}
+.stat .l{color:var(--muted);font-weight:700;font-size:.82rem;margin-top:2px}
+.stat.out .n{color:var(--err)} .stat.av .n{color:var(--ok)} .stat.br .n{color:var(--warn)}
+
+.who{background:var(--card);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.who-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;font-size:1.02rem;margin-bottom:6px}
+.item{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.item.overdue{color:var(--err);font-weight:700}
+.empty{text-align:center;padding:28px 16px;color:var(--muted);background:#f8fafc;border-radius:12px;border:1px dashed var(--line)}
+
+/* ================= TABLES & TAGS ================= */
+.table-wrap{overflow-x:auto;background:var(--card);border-radius:var(--r);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;font-size:.92rem}
+th{background:#f8fafc;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+tr.open td{background:#fffbeb}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:.76rem;font-weight:800}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.tag.out{background:var(--err-bg);color:var(--err)}
+.tag.br{background:var(--warn-bg);color:var(--warn)}
+.tag.info{background:var(--info-bg);color:var(--info)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:99px;background:#e2e8f0;font-size:.85rem;font-weight:700}
+.chip.new{background:var(--ok);color:#fff}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:700px){.grid2{grid-template-columns:1fr}}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap}
+.subtabs button{border:0;padding:9px 14px;border-radius:10px;background:#e2e8f0;font-weight:800;cursor:pointer}
+.subtabs button.active{background:var(--navy);color:#fff}
+
+/* ================= HALAMAN DATABASE (BERSIH, SIMPEL & RESPONSIF) ================= */
+.db-toolbar-card {
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: var(--card);
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+}
+
+.db-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+
+/* Segmented Control Tools vs Material */
+.db-segmented {
+  display: inline-flex;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  gap: 3px;
+}
+
+.db-seg-btn {
+  border: 0;
+  background: transparent;
+  color: #475569;
+  font-weight: 800;
+  font-size: .88rem;
+  padding: 7px 14px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+
+.db-seg-btn:hover {
+  color: var(--ink);
+}
+
+.db-seg-btn.active {
+  background: #0f2942;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 41, 66, .2);
+}
+
+.seg-ico { font-size: 1rem; line-height: 1; }
+.seg-badge {
+  font-size: .75rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.db-seg-btn.active .seg-badge {
+  background: #f59e0b;
+  color: #1f1300;
+}
+
+/* Filter Row: Ketersediaan + Kondisi + Search + Sort */
+.db-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.db-pills-group {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.db-pill {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  padding: 6px 11px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: .15s;
+}
+
+.db-pill:hover { background: #e2e8f0; }
+
+.db-pill.active {
+  background: #1e293b;
+  color: #fff;
+  border-color: #1e293b;
+}
+
+.dot-ind { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
+.dot-ind.ok { background: #16a34a; }
+.dot-ind.warn { background: #ea580c; }
+
+.db-cond-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.cond-lbl { font-size: .8rem; font-weight: 700; color: var(--muted); margin-right: 2px; }
+
+.db-cond-group button {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: .78rem;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.db-cond-group button.active {
+  background: #334155;
+  color: #fff;
+  border-color: #334155;
+}
+
+.cond-btn-bagus.active { background: #15803d !important; border-color: #15803d !important; color: #fff !important; }
+.cond-btn-kalibrasi.active { background: #b45309 !important; border-color: #b45309 !important; color: #fff !important; }
+.cond-btn-eject.active { background: #b91c1c !important; border-color: #b91c1c !important; color: #fff !important; }
+
+.clean-select {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: .82rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+}
+
+.db-search-wrap input {
+  width: 100%;
+  padding: 7px 12px;
+  font-size: .88rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+/* Tabel Database */
+.db-table-card { padding: 14px; }
+.db-table { width: 100%; border-collapse: collapse; }
+.db-table th {
+  background: #0f2942;
+  color: #fff;
+  font-weight: 800;
+  font-size: .76rem;
+  letter-spacing: .4px;
+  padding: 9px 11px;
+}
+.db-table td {
+  padding: 8px 11px;
+  font-size: .86rem;
+  border-bottom: 1px solid var(--line);
+}
+.db-table tr:hover td { background: #f8fafc; }
+
+/* ================= EXCEL SPREADSHEET LOOK & FEEL ================= */
+.excel-toolbar-card {
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-bottom: 12px;
+}
+
+.excel-toolbar-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.excel-sheets-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.excel-sheet-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  padding: 8px 14px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.excel-sheet-tab:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.excel-sheet-tab.active {
+  background: #0f2942;
+  color: #ffffff;
+  border-color: #0f2942;
+  box-shadow: 0 2px 6px rgba(15,41,66,0.25);
+}
+
+.sheet-count {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.excel-sheet-tab.active .sheet-count {
+  background: rgba(255,255,255,0.22);
+  color: #ffffff;
+}
+
+.excel-action-btns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.excel-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.excel-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.excel-pill-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-right: 2px;
+}
+
+.excel-pill {
+  font-size: 0.77rem;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}
+
+.excel-pill:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.excel-pill.active {
+  background: linear-gradient(135deg, #0f2942, #1e3a5f);
+  color: #ffffff;
+  border-color: #0f2942;
+  box-shadow: 0 3px 8px rgba(15, 41, 66, 0.22);
+}
+
+/* Highlight warna lembut pada tombol filter Status & Kondisi */
+.excel-pill[data-avail="ready"] {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+.excel-pill[data-avail="ready"].active {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #ffffff;
+  border-color: #15803d;
+  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.28);
+}
+
+.excel-pill[data-avail="out"] {
+  background: #fff7ed;
+  color: #9a3412;
+  border-color: #fed7aa;
+}
+.excel-pill[data-avail="out"].active {
+  background: linear-gradient(135deg, #ea580c, #c2410c);
+  color: #ffffff;
+  border-color: #c2410c;
+  box-shadow: 0 3px 10px rgba(234, 88, 12, 0.28);
+}
+
+.excel-pill.cond-bagus-pill {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+.excel-pill.cond-bagus-pill.active {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #ffffff;
+  border-color: #15803d;
+  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.28);
+}
+
+.excel-pill.cond-kalibrasi-pill {
+  background: #fefce8;
+  color: #854d0e;
+  border-color: #fef08a;
+}
+.excel-pill.cond-kalibrasi-pill.active {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #ffffff;
+  border-color: #b45309;
+  box-shadow: 0 3px 10px rgba(217, 119, 6, 0.28);
+}
+
+.excel-pill.cond-eject-pill {
+  background: #fff1f2;
+  color: #9f1239;
+  border-color: #fecdd3;
+}
+.excel-pill.cond-eject-pill.active {
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  color: #ffffff;
+  border-color: #be123c;
+  box-shadow: 0 3px 10px rgba(225, 29, 72, 0.28);
+}
+
+.excel-search-box {
+  min-width: 200px;
+}
+
+.excel-search-box input {
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  background: #ffffff;
+}
+
+.excel-search-box input:focus {
+  border-color: #0284c7;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(2,132,199,0.18);
+}
+
+.excel-select {
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.excel-select:focus {
+  border-color: #0284c7;
+  outline: none;
+}
+
+.excel-sheet-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.excel-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.excel-grid-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f2942;
+}
+
+.excel-table-container {
+  overflow-x: auto;
+  max-height: 72vh;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  font-size: 0.83rem;
+  color: #1e293b;
+}
+
+.excel-table th {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 800;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  text-align: left;
+}
+
+.excel-table td {
+  padding: 7px 10px;
+  border: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.excel-table tr:nth-child(even) td {
+  background: #fbfcfe;
+}
+
+/* Highlight Baris Tabel Database yang Simpel, Elegan & Enak Dilihat */
+.excel-table tr.row-state-ready td:first-child {
+  border-left: 4px solid #10b981 !important;
+}
+
+.excel-table tr.row-state-out td {
+  background: #fffbeb !important;
+}
+.excel-table tr.row-state-out td:first-child {
+  border-left: 4px solid #f97316 !important;
+  background: #fef3c7 !important;
+  color: #9a3412;
+}
+
+.excel-table tr.row-state-kalibrasi td {
+  background: #fefce8 !important;
+}
+.excel-table tr.row-state-kalibrasi td:first-child {
+  border-left: 4px solid #eab308 !important;
+  background: #fef9c3 !important;
+  color: #854d0e;
+}
+
+.excel-table tr.row-state-eject td {
+  background: #fff1f2 !important;
+}
+.excel-table tr.row-state-eject td:first-child {
+  border-left: 4px solid #e11d48 !important;
+  background: #ffe4e6 !important;
+  color: #9f1239;
+}
+
+.excel-table tr:hover td {
+  background: #f0f9ff !important;
+}
+
+.excel-row-num {
+  width: 42px;
+  text-align: center;
+  background: #f8fafc !important;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-right: 2px solid #cbd5e1 !important;
+  user-select: none;
+}
+
+/* Badge Status & Kondisi dengan Highlight Pill Elegan + Titik Indikator */
+.excel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.hl-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: none;
+}
+
+.excel-badge.ready {
+  background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+.excel-badge.ready .hl-dot {
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.excel-badge.out {
+  background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
+  color: #9a3412;
+  border: 1px solid #fdba74;
+}
+.excel-badge.out .hl-dot {
+  background: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.22);
+}
+
+.excel-badge.kalibrasi {
+  background: linear-gradient(180deg, #fefce8 0%, #fef08a 100%);
+  color: #854d0e;
+  border: 1px solid #fde047;
+}
+.excel-badge.kalibrasi .hl-dot {
+  background: #eab308;
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.22);
+}
+
+.excel-badge.eject {
+  background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
+  color: #9f1239;
+  border: 1px solid #fda4af;
+}
+.excel-badge.eject .hl-dot {
+  background: #e11d48;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2);
+}
+
+.code-pill {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: .8rem;
+  display: inline-block;
+  white-space: nowrap;
+}
+.code-pill.tool { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.code-pill.material { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+
+.cond-select-inline {
+  font-size: .76rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.cond-select-inline:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+.cond-select-inline.bagus {
+  background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #065f46;
+  border-color: #6ee7b7;
+}
+.cond-select-inline.kalibrasi {
+  background: linear-gradient(180deg, #fefce8 0%, #fef08a 100%);
+  color: #854d0e;
+  border-color: #fde047;
+}
+.cond-select-inline.eject {
+  background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
+  color: #9f1239;
+  border-color: #fda4af;
+}
+
+.entry-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* ================= COMPACT DATA ENTRY (MUDAH DIGUNAKAN AWAM) ================= */
+.compact-entry-card {
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.entry-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 12px;
+}
+
+.entry-type-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+@media (max-width: 680px) {
+  .entry-type-switcher { grid-template-columns: 1fr; }
+}
+
+.entry-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.entry-type-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.entry-type-btn.active[data-etype="tool"] {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  color: #0c4a6e;
+  box-shadow: 0 2px 6px rgba(2,132,199,0.18);
+}
+
+.entry-type-btn.active[data-etype="material"] {
+  background: #fef3c7;
+  border-color: #d97706;
+  color: #78350f;
+  box-shadow: 0 2px 6px rgba(217,119,6,0.18);
+}
+
+.entry-type-btn .et-ico {
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.entry-type-btn .et-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.entry-type-btn .et-txt b {
+  font-size: 0.92rem;
+}
+
+.entry-type-btn .et-txt small {
+  font-size: 0.76rem;
+  opacity: 0.85;
+}
+
+.compact-form-row {
+  display: grid;
+  grid-template-columns: 2.2fr 145px 105px 135px 1.2fr 105px auto;
+  gap: 8px;
+  align-items: end;
+}
+
+@media (max-width: 1150px) {
+  .compact-form-row {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .c-field-name {
+    grid-column: 1 / -1;
+  }
+}
+
+.c-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.c-field label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.c-field input,
+.c-field select {
+  height: 40px;
+  padding: 6px 10px;
+  font-size: 0.88rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  width: 100%;
+  background: #fff;
+}
+
+.c-field input:focus,
+.c-field select:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 2px rgba(2,132,199,0.15);
+}
+
+/* Stepper Jumlah (- / Angka / +) di Form Data Entry */
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.qty-stepper .qty-btn {
+  width: 36px;
+  height: 100%;
+  border: 0;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.qty-stepper .qty-btn:hover {
+  background: #e2e8f0;
+}
+
+.qty-stepper .qty-btn:active {
+  background: #cbd5e1;
+}
+
+.qty-stepper input {
+  border: 0 !important;
+  border-left: 1px solid #cbd5e1 !important;
+  border-right: 1px solid #cbd5e1 !important;
+  border-radius: 0 !important;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0 4px !important;
+  height: 100% !important;
+  min-width: 48px;
+  box-shadow: none !important;
+}
+
+/* Inline Stepper Jumlah di dalam Tabel Database & Data Entry */
+.inline-qty-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+
+.inline-qty-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.inline-qty-btn:hover {
+  background: #0f2942;
+  color: #ffffff;
+  border-color: #0f2942;
+}
+
+.inline-qty-input {
+  width: 48px !important;
+  height: 24px !important;
+  padding: 0 3px !important;
+  border: 1px solid transparent !important;
+  border-radius: 4px !important;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.82rem !important;
+  background: transparent !important;
+}
+
+.inline-qty-input:focus {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+.inline-qty-unit {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #475569;
+  padding: 0 3px;
+}
+
+.compact-import-box {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px dashed #94a3b8;
+  border-radius: 8px;
+}
+
+/* ================= HALAMAN SCAN & PINJAM CEPAT ================= */
+.simple-scan-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.simple-scan-card {
+  padding: 18px;
+  border-radius: 12px;
+}
+
+.borrow-step-box {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.borrow-step-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #0f2942;
+  margin-bottom: 8px;
+}
+
+.quick-scroll-list {
+  max-height: 195px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.quick-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  font-size: 0.84rem;
+}
+
+.quick-item-row:hover {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+.quick-item-row.selected {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  box-shadow: 0 1px 4px rgba(2, 132, 199, 0.15);
+}
+
+.quick-item-row.out-of-stock {
+  opacity: 0.55;
+  background: #fef2f2;
+}
+
+.selected-item-banner {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 2px solid #0284c7;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sel-item-name {
+  font-weight: 900;
+  font-size: 0.96rem;
+  color: #0f2942;
+}
+
+.borrower-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .borrower-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.crew-scroll-grid {
+  max-height: 215px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 5px;
+}
+
+.crew-quick-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 7px 9px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s ease;
+  font-family: inherit;
+}
+
+.crew-quick-btn:hover {
+  background: #f0f9ff;
+  border-color: #7dd3fc;
+}
+
+.crew-quick-btn.selected {
+  background: #0f2942;
+  color: #ffffff;
+  border-color: #0f2942;
+}
+
+.crew-quick-btn.selected .muted {
+  color: #cbd5e1 !important;
+}
+
+.crew-quick-btn .crew-badge {
+  font-family: ui-monospace, Consolas, monospace;
+  font-weight: 800;
+  font-size: 0.74rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e0f2fe;
+  color: #0369a1;
+  flex: none;
+}
+
+.crew-quick-btn.selected .crew-badge {
+  background: #fcd34d;
+  color: #0f2942;
+}
+
+.active-loans-scroll {
+  max-height: 360px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ================= PUSAT KENDALI ADMIN (SIMPEL & RAMAH AWAM) ================= */
+.admin-big-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+}
+
+.admin-big-tabs button {
+  padding: 10px 12px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  background: #f8fafc;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  text-align: left;
+}
+
+.admin-big-tabs button:hover {
+  background: #f0f9ff;
+  border-color: #7dd3fc;
+}
+
+.admin-big-tabs button.active {
+  background: #0f2942;
+  color: #ffffff;
+  border-color: #0f2942;
+  box-shadow: 0 3px 10px rgba(15, 41, 66, 0.2);
+}
+
+.simple-crew-form {
+  display: grid;
+  grid-template-columns: 165px 1.4fr 1.15fr auto;
+  gap: 10px;
+  align-items: end;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.ef-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ef-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.ef-col input,
+.ef-col select {
+  height: 40px;
+  padding: 6px 10px;
+  font-size: 0.88rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  width: 100%;
+  background: #fff;
+}
+
+@media (max-width: 860px) {
+  .simple-crew-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .simple-crew-form {
+    grid-template-columns: 1fr;
+  }
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+.recap-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.recap-action-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.14s ease;
+}
+
+.recap-action-card:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+}
+
+.rac-icon {
+  font-size: 1.65rem;
+  line-height: 1;
+  flex: none;
+}
+
+.rac-title {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #0f2942;
+}
+
+.rac-sub {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.admin-simple-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 12px;
+}
+
+/* ================= MODE SIMPEL & VISUAL (DESKTOP + HP ANDROID / IPHONE) ================= */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+}
+
+.excel-table-container,
+.table-wrap {
+  -webkit-overflow-scrolling: touch;
+}
+
+.mob-only {
+  display: none !important;
+}
+
+.search-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.more-filters {
+  display: contents;
+}
+
+.history-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.hf-dates,
+.hf-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Kartu Visual Besar untuk HP (Mudah dibaca lulusan SMP/SMA, tanpa tabel sempit) */
+.m-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.m-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-left: 5px solid #10b981;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05);
+}
+
+.m-card.m-state-ready { border-left-color: #10b981; }
+.m-card.m-state-out { border-left-color: #f97316; background: #fffdf7; }
+.m-card.m-state-kalibrasi { border-left-color: #eab308; background: #fefef5; }
+.m-card.m-state-eject { border-left-color: #e11d48; background: #fff8f9; }
+
+.mc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.mc-title-wrap {
+  min-width: 0;
+  flex: 1;
+}
+
+.mc-name {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #0f2942;
+  line-height: 1.25;
+}
+
+.mc-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.mc-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed #e2e8f0;
+  flex-wrap: wrap;
+}
+
+.mc-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Tombol Tambah Melayang (+) di Pojok Kanan Bawah HP */
+.fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(74px + env(safe-area-inset-bottom));
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+  z-index: 26;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab:active {
+  transform: scale(0.93);
+}
+
+@media (max-width: 760px) {
+  .desk-only {
+    display: none !important;
+  }
+  .mob-only {
+    display: flex !important;
+  }
+  div.m-cards.mob-only {
+    display: flex !important;
+  }
+
+  /* Cegah auto-zoom di iPhone (iOS Safari) saat mengetuk kolom input */
+  input:not(.inline-qty-input),
+  select:not(.cond-select-inline),
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Header HP: Cukup 1 Baris Tipis & Bersih */
+  .topbar-inner {
+    flex-wrap: nowrap !important;
+    padding: 8px 12px !important;
+    gap: 8px !important;
+  }
+  .brand-emblem {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+  }
+  .brand-sub,
+  .brand-tag {
+    display: none !important;
+  }
+  .brand-title {
+    font-size: 1.02rem;
+  }
+  .topbar-actions {
+    width: auto !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+    gap: 6px;
+  }
+  .hdr-hp-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+
+  /* Navigasi Bawah 5 Menu Singkat & Jelas */
+  .navbars {
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    gap: 2px;
+  }
+  .navbars button {
+    padding: 6px 2px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    min-width: 0;
+    border-radius: 9px;
+  }
+  .navbars button .nav-ico {
+    font-size: 1.2rem;
+  }
+
+  main {
+    padding: 10px 10px 96px;
+  }
+
+  .card,
+  .compact-entry-card,
+  .excel-toolbar-card,
+  .simple-scan-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  /* Tab Pilihan Semua / Tools / Material Besar & Mudah Ditekan */
+  .excel-toolbar-top {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .excel-sheets-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .excel-sheet-tab {
+    justify-content: center;
+    padding: 9px 6px;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .excel-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding-top: 8px;
+  }
+
+  .search-filter-row {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .excel-search-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .excel-search-box input {
+    height: 42px;
+    border-radius: 9px;
+  }
+
+  #dbAvailTabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  #dbAvailTabs .excel-pill {
+    text-align: center;
+    padding: 7px 4px;
+    font-size: 0.78rem;
+  }
+
+  /* Filter tambahan tersembunyi di HP sampai tombol Filter diklik */
+  .more-filters {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #cbd5e1;
+  }
+  .more-filters.open {
+    display: flex;
+  }
+
+  .excel-select {
+    width: 100%;
+    height: 42px;
+  }
+
+  /* Stepper +/- Lebih Besar di HP agar Mudah Ditekan Jempol */
+  .mc-qty .inline-qty-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+    border-radius: 7px;
+  }
+  .mc-qty .inline-qty-input {
+    width: 52px !important;
+    height: 34px !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Form Tambah Barang di HP: Sembunyikan kolom opsional sampai diminta */
+  .compact-form-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .c-field-name,
+  .c-field-cond,
+  .c-field-advtoggle,
+  .c-field-submit {
+    grid-column: 1 / -1;
+  }
+  #toolForm:not(.show-adv) .adv-field {
+    display: none !important;
+  }
+  #toolForm.show-adv .adv-field {
+    grid-column: 1 / -1;
+  }
+
+  /* Pilihan Tools / Material Besar 2 Kolom Sejajar di HP */
+  .entry-type-switcher {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px;
+  }
+  .entry-type-btn {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 14px 10px;
+    gap: 6px;
+  }
+  .entry-type-btn .et-ico,
+  .entry-type-btn .et-icon {
+    font-size: 1.9rem;
+  }
+
+  /* Halaman Pinjam di HP */
+  .selected-item-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .crew-scroll-grid {
+    grid-template-columns: 1fr 1fr;
+    max-height: 200px;
+  }
+  .crew-quick-btn {
+    padding: 9px 10px;
+  }
+
+  /* Halaman Riwayat di HP */
+  .history-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hf-dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hf-dates label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .hf-dates input {
+    width: 100%;
+  }
+  .hf-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  /* Halaman Admin di HP */
+  .admin-big-tabs {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .admin-big-tabs button {
+    padding: 10px;
+    font-size: 0.82rem;
+    text-align: center;
+  }
+  .recap-actions-grid {
+    grid-template-columns: 1fr;
+  }
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .stat {
+    padding: 10px 12px;
+  }
+  .stat .n {
+    font-size: 1.5rem;
+  }
+
+  .modal {
+    padding: 10px;
+  }
+  .modal-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+  .qr-sticker-preview {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 390px) {
+  .crew-scroll-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= MODAL & QR PREVIEW ================= */
+.modal{position:fixed;inset:0;background:rgba(9,25,41,.68);display:flex;align-items:center;justify-content:center;z-index:60;padding:14px;overflow-y:auto}
+.modal-card{background:#fff;border-radius:20px;padding:20px;max-width:520px;width:100%;max-height:92dvh;overflow-y:auto;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.qr-sticker-preview{background:#f8fafc;border:2px dashed #94a3b8;border-radius:14px;padding:14px;display:flex;gap:14px;align-items:center;margin:12px 0}
+.qr-sticker-preview img.qr-img{width:115px;height:115px;background:#fff;padding:6px;border-radius:10px;border:1px solid var(--line);flex:none}
+
+.print-only{display:none}
+.print-hdr{align-items:center;gap:14px;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:12px}
+.print-hdr img{width:48px;height:48px;object-fit:contain}
+.print-hdr h2{margin:2px 0 0}
+.print-comp{font-weight:800;font-size:.85rem;letter-spacing:.8px;color:#0f2942}
+@media print{
+  .topbar,.navbars,.print-hide,.stats{display:none!important}
+  .print-only{display:block}
+  .print-only.print-hdr{display:flex}
+  body{background:#fff} main{padding:0} .who{border:1px solid #ccc;break-inside:avoid}
+}

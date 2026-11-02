@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f2942"/>
+      <stop offset="100%" stop-color="#091929"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="16" y1="12" x2="104" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="25" y1="25" x2="95" y2="95" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer hexagonal mining shield -->
+  <polygon points="60,4 110,32 110,88 60,116 10,88 10,32" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- Cahaya (Sunburst / Mineral Rays) at top -->
+  <g stroke="url(#goldGrad)" stroke-width="3.2" stroke-linecap="round">
+    <line x1="60" y1="15" x2="60" y2="25"/>
+    <line x1="43" y1="19" x2="47" y2="28"/>
+    <line x1="77" y1="19" x2="73" y2="28"/>
+    <line x1="29" y1="29" x2="36" y2="35"/>
+    <line x1="91" y1="29" x2="84" y2="35"/>
+  </g>
+
+  <!-- Mineral Crystal / Nickel Mountain Facets -->
+  <polygon points="60,26 86,52 60,46 34,52" fill="url(#goldGrad)"/>
+  <polygon points="34,52 60,46 60,64 26,64" fill="#d97706" opacity="0.9"/>
+  <polygon points="86,52 60,46 60,64 94,64" fill="url(#tealGrad)"/>
+
+  <!-- Banner / Ribbon for GFM -->
+  <rect x="18" y="61" width="84" height="26" rx="6" fill="#091929" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  <text x="60" y="80" text-anchor="middle" fill="#ffffff" font-family="Arial, 'Segoe UI', sans-serif" font-weight="900" font-size="20" letter-spacing="2">GFM</text>
+
+  <!-- SCM sub-badge -->
+  <text x="60" y="102" text-anchor="middle" fill="#fcd34d" font-family="Arial, 'Segoe UI', sans-serif" font-weight="800" font-size="11" letter-spacing="2.5">SCM</text>
+</svg>

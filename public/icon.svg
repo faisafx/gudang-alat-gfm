@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f2942"/>
+      <stop offset="100%" stop-color="#091929"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="16" y1="12" x2="104" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="25" y1="25" x2="95" y2="95" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="26" fill="url(#bgGrad)"/>
+  <polygon points="60,8 106,34 106,86 60,112 14,86 14,34" fill="none" stroke="url(#goldGrad)" stroke-width="4" stroke-linejoin="round"/>
+  <g stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round">
+    <line x1="60" y1="17" x2="60" y2="26"/>
+    <line x1="44" y1="21" x2="48" y2="29"/>
+    <line x1="76" y1="21" x2="72" y2="29"/>
+  </g>
+  <polygon points="60,28 84,52 60,46 36,52" fill="url(#goldGrad)"/>
+  <polygon points="36,52 60,46 60,62 28,62" fill="#d97706" opacity="0.9"/>
+  <polygon points="84,52 60,46 60,62 92,62" fill="url(#tealGrad)"/>
+  <rect x="20" y="60" width="80" height="25" rx="6" fill="#091929" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  <text x="60" y="78" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-weight="900" font-size="19" letter-spacing="2">GFM</text>
+  <text x="60" y="100" text-anchor="middle" fill="#fcd34d" font-family="Arial, sans-serif" font-weight="800" font-size="11" letter-spacing="2.5">SCM</text>
+</svg>
