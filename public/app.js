@@ -9,7 +9,47 @@ const norm = (c) => String(c ?? '').trim().toUpperCase();
 let CONFIG = { shiftHours: 12 };
 let currentUser = null;
 let currentTab = 'database';
-let allToolsCache = [];
+
+// Data awal bawaan (29 Barang: 21 Tools + 8 Material) agar Tabel Database langsung tampil 0ms tanpa pernah kosong
+const DEFAULT_TOOLS_SEED = [
+  { code: 'T-001', name: 'Kunci Pas Set Tekiro 8-24mm', item_type: 'tool', category: 'Kunci & Hand Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-002', name: 'Kunci Ring Ratchet 17-19mm', item_type: 'tool', category: 'Kunci & Hand Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-003', name: 'Kunci Inggris Heavy Duty 15"', item_type: 'tool', category: 'Kunci & Hand Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-004', name: 'Kunci Pipa (Pipe Wrench) 24"', item_type: 'tool', category: 'Kunci & Hand Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-005', name: 'Socket Set 1/2" 24 Pcs', item_type: 'tool', category: 'Kunci & Hand Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-006', name: 'Torque Wrench 40-200 Nm', item_type: 'tool', category: 'Kunci & Hand Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-007', name: 'Gerinda Tangan Makita 4" GA4030', item_type: 'tool', category: 'Power Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-008', name: 'Gerinda Potong Bosch 7"', item_type: 'tool', category: 'Power Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-009', name: 'Bor Listrik Impact Bosch GSB 16RE', item_type: 'tool', category: 'Power Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-010', name: 'Cordless Impact Wrench Dewalt 20V', item_type: 'tool', category: 'Power Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-011', name: 'Rotary Hammer Drill Makita HR2470', item_type: 'tool', category: 'Power Tool', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-012', name: 'Mesin Las Inverter Lakoni 160A', item_type: 'tool', category: 'Welding & Cutting', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-013', name: 'Palu Godam (Sledge Hammer) 5 Kg', item_type: 'tool', category: 'Manual & Konstruksi', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-014', name: 'Linggis Baja 150 cm', item_type: 'tool', category: 'Manual & Konstruksi', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-015', name: 'Dongkrak Botol Hidrolik 20 Ton', item_type: 'tool', category: 'Lifting & Jack', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-016', name: 'Chain Block Takel 2 Ton x 5m', item_type: 'tool', category: 'Lifting & Jack', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-017', name: 'Multimeter Digital Fluke 117', item_type: 'tool', category: 'Alat Ukur & Elektrik', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-018', name: 'Tang Ampere (Clamp Meter) Kyoritsu', item_type: 'tool', category: 'Alat Ukur & Elektrik', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-019', name: 'Laser Distance Meter 100m', item_type: 'tool', category: 'Alat Ukur & Elektrik', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-020', name: 'Multi Gas Detector Portable', item_type: 'tool', category: 'Safety & Inspeksi', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'T-021', name: 'Lampu Kerja Sorot LED', item_type: 'tool', category: 'Alat Ukur & Elektrik', condition: 'bagus', status: 'ok', quantity: 1, unit: 'Unit', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-001', name: 'Kawat Las / Elektroda Kobe RB-26 3.2mm', item_type: 'material', category: 'Consumable Las', condition: 'bagus', status: 'ok', quantity: 25, unit: 'Box', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-002', name: 'Batu Gerinda Potong WD 4" x 1.2mm', item_type: 'material', category: 'Consumable Abrasive', condition: 'bagus', status: 'ok', quantity: 100, unit: 'Pcs', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-003', name: 'Batu Gerinda Poles Kinik 4" x 6mm', item_type: 'material', category: 'Consumable Abrasive', condition: 'bagus', status: 'ok', quantity: 50, unit: 'Pcs', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-004', name: 'Oli Hidrolik Shell Tellus S2 M46', item_type: 'material', category: 'Lubricant & Oli', condition: 'bagus', status: 'ok', quantity: 200, unit: 'Liter', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-005', name: 'Grease / Gemuk Pertamini EP-2 Heavy Duty', item_type: 'material', category: 'Lubricant & Oli', condition: 'bagus', status: 'ok', quantity: 15, unit: 'Pail', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-006', name: 'Baut & Mur High Tensile M16 x 50mm', item_type: 'material', category: 'Fastener & Baut', condition: 'bagus', status: 'ok', quantity: 150, unit: 'Set', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-007', name: 'Isolasi Listrik 3M Vinyl Tape Hitam', item_type: 'material', category: 'Material Elektrik', condition: 'bagus', status: 'ok', quantity: 40, unit: 'Roll', borrowed_qty: 0, consumed_qty: 0 },
+  { code: 'M-008', name: 'Majun Pembersih Katun Jahit', item_type: 'material', category: 'Housekeeping & Safety', condition: 'bagus', status: 'ok', quantity: 30, unit: 'Kg', borrowed_qty: 0, consumed_qty: 0 },
+];
+
+let allToolsCache = (() => {
+  try {
+    const saved = JSON.parse(localStorage.getItem('gfm_tools_cache') || 'null');
+    if (Array.isArray(saved) && saved.length) return saved;
+  } catch { /* abaikan */ }
+  return [...DEFAULT_TOOLS_SEED];
+})();
 let allUsersCache = [];
 let toolFilter = 'all';
 let knownTransferIds = new Set();
@@ -1249,20 +1289,34 @@ function addEvent(kind, title, detail, actions = []) {
 // HALAMAN 1 (UTAMA): DATABASE (TOOLS & MATERIAL, READY & KELUAR, KONDISI)
 // =====================================================================
 async function loadDatabaseView() {
+  // Render langsung dari cache yang sudah siap (0ms) agar tabel tidak pernah kosong
+  if (!allToolsCache || !allToolsCache.length) {
+    allToolsCache = [...DEFAULT_TOOLS_SEED];
+  }
+  populateDbCategoryFilter();
+  updateDbCounterBadges();
+  renderDatabaseTable();
+
   try {
     const [tools, outData] = await Promise.all([
       api('/api/tools'),
       api('/api/out?since=' + encodeURIComponent(startOfToday().toISOString())).catch(() => null),
     ]);
-    allToolsCache = tools;
-    if ($('#dlToolsCount')) $('#dlToolsCount').textContent = tools.length;
+    if (Array.isArray(tools) && tools.length) {
+      allToolsCache = tools;
+      try { localStorage.setItem('gfm_tools_cache', JSON.stringify(tools)); } catch { /* abaikan */ }
+    }
+    if ($('#dlToolsCount')) $('#dlToolsCount').textContent = allToolsCache.length;
     if (outData) renderOutStatsBar(outData);
 
     populateDbCategoryFilter();
     updateDbCounterBadges();
     renderDatabaseTable();
   } catch (err) {
-    console.error('loadDatabaseView error:', err);
+    console.warn('loadDatabaseView fallback ke cache lokal:', err);
+    populateDbCategoryFilter();
+    updateDbCounterBadges();
+    renderDatabaseTable();
   }
 }
 
@@ -3366,6 +3420,13 @@ setInterval(() => {
 }, 6000);
 
 (async () => {
+  // Tampilkan langsung Tabel Database dari seed/cache (0ms) tanpa menunggu network
+  try {
+    populateDbCategoryFilter();
+    updateDbCounterBadges();
+    renderDatabaseTable();
+  } catch (e) { console.warn('Initial render err:', e); }
+
   // Jika berpindah dari HTTP ke HTTPS dengan membawa token sesi (#auth=...), simpan otomatis agar tidak perlu login ulang!
   if (location.hash.startsWith('#auth=')) {
     const passedToken = decodeURIComponent(location.hash.slice(6));
