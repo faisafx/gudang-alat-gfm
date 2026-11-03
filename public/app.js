@@ -271,27 +271,6 @@ function renderAuthView() {
   $('#topUserDept').textContent = currentUser.dept || (isAdmin ? 'Penjaga Gudang GFM' : 'Crew Lapangan');
   $('#navAdmin')?.classList.toggle('hidden', !isAdmin);
   $('#adminAddToolBox')?.classList.toggle('hidden', !isAdmin);
-  $('#adminDelegateBox')?.classList.toggle('hidden', !isAdmin);
-
-  $('#roleBanner').className = 'role-card ' + (isAdmin ? 'admin' : '');
-  $('#roleBanner').innerHTML = isAdmin
-    ? `<div>
-         <div class="rc-title">🛡️ Mode Penjaga Gudang — ${esc(currentUser.name)}</div>
-         <div class="rc-sub">Scan QR barang yang dikembalikan Crew untuk <b>mengesahkan pengembalian</b> ke gudang.</div>
-       </div>
-       <div class="role-card-right">
-         <button type="button" class="btn btn-primary btn-sm" id="btnBannerPw">🔑 Ubah Password Saya</button>
-       </div>`
-    : `<div>
-         <div class="rc-title">👷 ${esc(currentUser.name)} <span style="opacity:.82">(${esc(currentUser.username)})</span></div>
-         <div class="rc-sub">${esc(currentUser.dept || 'Crew Lapangan')} · Scan QR di barang untuk meminjam atau meminta oper dari rekan.</div>
-       </div>
-       <div class="role-card-right">
-         <button type="button" class="btn btn-primary btn-sm" id="btnBannerPw">🔑 Ubah Password Saya</button>
-       </div>`;
-
-  const bp = $('#btnBannerPw');
-  if (bp) bp.onclick = openChangePasswordModal;
 
   if (isAdmin) populateDelegateUsers();
   refreshMyState();
@@ -484,11 +463,8 @@ $('#btnUserMenu').onclick = async () => {
 async function populateDelegateUsers() {
   try {
     const users = await api('/api/users');
-    allUsersCache = users;
-    renderQuickAccountsDropdown(users);
-    const crews = users.filter((u) => u.role === 'crew');
-    $('#delegateSelect').innerHTML = `<option value="">🔍 Hanya Cek / Verifikasi Pengembalian Barang</option>` +
-      crews.map((u) => `<option value="${esc(u.username)}">📌 Pinjamkan untuk: ${esc(u.username)} — ${esc(u.name)} (${esc(u.dept)})</option>`).join('');
+    if (Array.isArray(users) && users.length) allUsersCache = users;
+    renderQuickAccountsDropdown(allUsersCache);
   } catch { /* abaikan */ }
 }
 
@@ -875,34 +851,53 @@ $('#photoQrInput').onchange = async (e) => {
 };
 
 // =====================================================================
-// HALAMAN 3: SCAN & PINJAM (SIMPEL & BERTAHAP — MUNCUL SAAT DITEKAN)
+// HALAMAN 3: SCAN & PINJAM (LAYOUT 2 KOLOM RAPI — SIAP PAKAI)
 // =====================================================================
 const scanState = {
-  itemType: '',
+  itemType: 'tool',
   selectedCode: '',
   selectedWorker: '',
   searchItem: '',
   searchCrew: '',
 };
 
+function resetSelectedItemBanner() {
+  const isMat = scanState.itemType === 'material';
+  const titleEl = $('#selItemTitle');
+  const stockEl = $('#selItemStockInfo');
+  const unitEl = $('#borrowUnitLabel');
+  const qtyInp = $('#borrowQtyInput');
+  if (titleEl) {
+    titleEl.innerHTML = isMat
+      ? '👆 Pilih salah satu Material di daftar atas'
+      : '👆 Pilih salah satu Tools di daftar atas';
+  }
+  if (stockEl) stockEl.textContent = 'Klik nama barang atau Scan QR untuk memilih';
+  if (unitEl) unitEl.textContent = isMat ? 'Pcs' : 'Unit';
+  if (qtyInp) qtyInp.value = 1;
+}
+
 async function loadScanBorrowView() {
+  if (!scanState.itemType) scanState.itemType = 'tool';
+  // Render langsung 0ms dari cache sebelum API selesai
+  renderScanCrewScrollList();
+  renderScanItemScrollList();
+
   try {
     const [tools, users] = await Promise.all([
       api('/api/tools'),
       api('/api/users'),
     ]);
-    allToolsCache = tools;
-    allUsersCache = users;
+    if (Array.isArray(tools) && tools.length) allToolsCache = tools;
+    if (Array.isArray(users) && users.length) allUsersCache = users;
 
-    const countTools = tools.filter((t) => (t.item_type || (t.code?.startsWith('M-') ? 'material' : 'tool')) === 'tool').length;
-    const countMaterial = tools.filter((t) => (t.item_type || (t.code?.startsWith('M-') ? 'material' : 'tool')) === 'material').length;
+    const countTools = allToolsCache.filter((t) => (t.item_type || (t.code?.startsWith('M-') ? 'material' : 'tool')) === 'tool').length;
+    const countMaterial = allToolsCache.filter((t) => (t.item_type || (t.code?.startsWith('M-') ? 'material' : 'tool')) === 'material').length;
     if ($('#scanCountTool')) $('#scanCountTool').textContent = countTools;
     if ($('#scanCountMaterial')) $('#scanCountMaterial').textContent = countMaterial;
 
     renderScanCrewScrollList();
-    if (scanState.itemType) {
-      renderScanItemScrollList();
-    }
+    renderScanItemScrollList();
   } catch (err) {
     console.error('loadScanBorrowView err:', err);
   }
@@ -912,8 +907,8 @@ function updateScanModeLabels(validType) {
   const isMat = validType === 'material';
   if ($('#scanStepItemsTitle')) {
     $('#scanStepItemsTitle').textContent = isMat
-      ? '① Pilih Material (Habis Pakai) & Jumlah yang Diambil'
-      : '① Pilih Tools (Alat Kerja) & Jumlah yang Dipinjam';
+      ? '① Pilih Material (Habis Pakai) & Jumlah Diambil'
+      : '① Pilih Tools (Alat Kerja) & Jumlah Pinjam';
   }
   if ($('#selItemQtyLabel')) {
     $('#selItemQtyLabel').textContent = isMat ? 'Jumlah Diambil' : 'Jumlah Pinjam';
@@ -925,8 +920,9 @@ function updateScanModeLabels(validType) {
   }
   if ($('#btnSubmitBorrow')) {
     $('#btnSubmitBorrow').textContent = isMat
-      ? '✅ KELUARKAN MATERIAL (HABIS PAKAI)'
+      ? '📦 KELUARKAN MATERIAL (HABIS PAKAI)'
       : '✅ SIMPAN PINJAMAN TOOLS';
+    $('#btnSubmitBorrow').className = isMat ? 'btn btn-primary btn-lg' : 'btn btn-ok btn-lg';
   }
 }
 
@@ -939,11 +935,11 @@ function setScanItemType(type) {
   $('#btnScanTypeMaterial')?.classList.toggle('active', validType === 'material');
 
   updateScanModeLabels(validType);
+  resetSelectedItemBanner();
 
-  // Munculkan kotak pilih barang, dan sembunyikan kotak peminjam sampai barang dipilih
   $('#scanStepItems')?.classList.remove('hidden');
-  $('#selectedItemBox')?.classList.add('hidden');
-  $('#scanStepBorrower')?.classList.add('hidden');
+  $('#selectedItemBox')?.classList.remove('hidden');
+  $('#scanStepBorrower')?.classList.remove('hidden');
 
   renderScanItemScrollList();
 }
@@ -1229,14 +1225,9 @@ async function submitBorrowForm() {
       ]
     );
 
-    // Kembalikan tampilan ke kondisi bersih (tutup kotak tahap 2 & 3) setelah selesai
+    // Bersihkan pilihan barang setelah selesai tanpa menyembunyikan layout 2 kolom
     scanState.selectedCode = '';
-    scanState.itemType = '';
-    $('#btnScanTypeTool')?.classList.remove('active');
-    $('#btnScanTypeMaterial')?.classList.remove('active');
-    $('#scanStepItems')?.classList.add('hidden');
-    $('#selectedItemBox')?.classList.add('hidden');
-    $('#scanStepBorrower')?.classList.add('hidden');
+    resetSelectedItemBanner();
 
     await loadScanBorrowView();
     await refreshMyState();
@@ -2094,7 +2085,7 @@ async function openToolModal(code, newlyCreated = false) {
     actionBtns += `<button type="button" id="mBtnReqTransfer" class="btn btn-primary btn-block" style="margin-bottom:8px">🔄 Minta Persetujuan Oper dari ${esc(open.worker_name)}</button>`;
   }
   if (open && isAdmin) {
-    actionBtns += `<button type="button" id="mBtnAdminReturn" class="btn btn-ok btn-block" style="margin-bottom:8px">↩️ Verifikasi Barang Kembali ke Gudang</button>`;
+    actionBtns += `<button type="button" id="mBtnAdminReturn" class="btn btn-ok btn-block" style="margin-bottom:8px">↩️ Kembalikan Barang ke Gudang</button>`;
   }
 
   const adminControls = isAdmin ? `
@@ -3425,6 +3416,8 @@ setInterval(() => {
     populateDbCategoryFilter();
     updateDbCounterBadges();
     renderDatabaseTable();
+    renderScanItemScrollList();
+    renderScanCrewScrollList();
   } catch (e) { console.warn('Initial render err:', e); }
 
   // Jika berpindah dari HTTP ke HTTPS dengan membawa token sesi (#auth=...), simpan otomatis agar tidak perlu login ulang!

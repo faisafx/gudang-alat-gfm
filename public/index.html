@@ -8,7 +8,7 @@
   <title>GFM Gudang Alat &amp; Material — PT Sulawesi Cahaya Mineral</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="style.css?v=30">
   <script>
     // Bersihkan Service Worker & Cache lama agar menu dan aplikasi selalu berjalan normal 100%
     if ('serviceWorker' in navigator) {
@@ -207,7 +207,8 @@
             <div class="std-head-text">
               <span class="std-head-kicker">MODUL 01 · MASTER INVENTARIS GUDANG</span>
               <h1 class="std-head-title">Database Barang (Tools &amp; Material)</h1>
-              <span class="std-head-desc">Pantau ketersediaan stok, status peminjaman, dan kondisi barang secara real-time.</span>
+              <span class="std-head-desc">Pantau ketersediaan stok, status peminjaman, dan kondisi barang secara
+                real-time.</span>
             </div>
           </div>
           <div class="std-head-actions">
@@ -324,10 +325,23 @@
                   <td><b>Kawat Las / Elektroda Kobe RB-26 3.2mm</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Consumable Las</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-001', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="25" onchange="changeToolQuantity('M-001', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-001', 1, true)">+</button><span class="inline-qty-unit">Box</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-001', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-001', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="25"
+                        onchange="changeToolQuantity('M-001', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-001', 1, true)">+</button><span
+                        class="inline-qty-unit">Box</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-001', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (25 Box)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-001')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-001')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-001')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-001')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">2</td>
@@ -335,10 +349,23 @@
                   <td><b>Batu Gerinda Potong WD 4" x 1.2mm</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Consumable Abrasive</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-002', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="100" onchange="changeToolQuantity('M-002', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-002', 1, true)">+</button><span class="inline-qty-unit">Pcs</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-002', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-002', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="100"
+                        onchange="changeToolQuantity('M-002', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-002', 1, true)">+</button><span
+                        class="inline-qty-unit">Pcs</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-002', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (100 Pcs)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-002')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-002')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-002')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-002')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">3</td>
@@ -346,10 +373,23 @@
                   <td><b>Batu Gerinda Poles Kinik 4" x 6mm</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Consumable Abrasive</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-003', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="50" onchange="changeToolQuantity('M-003', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-003', 1, true)">+</button><span class="inline-qty-unit">Pcs</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-003', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-003', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="50"
+                        onchange="changeToolQuantity('M-003', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-003', 1, true)">+</button><span
+                        class="inline-qty-unit">Pcs</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-003', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (50 Pcs)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-003')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-003')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-003')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-003')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">4</td>
@@ -357,10 +397,23 @@
                   <td><b>Oli Hidrolik Shell Tellus S2 M46</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Lubricant &amp; Oli</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-004', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="200" onchange="changeToolQuantity('M-004', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-004', 1, true)">+</button><span class="inline-qty-unit">Liter</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-004', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-004', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="200"
+                        onchange="changeToolQuantity('M-004', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-004', 1, true)">+</button><span
+                        class="inline-qty-unit">Liter</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-004', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (200 Liter)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-004')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-004')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-004')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-004')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">5</td>
@@ -368,10 +421,23 @@
                   <td><b>Grease / Gemuk Pertamini EP-2 Heavy Duty</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Lubricant &amp; Oli</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-005', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="15" onchange="changeToolQuantity('M-005', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-005', 1, true)">+</button><span class="inline-qty-unit">Pail</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-005', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-005', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="15"
+                        onchange="changeToolQuantity('M-005', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-005', 1, true)">+</button><span
+                        class="inline-qty-unit">Pail</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-005', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (15 Pail)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-005')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-005')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-005')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-005')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">6</td>
@@ -379,10 +445,23 @@
                   <td><b>Baut &amp; Mur High Tensile M16 x 50mm</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Fastener &amp; Baut</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-006', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="150" onchange="changeToolQuantity('M-006', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-006', 1, true)">+</button><span class="inline-qty-unit">Set</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-006', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-006', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="150"
+                        onchange="changeToolQuantity('M-006', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-006', 1, true)">+</button><span
+                        class="inline-qty-unit">Set</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-006', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (150 Set)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-006')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-006')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-006')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-006')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">7</td>
@@ -390,10 +469,23 @@
                   <td><b>Isolasi Listrik 3M Vinyl Tape Hitam</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Material Elektrik</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-007', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="40" onchange="changeToolQuantity('M-007', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-007', 1, true)">+</button><span class="inline-qty-unit">Roll</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-007', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-007', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="40"
+                        onchange="changeToolQuantity('M-007', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-007', 1, true)">+</button><span
+                        class="inline-qty-unit">Roll</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-007', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (40 Roll)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-007')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-007')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-007')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-007')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">8</td>
@@ -401,10 +493,23 @@
                   <td><b>Majun Pembersih Katun Jahit</b></td>
                   <td><span class="muted small">📦 Material</span></td>
                   <td><span>Housekeeping &amp; Safety</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-008', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="30" onchange="changeToolQuantity('M-008', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('M-008', 1, true)">+</button><span class="inline-qty-unit">Kg</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-008', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('M-008', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="30"
+                        onchange="changeToolQuantity('M-008', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('M-008', 1, true)">+</button><span
+                        class="inline-qty-unit">Kg</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('M-008', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Stok Tersedia (30 Kg)</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm" onclick="quickBorrowItem('M-008')">📦 Ambil</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('M-008')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-primary btn-sm"
+                      onclick="quickBorrowItem('M-008')">📦 Ambil</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('M-008')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">9</td>
@@ -412,10 +517,23 @@
                   <td><b>Kunci Pas Set Tekiro 8-24mm</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Kunci &amp; Hand Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-001', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-001', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-001', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-001', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-001', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-001', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-001', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-001', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-001')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-001')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-001')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-001')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">10</td>
@@ -423,10 +541,23 @@
                   <td><b>Kunci Ring Ratchet 17-19mm</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Kunci &amp; Hand Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-002', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-002', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-002', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-002', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-002', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-002', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-002', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-002', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-002')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-002')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-002')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-002')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">11</td>
@@ -434,10 +565,23 @@
                   <td><b>Kunci Inggris Heavy Duty 15"</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Kunci &amp; Hand Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-003', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-003', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-003', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-003', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-003', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-003', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-003', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-003', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-003')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-003')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-003')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-003')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">12</td>
@@ -445,10 +589,23 @@
                   <td><b>Kunci Pipa (Pipe Wrench) 24"</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Kunci &amp; Hand Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-004', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-004', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-004', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-004', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-004', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-004', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-004', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-004', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-004')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-004')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-004')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-004')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">13</td>
@@ -456,10 +613,23 @@
                   <td><b>Socket Set 1/2" 24 Pcs</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Kunci &amp; Hand Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-005', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-005', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-005', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-005', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-005', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-005', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-005', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-005', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-005')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-005')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-005')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-005')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">14</td>
@@ -467,10 +637,23 @@
                   <td><b>Torque Wrench 40-200 Nm</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Kunci &amp; Hand Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-006', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-006', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-006', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-006', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-006', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-006', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-006', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-006', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-006')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-006')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-006')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-006')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">15</td>
@@ -478,10 +661,23 @@
                   <td><b>Gerinda Tangan Makita 4" GA4030</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Power Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-007', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-007', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-007', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-007', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-007', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-007', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-007', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-007', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-007')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-007')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-007')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-007')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">16</td>
@@ -489,10 +685,23 @@
                   <td><b>Gerinda Potong Bosch 7"</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Power Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-008', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-008', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-008', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-008', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-008', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-008', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-008', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-008', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-008')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-008')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-008')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-008')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">17</td>
@@ -500,10 +709,23 @@
                   <td><b>Bor Listrik Impact Bosch GSB 16RE</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Power Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-009', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-009', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-009', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-009', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-009', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-009', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-009', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-009', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-009')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-009')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-009')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-009')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">18</td>
@@ -511,10 +733,23 @@
                   <td><b>Cordless Impact Wrench Dewalt 20V</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Power Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-010', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-010', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-010', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-010', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-010', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-010', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-010', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-010', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-010')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-010')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-010')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-010')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">19</td>
@@ -522,10 +757,23 @@
                   <td><b>Rotary Hammer Drill Makita HR2470</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Power Tool</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-011', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-011', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-011', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-011', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-011', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-011', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-011', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-011', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-011')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-011')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-011')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-011')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">20</td>
@@ -533,10 +781,23 @@
                   <td><b>Mesin Las Inverter Lakoni 160A</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Welding &amp; Cutting</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-012', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-012', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-012', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-012', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-012', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-012', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-012', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-012', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-012')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-012')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-012')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-012')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">21</td>
@@ -544,10 +805,23 @@
                   <td><b>Palu Godam (Sledge Hammer) 5 Kg</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Manual &amp; Konstruksi</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-013', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-013', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-013', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-013', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-013', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-013', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-013', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-013', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-013')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-013')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-013')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-013')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">22</td>
@@ -555,10 +829,23 @@
                   <td><b>Linggis Baja 150 cm</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Manual &amp; Konstruksi</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-014', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-014', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-014', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-014', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-014', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-014', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-014', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-014', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-014')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-014')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-014')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-014')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">23</td>
@@ -566,10 +853,23 @@
                   <td><b>Dongkrak Botol Hidrolik 20 Ton</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Lifting &amp; Jack</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-015', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-015', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-015', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-015', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-015', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-015', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-015', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-015', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-015')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-015')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-015')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-015')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">24</td>
@@ -577,10 +877,23 @@
                   <td><b>Chain Block Takel 2 Ton x 5m</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Lifting &amp; Jack</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-016', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-016', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-016', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-016', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-016', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-016', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-016', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-016', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-016')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-016')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-016')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-016')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">25</td>
@@ -588,10 +901,23 @@
                   <td><b>Multimeter Digital Fluke 117</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Alat Ukur &amp; Elektrik</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-017', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-017', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-017', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-017', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-017', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-017', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-017', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-017', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-017')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-017')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-017')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-017')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">26</td>
@@ -599,10 +925,23 @@
                   <td><b>Tang Ampere (Clamp Meter) Kyoritsu</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Alat Ukur &amp; Elektrik</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-018', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-018', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-018', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-018', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-018', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-018', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-018', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-018', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-018')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-018')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-018')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-018')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">27</td>
@@ -610,10 +949,23 @@
                   <td><b>Laser Distance Meter 100m</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Alat Ukur &amp; Elektrik</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-019', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-019', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-019', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-019', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-019', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-019', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-019', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-019', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-019')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-019')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-019')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-019')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">28</td>
@@ -621,10 +973,23 @@
                   <td><b>Multi Gas Detector Portable</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Safety &amp; Inspeksi</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-020', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-020', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-020', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-020', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-020', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-020', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-020', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-020', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-020')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-020')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-020')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-020')">🔲 QR</button></td>
                 </tr>
                 <tr class="row-state-ready">
                   <td class="excel-row-num">29</td>
@@ -632,10 +997,23 @@
                   <td><b>Lampu Kerja Sorot LED</b></td>
                   <td><span class="muted small">🧰 Tools</span></td>
                   <td><span>Alat Ukur &amp; Elektrik</span></td>
-                  <td><div class="inline-qty-wrap"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-021', -1, true)">−</button><input type="number" step="any" min="0" class="inline-qty-input" value="1" onchange="changeToolQuantity('T-021', this.value, false)"><button type="button" class="inline-qty-btn" onclick="changeToolQuantity('T-021', 1, true)">+</button><span class="inline-qty-unit">Unit</span></div></td>
-                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-021', this.value)"><option value="bagus" selected>🟢 Bagus</option><option value="kalibrasi">🟡 Kalibrasi</option><option value="eject">🔴 Rusak</option></select></td>
+                  <td>
+                    <div class="inline-qty-wrap"><button type="button" class="inline-qty-btn"
+                        onclick="changeToolQuantity('T-021', -1, true)">−</button><input type="number" step="any"
+                        min="0" class="inline-qty-input" value="1"
+                        onchange="changeToolQuantity('T-021', this.value, false)"><button type="button"
+                        class="inline-qty-btn" onclick="changeToolQuantity('T-021', 1, true)">+</button><span
+                        class="inline-qty-unit">Unit</span></div>
+                  </td>
+                  <td><select class="cond-select-inline bagus" onchange="changeToolCondition('T-021', this.value)">
+                      <option value="bagus" selected>🟢 Bagus</option>
+                      <option value="kalibrasi">🟡 Kalibrasi</option>
+                      <option value="eject">🔴 Rusak</option>
+                    </select></td>
                   <td><span class="excel-badge ready"><span class="hl-dot"></span> Ready</span></td>
-                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm" onclick="quickBorrowItem('T-021')">🤝 Pinjam</button> <button type="button" class="btn btn-ghost btn-sm" onclick="openToolModal('T-021')">🔲 QR</button></td>
+                  <td style="text-align:center;white-space:nowrap"><button type="button" class="btn btn-ok btn-sm"
+                      onclick="quickBorrowItem('T-021')">🤝 Pinjam</button> <button type="button"
+                      class="btn btn-ghost btn-sm" onclick="openToolModal('T-021')">🔲 QR</button></td>
                 </tr>
               </tbody>
             </table>
@@ -654,7 +1032,7 @@
             <div class="std-head-text">
               <span class="std-head-kicker">MODUL 02 · REGISTRASI INVENTARIS</span>
               <h1 class="std-head-title">Data Entry — Input Barang Baru</h1>
-              <span class="std-head-desc">Tambahkan Tools (Aset Pinjam) atau Material (Habis Pakai) baru ke Database Gudang.</span>
+              <span class="std-head-desc">Tambahkan Tools atau Material baru ke Database Gudang.</span>
             </div>
           </div>
           <div class="std-head-actions">
@@ -673,14 +1051,14 @@
             <button type="button" class="entry-type-btn active" data-etype="tool" id="btnEntryTypeTool">
               <span class="et-ico">🧰</span>
               <span class="et-txt">
-                <b>TOOLS (Alat Pinjam)</b>
+                <b>TOOLS</b>
                 <small><span id="entryCountTool">21</span> alat terdaftar • Kode T-xxx</small>
               </span>
             </button>
             <button type="button" class="entry-type-btn" data-etype="material" id="btnEntryTypeMaterial">
               <span class="et-ico">📦</span>
               <span class="et-txt">
-                <b>MATERIAL (Habis Pakai)</b>
+                <b>MATERIAL</b>
                 <small><span id="entryCountMaterial">8</span> bahan terdaftar • Kode M-xxx</small>
               </span>
             </button>
@@ -805,64 +1183,66 @@
            ========================================================================= -->
       <section id="tab-scan" class="tab">
         <div id="incomingTransfersBox" class="hidden"></div>
-        <div id="roleBanner" class="role-card hidden"></div>
-        <div id="adminDelegateBox" class="hidden"><select id="delegateSelect"></select></div>
 
-        <div class="simple-scan-wrap">
-          <!-- HEADING STANDAR MODUL 03: BARANG KELUAR -->
-          <div class="std-page-header print-hide">
-            <div class="std-head-left">
-              <div class="std-head-icon">📤</div>
-              <div class="std-head-text">
-                <span class="std-head-kicker">MODUL 03 · SIRKULASI BARANG KELUAR</span>
-                <h1 class="std-head-title">Pinjam Tools &amp; Ambil Material</h1>
-                <span class="std-head-desc">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis pakai / kurangi stok).</span>
-              </div>
-            </div>
-            <div class="std-head-actions">
-              <button type="button" id="btnToggleReturnBox" class="btn btn-ok btn-sm">
-                ↩️ Kembalikan Tools (<span id="myHoldingCount">0</span>)
-              </button>
+        <!-- HEADING STANDAR MODUL 03: BARANG KELUAR -->
+        <div class="std-page-header print-hide">
+          <div class="std-head-left">
+            <div class="std-head-icon">📤</div>
+            <div class="std-head-text">
+              <span class="std-head-kicker">MODUL 03 · SIRKULASI BARANG KELUAR</span>
+              <h1 class="std-head-title">Pinjam Tools &amp; Ambil Material</h1>
+              <span class="std-head-desc">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis
+                pakai / kurangi stok).</span>
             </div>
           </div>
+          <div class="std-head-actions">
+            <button type="button" id="btnToggleReturnBox" class="btn btn-ok btn-sm">
+              ↩️ Kembalikan Tools (<span id="myHoldingCount">0</span>)
+            </button>
+          </div>
+        </div>
 
-          <div class="card simple-scan-card">
+        <div class="card compact-entry-card simple-scan-card">
 
-            <!-- Kotak Pengembalian Tools -->
-            <div id="myHoldingCard" class="compact-import-box hidden" style="margin-bottom:14px">
-              <div class="row between" style="margin-bottom:8px">
-                <b style="font-size:.95rem">↩️ Daftar Tools yang Sedang Dipinjam (Klik Kembalikan)</b>
-                <button type="button" id="btnCloseReturnBox" class="btn btn-ghost btn-sm">✕</button>
-              </div>
-              <div id="myHoldingList" class="active-loans-scroll"></div>
-              <div id="outgoingTransfersBox"></div>
+          <!-- Kotak Pengembalian Tools -->
+          <div id="myHoldingCard" class="compact-import-box hidden" style="margin-top:0;margin-bottom:14px">
+            <div class="row between" style="margin-bottom:8px">
+              <b style="font-size:.95rem">↩️ Daftar Tools yang Sedang Dipinjam (Klik Kembalikan)</b>
+              <button type="button" id="btnCloseReturnBox" class="btn btn-ghost btn-sm">✕</button>
             </div>
+            <div id="myHoldingList" class="active-loans-scroll"></div>
+            <div id="outgoingTransfersBox"></div>
+          </div>
 
-            <!-- LANGKAH 1: PILIH JENIS TRANSAKSI KELUAR -->
-            <div class="entry-type-switcher scan-type-switcher" style="margin-bottom:0">
-              <button type="button" id="btnScanTypeTool" class="entry-type-btn" data-type="tool">
-                <span class="et-icon">🔧</span>
-                <div class="et-text">
-                  <b>PINJAM TOOLS (Alat Kerja)</b>
-                  <small>Wajib dikembalikan • <span id="scanCountTool">0</span> jenis alat</small>
-                </div>
-              </button>
-              <button type="button" id="btnScanTypeMaterial" class="entry-type-btn material" data-type="material">
-                <span class="et-icon">📦</span>
-                <div class="et-text">
-                  <b>AMBIL MATERIAL (Habis Pakai)</b>
-                  <small>Langsung kurangi stok • <span id="scanCountMaterial">0</span> bahan</small>
-                </div>
-              </button>
-            </div>
+          <!-- PILIH JENIS TRANSAKSI KELUAR -->
+          <div class="entry-type-switcher scan-type-switcher">
+            <button type="button" id="btnScanTypeTool" class="entry-type-btn active" data-etype="tool" data-type="tool">
+              <span class="et-ico">🧰</span>
+              <span class="et-txt">
+                <b>PINJAM TOOLS (Wajib Kembali)</b>
+                <small>Alat kerja dipinjam sementara • <span id="scanCountTool">21</span> jenis alat</small>
+              </span>
+            </button>
+            <button type="button" id="btnScanTypeMaterial" class="entry-type-btn" data-etype="material"
+              data-type="material">
+              <span class="et-ico">📦</span>
+              <span class="et-txt">
+                <b>AMBIL MATERIAL (Habis Pakai)</b>
+                <small>Langsung kurangi stok gudang • <span id="scanCountMaterial">8</span> bahan</small>
+              </span>
+            </button>
+          </div>
 
-            <!-- LANGKAH 2: PILIH BARANG -->
-            <div id="scanStepItems" class="borrow-step-box hidden" style="margin-top:14px">
-              <div class="row between wrap gap8" style="margin-bottom:8px">
-                <div class="borrow-step-title" id="scanStepItemsTitle" style="margin:0">① Pilih barang</div>
+          <!-- LAYOUT 2 KOLOM RAPI: KIRI (PILIH BARANG & JUMLAH) | KANAN (PILIH CREW & SIMPAN) -->
+          <div class="scan-workspace-grid">
+            <!-- KOLOM KIRI: ① PILIH BARANG & JUMLAH -->
+            <div id="scanStepItems" class="borrow-step-box">
+              <div class="row between wrap gap8" style="margin-bottom:10px">
+                <div class="borrow-step-title" id="scanStepItemsTitle" style="margin:0">① Pilih Tools (Alat Kerja) &amp;
+                  Jumlah Pinjam</div>
                 <div class="row gap6">
-                  <button type="button" id="btnCamera" class="btn btn-primary btn-sm">📷 Scan</button>
-                  <button type="button" id="btnPhotoQr" class="btn btn-dark btn-sm">📸 Foto</button>
+                  <button type="button" id="btnCamera" class="btn btn-primary btn-sm">📷 Scan QR</button>
+                  <button type="button" id="btnPhotoQr" class="btn btn-dark btn-sm">📸 Foto QR</button>
                   <input id="photoQrInput" type="file" accept="image/*" capture="environment" class="hidden">
                 </div>
               </div>
@@ -894,13 +1274,13 @@
               <div id="scanItemScrollList" class="quick-scroll-list"></div>
 
               <!-- Pengatur Jumlah Barang Terpilih -->
-              <div id="selectedItemBox" class="selected-item-banner hidden">
+              <div id="selectedItemBox" class="selected-item-banner">
                 <div class="sel-item-info">
-                  <div id="selItemTitle" class="sel-item-name">-</div>
-                  <div id="selItemStockInfo" class="small muted"></div>
+                  <div id="selItemTitle" class="sel-item-name">👆 Pilih salah satu barang di daftar atas</div>
+                  <div id="selItemStockInfo" class="small muted">Klik nama barang atau Scan QR untuk memilih</div>
                 </div>
                 <div class="sel-item-qty">
-                  <span class="c-label" id="selItemQtyLabel" style="margin-bottom:3px">Jumlah</span>
+                  <span class="c-label" id="selItemQtyLabel" style="margin-bottom:3px">Jumlah Pinjam</span>
                   <div class="qty-stepper">
                     <button type="button" id="btnBorrowQtyMinus" class="qty-btn">−</button>
                     <input type="number" inputmode="decimal" id="borrowQtyInput" value="1" min="1" step="any">
@@ -911,24 +1291,24 @@
               </div>
             </div>
 
-            <!-- LANGKAH 3: SIAPA YANG PINJAM / MENGAMBIL -->
-            <div id="scanStepBorrower" class="borrow-step-box hidden" style="margin-top:12px">
-              <div class="borrow-step-title" id="scanStepBorrowerTitle">② Siapa yang meminjam?</div>
+            <!-- KOLOM KANAN: ② SIAPA YANG PINJAM / MENGAMBIL -->
+            <div id="scanStepBorrower" class="borrow-step-box scan-borrower-col">
+              <div class="borrow-step-title" id="scanStepBorrowerTitle">② Siapa yang meminjam Tools?</div>
 
               <!-- Ketik Badge ID / Nama (otomatis menyaring daftar) -->
               <div class="borrower-form-grid">
                 <div class="c-field">
-                  <span class="c-label">🪪 Badge ID / Nama Crew *</span>
+                  <label for="borrowBadgeId">🪪 Badge ID / Cari Crew <span style="color:#dc2626">*</span></label>
                   <input id="borrowBadgeId" type="search" placeholder="Ketik badge / nama…" autocomplete="off">
                 </div>
                 <div class="c-field">
-                  <span class="c-label">👷 Nama Crew Terpilih</span>
+                  <label for="borrowerNameInput">👷 Nama Crew Terpilih</label>
                   <input id="borrowerNameInput" placeholder="Terisi otomatis" autocomplete="off">
                 </div>
               </div>
 
               <!-- Daftar Crew (ketuk untuk memilih) -->
-              <div style="margin-top:8px">
+              <div style="margin-top:8px;flex:1;display:flex;flex-direction:column">
                 <select id="borrowQuickSelect" class="clean-select hidden"></select>
                 <div id="borrowCrewScrollList" class="crew-scroll-grid"></div>
               </div>
@@ -937,15 +1317,15 @@
 
               <div style="margin-top:12px">
                 <button type="button" id="btnSubmitBorrow" class="btn btn-ok btn-lg"
-                  style="width:100%;font-size:1.05rem;padding:14px">
+                  style="width:100%;font-size:1rem;padding:13px 16px">
                   ✅ SIMPAN PINJAMAN TOOLS
                 </button>
               </div>
             </div>
-
-            <!-- Notifikasi Hasil Singkat (Hanya muncul setelah transaksi selesai) -->
-            <div id="feed" class="feed" style="margin-top:12px"></div>
           </div>
+
+          <!-- Notifikasi Hasil Singkat (Hanya muncul setelah transaksi selesai) -->
+          <div id="feed" class="feed" style="margin-top:12px"></div>
         </div>
       </section>
 
@@ -960,11 +1340,13 @@
             <div class="std-head-text">
               <span class="std-head-kicker">MODUL 04 · LOG TRANSAKSI GUDANG</span>
               <h1 class="std-head-title">Riwayat Peminjaman Tools &amp; Pengambilan Material</h1>
-              <span class="std-head-desc">Rekam jejak waktu keluar, pengembalian alat kerja, dan pemakaian material habis pakai.</span>
+              <span class="std-head-desc">Rekam jejak waktu keluar, pengembalian alat kerja, dan pemakaian material
+                habis pakai.</span>
             </div>
           </div>
           <div class="std-head-actions">
-            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('hCsv')?.click()">⬇️ Unduh Laporan Excel</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('hCsv')?.click()">⬇️
+              Unduh Laporan Excel</button>
           </div>
         </div>
 
@@ -1006,7 +1388,8 @@
             <div class="std-head-text">
               <span class="std-head-kicker">MODUL 05 · ADMINISTRASI &amp; KONTROL STOK</span>
               <h1 class="std-head-title">Panel Kendali Admin &amp; Stock Opname</h1>
-              <span class="std-head-desc">Kelola akun Crew, Balancing Stok Opname (Sistem vs Fisik), Laporan Rekap, dan Backup.</span>
+              <span class="std-head-desc">Kelola akun Crew, Balancing Stok Opname (Sistem vs Fisik), Laporan Rekap, dan
+                Backup.</span>
             </div>
           </div>
           <div class="std-head-actions">
@@ -1035,7 +1418,8 @@
                 <div>
                   <div class="std-sub-kicker">SUB-MODUL 5.1 · PERSONEL LAPANGAN</div>
                   <h3 class="std-sub-title" id="userFormTitle">Tambah &amp; Kelola Data Crew</h3>
-                  <div class="std-sub-desc">Daftarkan nama Crew dan divisi untuk peminjaman Tools &amp; pengambilan Material.</div>
+                  <div class="std-sub-desc">Daftarkan nama Crew dan divisi untuk peminjaman Tools &amp; pengambilan
+                    Material.</div>
                 </div>
               </div>
               <div class="row wrap gap6">
@@ -1105,7 +1489,9 @@
                 <div>
                   <div class="std-sub-kicker">SUB-MODUL 5.2 · AUDIT &amp; REKONSILIASI INVENTARIS</div>
                   <h3 class="std-sub-title">Data Opname — Balancing Stok Gudang</h3>
-                  <div class="std-sub-desc">Cocokkan <b>Sisa Sistem (di Rak)</b> setelah dikurangi barang keluar dengan <b>Fisik Aktual (di Rak)</b>.</div>
+                  <div class="std-sub-desc">Cocokkan <b>Sisa Sistem (di Rak)</b> setelah dikurangi barang keluar dengan
+                    <b>Fisik Aktual (di Rak)</b>.
+                  </div>
                 </div>
               </div>
               <div class="row wrap gap8">
@@ -1153,7 +1539,8 @@
 
           <div class="excel-sheet-card">
             <div class="excel-sheet-header">
-              <span class="excel-grid-title">📋 Tabel Balancing Stok (Total Aset/Awal · Keluar · Sisa Sistem vs Fisik Aktual)</span>
+              <span class="excel-grid-title">📋 Tabel Balancing Stok (Total Aset/Awal · Keluar · Sisa Sistem vs Fisik
+                Aktual)</span>
               <span class="small muted">Ketik jumlah fisik aktual atau tekan − / +, lalu klik <b>⚖️ Balance</b>.</span>
             </div>
             <div class="excel-table-container">
@@ -1175,7 +1562,8 @@
                 <div>
                   <div class="std-sub-kicker">SUB-MODUL 5.3 · EKSPOR LAPORAN MANAJEMEN</div>
                   <h3 class="std-sub-title">Unduh Rekapitulasi Laporan Gudang</h3>
-                  <div class="std-sub-desc">Ekspor data stok inventaris dan riwayat keluar/pinjam ke Microsoft Excel atau cetak PDF.</div>
+                  <div class="std-sub-desc">Ekspor data stok inventaris dan riwayat keluar/pinjam ke Microsoft Excel
+                    atau cetak PDF.</div>
                 </div>
               </div>
             </div>
@@ -1270,7 +1658,7 @@
   </div>
 
   <script src="vendor/jsQR.js" defer></script>
-  <script src="app.js?v=29" defer></script>
+  <script src="app.js?v=30" defer></script>
 </body>
 
 </html>
