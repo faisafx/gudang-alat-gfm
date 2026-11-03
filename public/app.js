@@ -2444,7 +2444,7 @@ function resetUserFormToCreate() {
   if ($('#ufPhone')) $('#ufPhone').value = '';
   if ($('#ufRole')) $('#ufRole').value = 'crew';
   if ($('#ufPassword')) $('#ufPassword').value = '';
-  if ($('#userFormTitle')) $('#userFormTitle').textContent = '➕ Tambah Crew';
+  if ($('#userFormTitle')) $('#userFormTitle').textContent = 'Tambah & Kelola Data Crew';
   if ($('#ufSubmitBtn')) $('#ufSubmitBtn').textContent = '➕ Simpan Crew';
   $('#ufCancelBtn')?.classList.add('hidden');
 }
@@ -2464,7 +2464,7 @@ function bindUserActionButtons(root) {
       if ($('#ufPhone')) $('#ufPhone').value = u.phone || '';
       if ($('#ufRole')) $('#ufRole').value = u.role || 'crew';
       if ($('#ufPassword')) $('#ufPassword').value = '';
-      if ($('#userFormTitle')) $('#userFormTitle').textContent = `✏️ Edit Crew: ${u.name}`;
+      if ($('#userFormTitle')) $('#userFormTitle').textContent = `Edit Data Crew: ${u.name}`;
       if ($('#ufSubmitBtn')) $('#ufSubmitBtn').textContent = '💾 Simpan';
       $('#ufCancelBtn')?.classList.remove('hidden');
       $('#ufName')?.focus();

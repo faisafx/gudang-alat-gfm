@@ -8,7 +8,7 @@
   <title>GFM Gudang Alat &amp; Material — PT Sulawesi Cahaya Mineral</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css?v=26">
+  <link rel="stylesheet" href="/style.css?v=28">
   <script>
     // Bersihkan Service Worker & Cache lama agar menu dan aplikasi selalu berjalan normal 100%
     if ('serviceWorker' in navigator) {
@@ -200,9 +200,26 @@
       <section id="tab-database" class="tab active">
         <div id="pendingTransfersOverview" class="hidden"></div>
 
+        <!-- HEADING STANDAR MODUL 01: DATABASE -->
+        <div class="std-page-header print-hide">
+          <div class="std-head-left">
+            <div class="std-head-icon">📦</div>
+            <div class="std-head-text">
+              <span class="std-head-kicker">MODUL 01 · MASTER INVENTARIS GUDANG</span>
+              <h1 class="std-head-title">Database Barang (Tools &amp; Material)</h1>
+              <span class="std-head-desc">Pantau ketersediaan stok, status peminjaman, dan kondisi barang secara real-time.</span>
+            </div>
+          </div>
+          <div class="std-head-actions">
+            <button type="button" id="btnQuickAddFromDb" class="btn btn-primary btn-sm">➕ Tambah Barang</button>
+            <button type="button" id="btnDlExcelFromDb" class="btn btn-dark btn-sm">📊 Unduh Excel</button>
+            <button type="button" class="btn btn-ghost btn-sm print-hide" onclick="window.print()">🖨️ Cetak</button>
+          </div>
+        </div>
+
         <!-- SPREADSHEET TOOLBAR ALA EXCEL -->
         <div class="card excel-toolbar-card">
-          <!-- Sheet Tabs: [Semua] [🧰 Tools] [📦 Material] + Aksi Cepat -->
+          <!-- Sheet Tabs: [Semua] [🧰 Tools] [📦 Material] -->
           <div class="excel-toolbar-top">
             <div class="excel-sheets-tabs" id="dbTypeTabs">
               <button type="button" class="excel-sheet-tab active" data-type="all" id="btnTypeAll">
@@ -217,12 +234,6 @@
                 <span>📦 Material</span>
                 <span class="sheet-count" id="badgeTypeMaterial">8</span>
               </button>
-            </div>
-
-            <div class="excel-action-btns">
-              <button type="button" id="btnQuickAddFromDb" class="btn btn-primary btn-sm">➕ Tambah Barang</button>
-              <button type="button" id="btnDlExcelFromDb" class="btn btn-dark btn-sm">📊 Unduh Excel</button>
-              <button type="button" class="btn btn-ghost btn-sm print-hide" onclick="window.print()">🖨️ Cetak</button>
             </div>
           </div>
 
@@ -301,36 +312,40 @@
            HALAMAN 2: DATA ENTRY (HANYA FORM TAMBAH BARANG & IMPORT, TANPA TABEL BARANG)
            ========================================================================= -->
       <section id="tab-entry" class="tab">
-        <div class="card compact-entry-card">
-          <!-- Baris Atas: Judul + Tombol Cepat Excel & QR -->
-          <div class="entry-top-bar">
-            <div>
-              <h2 style="margin:0">➕ Data Entry — Tambah Barang Baru</h2>
-              <div class="muted small" style="margin-top:2px">Barang yang disimpan langsung masuk ke menu <b>📦
-                  DATABASE</b>.</div>
-            </div>
-            <div class="row wrap gap8">
-              <button type="button" id="btnDlFormatToolsQuick" class="btn btn-ghost btn-sm">📊 Format Excel (<span
-                  id="dlToolsCount">29</span>)</button>
-              <button type="button" id="btnUploadCsvQuick" class="btn btn-dark btn-sm">📂 Upload Excel</button>
-              <button type="button" id="btnTogglePasteBox" class="btn btn-ghost btn-sm">📋 Paste Excel</button>
-              <a class="btn btn-ghost btn-sm" href="/labels" target="_blank">🖨️ Cetak QR</a>
+        <!-- HEADING STANDAR MODUL 02: DATA ENTRY -->
+        <div class="std-page-header print-hide">
+          <div class="std-head-left">
+            <div class="std-head-icon">➕</div>
+            <div class="std-head-text">
+              <span class="std-head-kicker">MODUL 02 · REGISTRASI INVENTARIS</span>
+              <h1 class="std-head-title">Data Entry — Input Barang Baru</h1>
+              <span class="std-head-desc">Tambahkan Tools (Aset Pinjam) atau Material (Habis Pakai) baru ke Database Gudang.</span>
             </div>
           </div>
+          <div class="std-head-actions">
+            <button type="button" id="btnDlFormatToolsQuick" class="btn btn-ghost btn-sm">📊 Format Excel (<span
+                id="dlToolsCount">29</span>)</button>
+            <button type="button" id="btnUploadCsvQuick" class="btn btn-primary btn-sm">📂 Upload Excel</button>
+            <button type="button" id="btnTogglePasteBox" class="btn btn-ghost btn-sm">📋 Paste Excel</button>
+            <a class="btn btn-ghost btn-sm" href="/labels" target="_blank">🖨️ Cetak QR</a>
+          </div>
+        </div>
+
+        <div class="card compact-entry-card">
 
           <!-- Pilihan Tipe Barang -->
           <div class="entry-type-switcher" id="entryTypePills">
             <button type="button" class="entry-type-btn active" data-etype="tool" id="btnEntryTypeTool">
               <span class="et-ico">🧰</span>
               <span class="et-txt">
-                <b>TOOLS</b>
+                <b>TOOLS (Alat Pinjam)</b>
                 <small><span id="entryCountTool">21</span> alat terdaftar • Kode T-xxx</small>
               </span>
             </button>
             <button type="button" class="entry-type-btn" data-etype="material" id="btnEntryTypeMaterial">
               <span class="et-ico">📦</span>
               <span class="et-txt">
-                <b>MATERIAL</b>
+                <b>MATERIAL (Habis Pakai)</b>
                 <small><span id="entryCountMaterial">8</span> bahan terdaftar • Kode M-xxx</small>
               </span>
             </button>
@@ -459,18 +474,24 @@
         <div id="adminDelegateBox" class="hidden"><select id="delegateSelect"></select></div>
 
         <div class="simple-scan-wrap">
-          <div class="card simple-scan-card">
-            <!-- Header + Tombol Kembalikan Tools -->
-            <div class="row between wrap gap8" style="margin-bottom:12px">
-              <div>
-                <h3 style="margin:0;font-size:1.15rem">📤 Menu Barang Keluar</h3>
-                <div class="muted small">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis
-                  pakai).</div>
+          <!-- HEADING STANDAR MODUL 03: BARANG KELUAR -->
+          <div class="std-page-header print-hide">
+            <div class="std-head-left">
+              <div class="std-head-icon">📤</div>
+              <div class="std-head-text">
+                <span class="std-head-kicker">MODUL 03 · SIRKULASI BARANG KELUAR</span>
+                <h1 class="std-head-title">Pinjam Tools &amp; Ambil Material</h1>
+                <span class="std-head-desc">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis pakai / kurangi stok).</span>
               </div>
+            </div>
+            <div class="std-head-actions">
               <button type="button" id="btnToggleReturnBox" class="btn btn-ok btn-sm">
                 ↩️ Kembalikan Tools (<span id="myHoldingCount">0</span>)
               </button>
             </div>
+          </div>
+
+          <div class="card simple-scan-card">
 
             <!-- Kotak Pengembalian Tools -->
             <div id="myHoldingCard" class="compact-import-box hidden" style="margin-bottom:14px">
@@ -597,6 +618,21 @@
            HALAMAN 4: RIWAYAT (TABEL SELALU TAMPIL)
            ========================================================================= -->
       <section id="tab-history" class="tab">
+        <!-- HEADING STANDAR MODUL 04: RIWAYAT -->
+        <div class="std-page-header print-hide">
+          <div class="std-head-left">
+            <div class="std-head-icon">🕘</div>
+            <div class="std-head-text">
+              <span class="std-head-kicker">MODUL 04 · LOG TRANSAKSI GUDANG</span>
+              <h1 class="std-head-title">Riwayat Peminjaman Tools &amp; Pengambilan Material</h1>
+              <span class="std-head-desc">Rekam jejak waktu keluar, pengembalian alat kerja, dan pemakaian material habis pakai.</span>
+            </div>
+          </div>
+          <div class="std-head-actions">
+            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('hCsv')?.click()">⬇️ Unduh Laporan Excel</button>
+          </div>
+        </div>
+
         <div class="card history-filters">
           <div class="hf-dates">
             <label>Dari <input type="date" id="hFrom"></label>
@@ -614,6 +650,10 @@
           </div>
         </div>
         <div class="excel-sheet-card">
+          <div class="excel-sheet-header">
+            <span class="excel-grid-title">📋 Tabel Log Riwayat Transaksi Gudang</span>
+            <span class="small muted">Menampilkan status Dipinjam, Kembali, dan Habis Pakai (Keluar).</span>
+          </div>
           <div class="excel-table-container">
             <table id="hTable" class="excel-table"></table>
           </div>
@@ -624,17 +664,25 @@
            HALAMAN 5: ADMIN (CREW, DATA OPNAME / BALANCING STOK, REKAP, QR & BACKUP)
            ========================================================================= -->
       <section id="tab-admin" class="tab">
-        <div class="card compact-entry-card print-hide" style="margin-bottom:12px">
-          <div class="row between wrap gap8" style="margin-bottom:10px">
-            <h2 style="margin:0;font-size:1.1rem">⚙️ Panel Kendali Admin</h2>
-            <div class="row wrap gap6">
-              <button type="button" id="btnAdminQuickAddTool" class="btn btn-primary btn-sm">🔧 + Tools</button>
-              <button type="button" id="btnAdminQuickAddMat" class="btn btn-dark btn-sm">📦 + Material</button>
+        <!-- HEADING STANDAR MODUL 05: ADMIN -->
+        <div class="std-page-header print-hide">
+          <div class="std-head-left">
+            <div class="std-head-icon">⚙️</div>
+            <div class="std-head-text">
+              <span class="std-head-kicker">MODUL 05 · ADMINISTRASI &amp; KONTROL STOK</span>
+              <h1 class="std-head-title">Panel Kendali Admin &amp; Stock Opname</h1>
+              <span class="std-head-desc">Kelola akun Crew, Balancing Stok Opname (Sistem vs Fisik), Laporan Rekap, dan Backup.</span>
             </div>
           </div>
+          <div class="std-head-actions">
+            <button type="button" id="btnAdminQuickAddTool" class="btn btn-primary btn-sm">🔧 + Tools</button>
+            <button type="button" id="btnAdminQuickAddMat" class="btn btn-ghost btn-sm">📦 + Material</button>
+          </div>
+        </div>
 
+        <div class="card compact-entry-card print-hide" style="margin-bottom:12px;padding:10px">
           <!-- MENU UTAMA ADMIN -->
-          <div class="subtabs admin-big-tabs">
+          <div class="subtabs admin-big-tabs" style="margin:0">
             <button type="button" data-sub="users" class="active">👷 Data Crew (<span
                 id="adminCrewCountTab">32</span>)</button>
             <button type="button" data-sub="opname">⚖️ Data Opname (Balancing Stok)</button>
@@ -646,8 +694,15 @@
         <!-- SUB 1: KELOLA DATA CREW & BADGE ID (SIMPEL TANPA PASSWORD) -->
         <div id="sub-users" class="sub">
           <div class="card compact-entry-card">
-            <div class="row between wrap gap8" style="margin-bottom:8px">
-              <h3 style="margin:0;font-size:1rem" id="userFormTitle">➕ Tambah Crew</h3>
+            <div class="std-sub-header">
+              <div class="std-sub-title-wrap">
+                <div class="std-sub-badge">👷</div>
+                <div>
+                  <div class="std-sub-kicker">SUB-MODUL 5.1 · PERSONEL LAPANGAN</div>
+                  <h3 class="std-sub-title" id="userFormTitle">Tambah &amp; Kelola Data Crew</h3>
+                  <div class="std-sub-desc">Daftarkan nama Crew dan divisi untuk peminjaman Tools &amp; pengambilan Material.</div>
+                </div>
+              </div>
               <div class="row wrap gap6">
                 <button type="button" id="btnDlCsvUsers" class="btn btn-ghost btn-sm">📗 Excel Crew (<span
                     id="dlUsersCount">32</span>)</button>
@@ -694,7 +749,7 @@
           <div class="excel-sheet-card" style="margin-top:10px">
             <div class="excel-sheet-header">
               <div class="row wrap gap8" style="flex:1">
-                <span class="excel-grid-title">📋 Daftar Crew</span>
+                <span class="excel-grid-title">📋 Daftar Crew Terdaftar</span>
                 <div class="excel-search-box" style="flex:1;max-width:300px">
                   <input id="userSearchInput" type="search" placeholder="🔍 Cari crew…" autocomplete="off">
                 </div>
@@ -709,11 +764,14 @@
         <!-- SUB 2: DATA OPNAME (BALANCING STOK SISTEM VS STOK FISIK AKTUAL) -->
         <div id="sub-opname" class="sub hidden">
           <div class="card compact-entry-card" style="margin-bottom:10px">
-            <div class="row between wrap gap8" style="margin-bottom:10px">
-              <div>
-                <h3 style="margin:0;font-size:1.05rem">⚖️ Data Opname — Balancing Stok Gudang</h3>
-                <div class="muted small">Sesuaikan <b>Stok Fisik Aktual</b> di gudang untuk menyeimbangkan (balance)
-                  jumlah stok di Database.</div>
+            <div class="std-sub-header">
+              <div class="std-sub-title-wrap">
+                <div class="std-sub-badge">⚖️</div>
+                <div>
+                  <div class="std-sub-kicker">SUB-MODUL 5.2 · AUDIT &amp; REKONSILIASI INVENTARIS</div>
+                  <h3 class="std-sub-title">Data Opname — Balancing Stok Gudang</h3>
+                  <div class="std-sub-desc">Cocokkan <b>Sisa Sistem (di Rak)</b> setelah dikurangi barang keluar dengan <b>Fisik Aktual (di Rak)</b>.</div>
+                </div>
               </div>
               <div class="row wrap gap8">
                 <button type="button" id="btnOpReset" class="btn btn-ghost btn-sm"
@@ -760,7 +818,7 @@
 
           <div class="excel-sheet-card">
             <div class="excel-sheet-header">
-              <span class="excel-grid-title">📋 Tabel Balancing Stok (Sistem vs Fisik Aktual)</span>
+              <span class="excel-grid-title">📋 Tabel Balancing Stok (Total Aset/Awal · Keluar · Sisa Sistem vs Fisik Aktual)</span>
               <span class="small muted">Ketik jumlah fisik aktual atau tekan − / +, lalu klik <b>⚖️ Balance</b>.</span>
             </div>
             <div class="excel-table-container">
@@ -776,7 +834,16 @@
 
           <!-- Unduh Laporan 1-Klik -->
           <div class="card compact-entry-card print-hide" style="margin-bottom:12px">
-            <h3 style="margin:0 0 10px;font-size:1rem">📥 Unduh Laporan</h3>
+            <div class="std-sub-header">
+              <div class="std-sub-title-wrap">
+                <div class="std-sub-badge">📊</div>
+                <div>
+                  <div class="std-sub-kicker">SUB-MODUL 5.3 · EKSPOR LAPORAN MANAJEMEN</div>
+                  <h3 class="std-sub-title">Unduh Rekapitulasi Laporan Gudang</h3>
+                  <div class="std-sub-desc">Ekspor data stok inventaris dan riwayat keluar/pinjam ke Microsoft Excel atau cetak PDF.</div>
+                </div>
+              </div>
+            </div>
             <div class="recap-actions-grid">
               <button type="button" id="btnRecapStockExcel" class="recap-action-card">
                 <span class="rac-icon">📗</span>
@@ -804,8 +871,14 @@
 
           <!-- Daftar Barang Sedang Dipinjam -->
           <div class="card compact-entry-card">
-            <div class="row between wrap gap8" style="margin-bottom:10px">
-              <h3 style="margin:0;font-size:1rem">👷 Tools yang Sedang Dipinjam</h3>
+            <div class="std-sub-header">
+              <div class="std-sub-title-wrap">
+                <div class="std-sub-badge">👷</div>
+                <div>
+                  <div class="std-sub-kicker">MONITORING AKTIF</div>
+                  <h3 class="std-sub-title">Daftar Tools yang Sedang Dipinjam di Lapangan</h3>
+                </div>
+              </div>
               <span class="muted small print-only">Dicetak: <span id="printTimeAdmin"></span></span>
             </div>
             <div id="outList"></div>
@@ -816,7 +889,15 @@
         <div id="sub-system" class="sub hidden">
           <div class="admin-simple-grid">
             <div class="card compact-entry-card">
-              <h3 style="margin:0 0 10px;font-size:1rem">📦 Barang &amp; Excel</h3>
+              <div class="std-sub-header">
+                <div class="std-sub-title-wrap">
+                  <div class="std-sub-badge">📦</div>
+                  <div>
+                    <div class="std-sub-kicker">SUB-MODUL 5.4A · TEMPLATE DATA</div>
+                    <h3 class="std-sub-title">Master Barang &amp; Format Excel</h3>
+                  </div>
+                </div>
+              </div>
               <div class="row wrap gap8">
                 <button type="button" id="btnSysAddTool" class="btn btn-primary">🔧 + Tools</button>
                 <button type="button" id="btnSysAddMat" class="btn btn-dark">📦 + Material</button>
@@ -826,7 +907,15 @@
             </div>
 
             <div class="card compact-entry-card">
-              <h3 style="margin:0 0 10px;font-size:1rem">🖨️ QR &amp; Backup</h3>
+              <div class="std-sub-header">
+                <div class="std-sub-title-wrap">
+                  <div class="std-sub-badge">🖨️</div>
+                  <div>
+                    <div class="std-sub-kicker">SUB-MODUL 5.4B · UTILITAS SISTEM</div>
+                    <h3 class="std-sub-title">Label QR Code &amp; Backup Database</h3>
+                  </div>
+                </div>
+              </div>
               <div class="row wrap gap8">
                 <a class="btn btn-primary" href="/labels" target="_blank">🖨️ Cetak QR</a>
                 <button id="btnBackup" class="btn btn-dark" type="button">💾 Backup Data</button>
@@ -846,7 +935,7 @@
   </div>
 
   <script src="/vendor/jsQR.js" defer></script>
-  <script src="/app.js?v=27" defer></script>
+  <script src="/app.js?v=28" defer></script>
 </body>
 
 </html>

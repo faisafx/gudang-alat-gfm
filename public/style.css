@@ -1891,3 +1891,179 @@ html, body {
   .print-only.print-hdr{display:flex}
   body{background:#fff} main{padding:0} .who{border:1px solid #ccc;break-inside:avoid}
 }
+
+/* ================= STANDARDIZED INDUSTRIAL HEADING SYSTEM ================= */
+.std-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: linear-gradient(135deg, #0f2942 0%, #163a5f 100%);
+  color: #ffffff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border-left: 5px solid #f59e0b;
+  box-shadow: 0 4px 14px rgba(15, 41, 66, 0.14);
+  margin-bottom: 12px;
+}
+
+.std-head-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.std-head-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: rgba(252, 211, 77, 0.14);
+  border: 1.5px solid rgba(252, 211, 77, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.std-head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.std-head-kicker {
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #fcd34d;
+  line-height: 1.1;
+}
+
+.std-head-title {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+}
+
+.std-head-desc {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.std-head-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.std-head-actions .btn-ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+.std-head-actions .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Standardized Sub-Section Header (Inside Cards / Subtabs) */
+.std-sub-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.std-sub-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.std-sub-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex: none;
+}
+
+.std-sub-kicker {
+  font-size: 0.64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #0369a1;
+}
+
+.std-sub-title {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 900;
+  color: #0f2942;
+  line-height: 1.2;
+}
+
+.std-sub-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+/* Standardized Table Sheet Header */
+.excel-sheet-header {
+  background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  border-bottom: 2px solid #cbd5e1 !important;
+  border-left: 4px solid #0f2942;
+  padding: 10px 14px !important;
+}
+
+.excel-grid-title {
+  font-size: 0.94rem !important;
+  font-weight: 900 !important;
+  color: #0f2942 !important;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .std-page-header {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .std-head-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+  .std-head-title {
+    font-size: 1.04rem;
+  }
+  .std-head-desc {
+    font-size: 0.75rem;
+  }
+  .std-head-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
