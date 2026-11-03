@@ -2203,3 +2203,20 @@ html, body {
     font-size: 0.8rem;
   }
 }
+
+
+/* Petunjuk awal Menu Keluar (sebelum memilih Pinjam Tools / Ambil Material) */
+.scan-pick-hint {
+  margin-top: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  font-size: 0.92rem;
+  color: #475569;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+}
+
+.scan-type-switcher .entry-type-btn.active {
+  transform: translateY(-1px);
+}

@@ -8,7 +8,7 @@
   <title>GFM Gudang Alat &amp; Material — PT Sulawesi Cahaya Mineral</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=31">
+  <link rel="stylesheet" href="style.css?v=32">
   <script>
     // Bersihkan Service Worker & Cache lama agar menu dan aplikasi selalu berjalan normal 100%
     if ('serviceWorker' in navigator) {
@@ -153,7 +153,7 @@
           </button>
           <button type="button" data-tab="scan" onclick="switchGudangTab('scan')">
             <span class="nav-ico">🤝</span>
-            <span class="nav-lbl">KELUAR</span>
+            <span class="nav-lbl">OUTGOING</span>
             <span id="myBadge" class="badge warn hidden">0</span>
           </button>
           <button type="button" data-tab="history" onclick="switchGudangTab('history')">
@@ -274,11 +274,11 @@
               </div>
 
               <select id="dbSort" class="excel-select" title="Urutkan data">
-                <option value="name_asc">🔤 Nama A → Z</option>
-                <option value="name_desc">🔤 Nama Z → A</option>
-                <option value="code_asc">🔢 Kode</option>
-                <option value="date_desc">📅 Terbaru</option>
-                <option value="date_asc">📅 Terlama</option>
+                <option value="name_asc">Nama A → Z</option>
+                <option value="name_desc">Nama Z → A</option>
+                <option value="code_asc">Kode</option>
+                <option value="date_desc">Terbaru</option>
+                <option value="date_asc">Terlama</option>
               </select>
 
               <select id="dbSubCat" class="excel-select" title="Filter Kategori">
@@ -1191,8 +1191,7 @@
             <div class="std-head-text">
               <span class="std-head-kicker">MODUL 03 · SIRKULASI BARANG KELUAR</span>
               <h1 class="std-head-title">Pinjam Tools &amp; Ambil Material</h1>
-              <span class="std-head-desc">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis
-                pakai / kurangi stok).</span>
+              <span class="std-head-desc">Pilih <b>Pinjam Tools</b> atau <b>Ambil Material</b></span>
             </div>
           </div>
           <div class="std-head-actions">
@@ -1216,10 +1215,10 @@
 
           <!-- PILIH JENIS TRANSAKSI KELUAR -->
           <div class="entry-type-switcher scan-type-switcher">
-            <button type="button" id="btnScanTypeTool" class="entry-type-btn active" data-etype="tool" data-type="tool">
+            <button type="button" id="btnScanTypeTool" class="entry-type-btn" data-etype="tool" data-type="tool">
               <span class="et-ico">🧰</span>
               <span class="et-txt">
-                <b>PINJAM TOOLS (Wajib Kembali)</b>
+                <b>PINJAM TOOLS</b>
                 <small>Alat kerja dipinjam sementara • <span id="scanCountTool">21</span> jenis alat</small>
               </span>
             </button>
@@ -1227,14 +1226,19 @@
               data-type="material">
               <span class="et-ico">📦</span>
               <span class="et-txt">
-                <b>AMBIL MATERIAL (Habis Pakai)</b>
+                <b>AMBIL MATERIAL</b>
                 <small>Langsung kurangi stok gudang • <span id="scanCountMaterial">8</span> bahan</small>
               </span>
             </button>
           </div>
 
           <!-- LAYOUT 2 KOLOM RAPI: KIRI (PILIH BARANG & JUMLAH) | KANAN (PILIH CREW & SIMPAN) -->
-          <div class="scan-workspace-grid">
+          <!-- Petunjuk awal (hilang setelah memilih jenis transaksi) -->
+          <div id="scanPickHint" class="scan-pick-hint">
+            👆 Ketuk <b>PINJAM TOOLS</b> atau <b>AMBIL MATERIAL</b> di atas untuk membuka form.
+          </div>
+
+          <div id="scanWorkspace" class="scan-workspace-grid hidden">
             <!-- KOLOM KIRI: ① PILIH BARANG & JUMLAH -->
             <div id="scanStepItems" class="borrow-step-box">
               <div class="row between wrap gap8" style="margin-bottom:10px">
@@ -1658,7 +1662,7 @@
   </div>
 
   <script src="vendor/jsQR.js" defer></script>
-  <script src="app.js?v=31" defer></script>
+  <script src="app.js?v=32" defer></script>
 </body>
 
 </html>

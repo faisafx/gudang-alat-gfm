@@ -851,15 +851,31 @@ $('#photoQrInput').onchange = async (e) => {
 };
 
 // =====================================================================
-// HALAMAN 3: SCAN & PINJAM (LAYOUT 2 KOLOM RAPI — SIAP PAKAI)
+// HALAMAN 3: SCAN & PINJAM (FORM MUNCUL HANYA SAAT JENIS TRANSAKSI DIKLIK)
 // =====================================================================
 const scanState = {
-  itemType: 'tool',
+  itemType: '',
   selectedCode: '',
   selectedWorker: '',
   searchItem: '',
   searchCrew: '',
 };
+
+// Tampilkan / sembunyikan form transaksi keluar (2 kolom)
+function showScanWorkspace(show) {
+  $('#scanWorkspace')?.classList.toggle('hidden', !show);
+  $('#scanPickHint')?.classList.toggle('hidden', !!show);
+}
+
+// Tutup form & kembali ke kondisi awal (belum memilih jenis transaksi)
+function closeScanWorkspace() {
+  scanState.itemType = '';
+  scanState.selectedCode = '';
+  $('#btnScanTypeTool')?.classList.remove('active');
+  $('#btnScanTypeMaterial')?.classList.remove('active');
+  closeCamera();
+  showScanWorkspace(false);
+}
 
 function resetSelectedItemBanner() {
   const isMat = scanState.itemType === 'material';
@@ -878,7 +894,7 @@ function resetSelectedItemBanner() {
 }
 
 async function loadScanBorrowView() {
-  if (!scanState.itemType) scanState.itemType = 'tool';
+  showScanWorkspace(!!scanState.itemType);
   // Render langsung 0ms dari cache sebelum API selesai
   renderScanCrewScrollList();
   renderScanItemScrollList();
@@ -928,20 +944,27 @@ function updateScanModeLabels(validType) {
 
 function setScanItemType(type) {
   const validType = type === 'material' ? 'material' : 'tool';
+
+  // Klik tombol yang sama lagi = tutup form
+  if (scanState.itemType === validType && !$('#scanWorkspace')?.classList.contains('hidden')) {
+    closeScanWorkspace();
+    return;
+  }
+
   scanState.itemType = validType;
   scanState.selectedCode = '';
+  scanState.searchItem = '';
+  if ($('#scanInput')) $('#scanInput').value = '';
 
   $('#btnScanTypeTool')?.classList.toggle('active', validType === 'tool');
   $('#btnScanTypeMaterial')?.classList.toggle('active', validType === 'material');
 
   updateScanModeLabels(validType);
   resetSelectedItemBanner();
-
-  $('#scanStepItems')?.classList.remove('hidden');
-  $('#selectedItemBox')?.classList.remove('hidden');
-  $('#scanStepBorrower')?.classList.remove('hidden');
+  showScanWorkspace(true);
 
   renderScanItemScrollList();
+  $('#scanWorkspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 $('#btnScanTypeTool')?.addEventListener('click', () => setScanItemType('tool'));
@@ -1009,6 +1032,7 @@ function selectScanItem(code, resetQty = true) {
     $('#btnScanTypeMaterial')?.classList.toggle('active', it === 'material');
   }
   updateScanModeLabels(it);
+  showScanWorkspace(true);
   $('#scanStepItems')?.classList.remove('hidden');
   $('#selectedItemBox')?.classList.remove('hidden');
   $('#scanStepBorrower')?.classList.remove('hidden');
@@ -1225,9 +1249,9 @@ async function submitBorrowForm() {
       ]
     );
 
-    // Bersihkan pilihan barang setelah selesai tanpa menyembunyikan layout 2 kolom
-    scanState.selectedCode = '';
+    // Setelah tersimpan: tutup form & kembali ke tampilan awal (notifikasi tetap terlihat)
     resetSelectedItemBanner();
+    closeScanWorkspace();
 
     await loadScanBorrowView();
     await refreshMyState();
