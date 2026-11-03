@@ -306,7 +306,8 @@
           <div class="entry-top-bar">
             <div>
               <h2 style="margin:0">➕ Data Entry — Tambah Barang Baru</h2>
-              <div class="muted small" style="margin-top:2px">Barang yang disimpan langsung masuk ke menu <b>📦 DATABASE</b>.</div>
+              <div class="muted small" style="margin-top:2px">Barang yang disimpan langsung masuk ke menu <b>📦
+                  DATABASE</b>.</div>
             </div>
             <div class="row wrap gap8">
               <button type="button" id="btnDlFormatToolsQuick" class="btn btn-ghost btn-sm">📊 Format Excel (<span
@@ -322,14 +323,14 @@
             <button type="button" class="entry-type-btn active" data-etype="tool" id="btnEntryTypeTool">
               <span class="et-ico">🧰</span>
               <span class="et-txt">
-                <b>TOOLS (Alat Pinjam)</b>
+                <b>TOOLS</b>
                 <small><span id="entryCountTool">21</span> alat terdaftar • Kode T-xxx</small>
               </span>
             </button>
             <button type="button" class="entry-type-btn" data-etype="material" id="btnEntryTypeMaterial">
               <span class="et-ico">📦</span>
               <span class="et-txt">
-                <b>MATERIAL (Habis Pakai)</b>
+                <b>MATERIAL</b>
                 <small><span id="entryCountMaterial">8</span> bahan terdaftar • Kode M-xxx</small>
               </span>
             </button>
@@ -443,7 +444,8 @@
           <!-- Pintasan ke Database (Tidak menampilkan tabel barang di halaman Data Entry) -->
           <div class="row between wrap gap8" style="margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e1">
             <span class="small muted">💡 Semua daftar barang ditampilkan terpusat di halaman <b>DATABASE</b>.</span>
-            <button type="button" class="btn btn-ghost btn-sm" onclick="switchGudangTab('database')">📦 Buka Tabel Database (<span id="entryTotalCount">29</span> Barang) →</button>
+            <button type="button" class="btn btn-ghost btn-sm" onclick="switchGudangTab('database')">📦 Buka Tabel
+              Database (<span id="entryTotalCount">29</span> Barang) →</button>
           </div>
         </div>
       </section>
@@ -462,7 +464,8 @@
             <div class="row between wrap gap8" style="margin-bottom:12px">
               <div>
                 <h3 style="margin:0;font-size:1.15rem">📤 Menu Barang Keluar</h3>
-                <div class="muted small">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis pakai).</div>
+                <div class="muted small">Pilih <b>Pinjam Tools</b> (wajib kembali) atau <b>Ambil Material</b> (habis
+                  pakai).</div>
               </div>
               <button type="button" id="btnToggleReturnBox" class="btn btn-ok btn-sm">
                 ↩️ Kembalikan Tools (<span id="myHoldingCount">0</span>)
@@ -526,7 +529,8 @@
               </div>
 
               <form id="scanForm" class="scan-input" autocomplete="off" style="margin:0 0 8px">
-                <input id="scanInput" type="search" placeholder="🔍 Cari nama barang / kode…" autocomplete="off" spellcheck="false">
+                <input id="scanInput" type="search" placeholder="🔍 Cari nama barang / kode…" autocomplete="off"
+                  spellcheck="false">
                 <button type="submit" class="btn btn-dark btn-sm">Cari</button>
               </form>
 
@@ -708,23 +712,29 @@
             <div class="row between wrap gap8" style="margin-bottom:10px">
               <div>
                 <h3 style="margin:0;font-size:1.05rem">⚖️ Data Opname — Balancing Stok Gudang</h3>
-                <div class="muted small">Sesuaikan <b>Stok Fisik Aktual</b> di gudang untuk menyeimbangkan (balance) jumlah stok di Database.</div>
+                <div class="muted small">Sesuaikan <b>Stok Fisik Aktual</b> di gudang untuk menyeimbangkan (balance)
+                  jumlah stok di Database.</div>
               </div>
               <div class="row wrap gap8">
-                <button type="button" id="btnOpReset" class="btn btn-ghost btn-sm" title="Samakan kembali angka fisik dengan stok sistem">↺ Samakan Fisik = Sistem</button>
-                <button type="button" id="btnOpSaveAll" class="btn btn-ok btn-sm">✅ Simpan &amp; Balance Semua Stok (<span id="opDiffActionCount">0</span>)</button>
+                <button type="button" id="btnOpReset" class="btn btn-ghost btn-sm"
+                  title="Samakan kembali angka fisik dengan stok sistem">↺ Samakan Fisik = Sistem</button>
+                <button type="button" id="btnOpSaveAll" class="btn btn-ok btn-sm">✅ Simpan &amp; Balance Semua Stok
+                  (<span id="opDiffActionCount">0</span>)</button>
               </div>
             </div>
 
             <!-- Ringkasan Opname -->
             <div class="opname-summary-bar" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
-              <span class="excel-badge" style="background:#f1f5f9;color:#1e293b;border:1px solid #cbd5e1;padding:6px 12px">
+              <span class="excel-badge"
+                style="background:#f1f5f9;color:#1e293b;border:1px solid #cbd5e1;padding:6px 12px">
                 📦 Total Jenis Barang: <b id="opTotalItems">0</b>
               </span>
-              <span class="excel-badge" style="background:#dcfce7;color:#166534;border:1px solid #86efac;padding:6px 12px">
+              <span class="excel-badge"
+                style="background:#dcfce7;color:#166534;border:1px solid #86efac;padding:6px 12px">
                 🟢 Sudah Sesuai (Balance): <b id="opMatchCount">0</b>
               </span>
-              <span class="excel-badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:6px 12px">
+              <span class="excel-badge"
+                style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:6px 12px">
                 ⚖️ Ada Selisih (Perlu Balance): <b id="opDiffCount">0</b>
               </span>
             </div>
@@ -738,7 +748,8 @@
                 <button type="button" class="excel-pill" data-opfilter="diff">⚖️ Hanya yang Selisih</button>
               </div>
               <div class="row wrap gap6" style="flex:1;max-width:460px">
-                <input id="opSearchInput" type="search" class="flex1" placeholder="🔍 Cari nama / kode barang…" autocomplete="off">
+                <input id="opSearchInput" type="search" class="flex1" placeholder="🔍 Cari nama / kode barang…"
+                  autocomplete="off">
                 <form id="opQuickScanForm" class="row gap4" style="margin:0" autocomplete="off">
                   <input id="opQuickScanInput" type="text" placeholder="⚡ Scan kode (+1 fisik)" style="max-width:170px">
                   <button type="submit" class="btn btn-dark btn-sm">+1</button>
@@ -835,7 +846,7 @@
   </div>
 
   <script src="/vendor/jsQR.js" defer></script>
-  <script src="/app.js?v=26" defer></script>
+  <script src="/app.js?v=27" defer></script>
 </body>
 
 </html>

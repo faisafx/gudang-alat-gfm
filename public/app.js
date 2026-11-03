@@ -2671,21 +2671,23 @@ function renderOpnameBalanceTable() {
   });
 
   if (!list.length) {
-    tbl.innerHTML = `<tbody><tr><td colspan="9" style="text-align:center;padding:28px;color:#64748b;font-weight:600">Tidak ada barang pada filter opname ini.</td></tr></tbody>`;
+    tbl.innerHTML = `<tbody><tr><td colspan="11" style="text-align:center;padding:28px;color:#64748b;font-weight:600">Tidak ada barang pada filter opname ini.</td></tr></tbody>`;
     return;
   }
 
   const thead = `<thead>
     <tr>
-      <th style="width:42px;text-align:center">No</th>
-      <th style="width:100px">Kode</th>
+      <th style="width:38px;text-align:center">No</th>
+      <th style="width:92px">Kode</th>
       <th>Nama Barang</th>
-      <th style="width:110px">Tipe</th>
-      <th style="width:125px;text-align:center">Stok Sistem</th>
-      <th style="width:175px">Stok Fisik Aktual</th>
-      <th style="width:145px;text-align:center">Selisih (Balance)</th>
-      <th style="width:135px">Kondisi Fisik</th>
-      <th style="width:135px;text-align:center">Aksi Balance</th>
+      <th style="width:105px">Tipe</th>
+      <th style="width:120px;text-align:center">Total Awal / Aset</th>
+      <th style="width:155px;text-align:center">Tercatat Keluar</th>
+      <th style="width:130px;text-align:center">Sisa Sistem (di Rak)</th>
+      <th style="width:168px">Fisik Aktual (di Rak)</th>
+      <th style="width:165px;text-align:center">Status Balance / Selisih</th>
+      <th style="width:128px">Kondisi</th>
+      <th style="width:125px;text-align:center">Aksi</th>
     </tr>
   </thead>`;
 
@@ -2694,19 +2696,38 @@ function renderOpnameBalanceTable() {
     const codeCls = isTool ? 'code-pill tool' : 'code-pill material';
     const unitTxt = esc(t.unit || (isTool ? 'Unit' : 'Pcs'));
     const sysQty = Number(t.quantity ?? 0);
+    const borrowedQty = Number(t.borrowed_qty || 0);
+    const consumedQty = Number(t.consumed_qty || 0);
+    const totalInitialOrAsset = isTool ? (sysQty + borrowedQty) : (sysQty + consumedQty);
+
     const actQty = Number(opBalanceState.actualQtyMap.get(t.code) ?? sysQty);
     const diff = Number((actQty - sysQty).toFixed(2));
     const sysCond = t.condition || (t.status === 'rusak' ? 'eject' : 'bagus');
     const actCond = opBalanceState.actualCondMap.get(t.code) || sysCond;
     const hasDiff = diff !== 0 || actCond !== sysCond;
 
-    let diffBadge = `<span class="excel-badge ready">✔ Balance (0)</span>`;
+    // Kolom Tercatat Keluar (Pengurangan)
+    let outInfoHtml = '';
+    if (isTool) {
+      outInfoHtml = borrowedQty > 0
+        ? `<span class="excel-badge out">🟠 Dipinjam: <b>${borrowedQty} ${unitTxt}</b></span>${t.holder ? `<div class="small muted" style="margin-top:2px">👷 ${esc(t.holder)}</div>` : ''}`
+        : `<span class="small muted">0 Dipinjam</span>`;
+    } else {
+      outInfoHtml = consumedQty > 0
+        ? `<span class="excel-badge" style="background:#f3e8ff;color:#6b21a8;border:1px solid #d8b4fe">📦 Habis Pakai: <b>-${consumedQty} ${unitTxt}</b></span>`
+        : `<span class="small muted">0 Keluar</span>`;
+    }
+
+    // Kolom Status Balance / Selisih
+    let diffBadge = `<span class="excel-badge ready">✔ BALANCE (0)</span>`;
     let rowCls = 'row-state-ready';
     if (diff > 0) {
-      diffBadge = `<span class="excel-badge" style="background:#dbeafe;color:#1d4ed8;border:1px solid #93c5fd">➕ Lebih +${diff} ${unitTxt}</span>`;
+      const hint = isTool ? 'Alat di rak belum klik kembali?' : 'Stok masuk belum diinput?';
+      diffBadge = `<span class="excel-badge" style="background:#dbeafe;color:#1d4ed8;border:1px solid #93c5fd">➕ Lebih +${diff} ${unitTxt}</span><div class="small muted" style="margin-top:2px">${hint}</div>`;
       rowCls = 'row-state-kalibrasi';
     } else if (diff < 0) {
-      diffBadge = `<span class="excel-badge eject">➖ Kurang ${diff} ${unitTxt}</span>`;
+      const hint = isTool ? 'Keluar belum tercatat / hilang' : 'Ambil material belum tercatat';
+      diffBadge = `<span class="excel-badge eject">➖ Kurang ${diff} ${unitTxt}</span><div class="small muted" style="margin-top:2px">${hint}</div>`;
       rowCls = 'row-state-out';
     } else if (actCond !== sysCond) {
       diffBadge = `<span class="excel-badge kalibrasi">🔄 Ubah Kondisi</span>`;
@@ -2720,10 +2741,15 @@ function renderOpnameBalanceTable() {
         <b>${esc(t.name)}</b>
         ${t.category ? `<div class="small muted">${esc(t.category)}</div>` : ''}
       </td>
-      <td><span class="muted small">${isTool ? '🧰 Tools' : '📦 Material'}</span></td>
+      <td><span class="muted small">${isTool ? '🧰 Tools (Aset)' : '📦 Material'}</span></td>
       <td style="text-align:center">
-        <b style="font-size:.95rem">${sysQty} ${unitTxt}</b>
-        ${t.borrowed_qty ? `<div class="small muted">Dipinjam: ${t.borrowed_qty}</div>` : ''}
+        <b>${totalInitialOrAsset} ${unitTxt}</b>
+        <div class="small muted">${isTool ? 'Total Aset' : 'Stok Awal'}</div>
+      </td>
+      <td style="text-align:center">${outInfoHtml}</td>
+      <td style="text-align:center">
+        <b style="font-size:.98rem;color:#0f2942">${sysQty} ${unitTxt}</b>
+        <div class="small muted">Wajib ada di rak</div>
       </td>
       <td>
         <div class="inline-qty-wrap">
@@ -2743,8 +2769,8 @@ function renderOpnameBalanceTable() {
       </td>
       <td style="text-align:center;white-space:nowrap">
         ${hasDiff
-          ? `<button type="button" class="btn btn-primary btn-sm" onclick="balanceSingleItem('${esc(t.code)}')">⚖️ Balance</button>`
-          : `<span class="small muted">✔ Sesuai</span>`}
+          ? `<button type="button" class="btn btn-primary btn-sm" onclick="balanceSingleItem('${esc(t.code)}')" title="Sesuaikan stok database dengan fisik aktual">⚖️ Balance</button>`
+          : `<span class="small muted">✔ Balance</span>`}
       </td>
     </tr>`;
   }).join('') + `</tbody>`;

@@ -766,7 +766,9 @@ app.get('/api/tools', requireAuth, wrap(() => db.prepare(`
          ol.holder_phone,
          ol.holder_badge,
          COALESCE(ol.borrowed_qty, 0) AS borrowed_qty,
-         COALESCE(ol.open_loans_count, 0) AS open_loans_count
+         COALESCE(ol.open_loans_count, 0) AS open_loans_count,
+         COALESCE(cl.consumed_qty, 0) AS consumed_qty,
+         COALESCE(cl.consumed_count, 0) AS consumed_count
   FROM tools t
   LEFT JOIN (
     SELECT l.tool_code,
@@ -784,6 +786,14 @@ app.get('/api/tools', requireAuth, wrap(() => db.prepare(`
     WHERE l.in_at IS NULL
     GROUP BY l.tool_code
   ) ol ON ol.tool_code = t.code
+  LEFT JOIN (
+    SELECT l.tool_code,
+           SUM(COALESCE(l.qty, 1)) AS consumed_qty,
+           COUNT(l.id) AS consumed_count
+    FROM loans l
+    WHERE l.in_condition = 'consumed'
+    GROUP BY l.tool_code
+  ) cl ON cl.tool_code = t.code
   WHERE t.active = 1
   ORDER BY t.code`).all()));
 
